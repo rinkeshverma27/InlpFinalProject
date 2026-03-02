@@ -1,0 +1,158 @@
+# ─────────────────────────────────────────────────────────────
+#  News-Driven Financial Prediction Engine — Project Config
+#  Blueprint v1.0  |  March 2026
+#  Edit this file to adjust runtime behaviour.
+#  NEVER hardcode paths — use the path keys below.
+# ─────────────────────────────────────────────────────────────
+
+project:
+  name: "nifty-nlp-prediction"
+  version: "1.0.0"
+  stage: "0"                     # Current active stage: 0 / 1 / 2A / 2B / 2C / 3
+
+# ── Safety Switch ─────────────────────────────────────────────
+# Set to true on: Union Budget, election day, RBI surprise, global shock
+# Reset to false manually 2-3 trading days after event normalises
+adaptive_learning:
+  FREEZE_ALL_UPDATES: false      # Disables Tier 1 + Tier 2 + Tier 3 simultaneously
+
+# ── Target Stocks ─────────────────────────────────────────────
+stocks:
+  pilot:                         # Stage 0 / Stage 1 — 3 stocks only
+    - "RELIANCE"
+    - "TCS"
+    - "HDFCBANK"
+  full:                          # Stage 2B onward — all 15 stocks
+    - "RELIANCE"
+    - "TCS"
+    - "HDFCBANK"
+    - "INFY"
+    - "ICICIBANK"
+    - "HINDUNILVR"
+    - "SBIN"
+    - "BAJFINANCE"
+    - "BHARTIARTL"
+    - "KOTAKBANK"
+    - "LT"
+    - "AXISBANK"
+    - "ASIANPAINT"
+    - "MARUTI"
+    - "TITAN"
+
+# ── Data Paths (relative to project root) ─────────────────────
+paths:
+  data_root:          "data"
+  price_dir:          "data/price"
+  news_raw_dir:       "data/news/raw"
+  handshake_dir:      "data/handshake"
+  trust_weights_dir:  "data/trust_weights"
+  predictions_dir:    "data/predictions"
+  models_dir:         "models/checkpoints"
+  logs_dir:           "logs"
+
+# ── Label Construction ─────────────────────────────────────────
+label:
+  target_time: "10:00"           # NSE price capture time
+  actual_fill_time: "10:05"      # When actual_pct is filled in predictions.csv
+  confound_subtract: true        # Always subtract Nifty 50 overnight return
+
+# ── LSTM Stream B ─────────────────────────────────────────────
+lstm:
+  window_normal: 60              # Days — RealVol < 1.0x avg
+  window_elevated: 30            # Days — RealVol 1.5–2.0x avg
+  window_event: 10               # Days — RealVol > 2.0x avg
+  hidden_size: 256
+  num_layers: 2
+  dropout: 0.3
+
+# ── Fusion & Output Head ───────────────────────────────────────
+fusion:
+  nlp_embed_dim: 512             # FinBERT / MuRIL CLS embedding size
+  lstm_hidden_dim: 256
+  concat_dim: 768
+  fc1_out: 128
+  dropout: 0.3
+  loss: "huber"
+  huber_delta: 0.01
+  mc_dropout_passes: 50          # Forward passes for 95% CI
+
+# ── NLP Models ─────────────────────────────────────────────────
+nlp:
+  english_model: "ProsusAI/finbert"
+  hindi_model: "google/muril-base-cased"       # Winner after Stage 0 eval; swap if IndicBERT wins
+  hindi_fallback: "ai4bharat/indic-bert"
+  max_token_length: 512
+  batch_size_en: 16              # FP16 on Machine 2, keeps under 3.5GB VRAM
+  batch_size_hi: 8               # Machine 1 shares VRAM with T-LSTM
+  fp16: true
+
+# ── Hindi Sparse Rule ─────────────────────────────────────────
+hindi_sparse:
+  min_articles: 2                # Minimum Hindi articles in past N days
+  lookback_days: 3               # Lookback window for sparse check
+  # If article count < min_articles → hindi weight set to 0.0, english to 1.0
+
+# ── Trust Weight System (Tier 1) ──────────────────────────────
+trust:
+  update_time: "10:10"           # Daily update time (trading days only)
+  weight_min: 0.1
+  weight_max: 2.0
+  max_share_per_source: 0.40     # No source > 40% of total weight per stock
+  stale_decay_days: 7            # Start decaying after 7 inactive days
+  stale_decay_rate: 0.02         # 2% per day toward neutral (1.0)
+  anomaly_sigma: 3.0             # Skip update if |actual_move| > 3σ
+
+# ── EWC Weekly Nudge (Tier 2) ─────────────────────────────────
+ewc:
+  schedule: "friday"
+  schedule_time: "23:00"
+  learning_rate: 1.0e-5          # 10x smaller than base LR
+  epochs: 3
+  lambda: 400                    # EWC penalty strength
+  rollback_tolerance: 0.02       # +2% MAE → rollback to previous checkpoint
+  frozen_layers:                 # These layers are NEVER touched during nudge
+    - "lstm"
+    - "transformer_encoder"
+  trainable_layers:              # Only these layers get nudged
+    - "fc1"
+    - "fc2"
+
+# ── Monthly Retrain (Tier 3) ───────────────────────────────────
+retrain:
+  schedule: "last_sunday"
+  deploy_gate_pct: 0.02          # New model MAE must beat live MAE by >= 2%
+  max_duration_hours: 8          # If retrain > 8h, limit to 8 stocks
+  validation_window_months: 3    # Rolling validation window
+
+# ── Evaluation Gates ──────────────────────────────────────────
+evaluation:
+  stage1_mae_target: 0.015       # < 1.5%
+  stage2_mae_target: 0.008       # < 0.8%
+  stage1_dir_acc: 0.52           # > 52%
+  stage2_dir_acc: 0.57           # > 57%
+  hybrid_vs_baseline_min: 0.05   # Hybrid must beat baseline by >= 5%
+
+# ── Machine Roles ─────────────────────────────────────────────
+machines:
+  machine1:
+    role: "training_core"
+    gpu: "RTX 5060"
+    vram_gb: 8
+    tasks: ["muril_inference", "t_lstm_training", "ewc_nudge", "monthly_retrain", "fusion", "trust_weights", "fisher_matrix"]
+  machine2:
+    role: "english_nlp"
+    gpu: "RTX 3050"
+    vram_gb: 4
+    tasks: ["finbert_inference", "en_sentiment_csv"]
+  machine3:
+    role: "data_server"
+    gpu: "RTX 3050"
+    vram_gb: 4
+    tasks: ["rss_scraping", "dedup", "timestamp_alignment", "ohlcv_serving", "price_capture_10am", "cron_scheduler"]
+
+# ── Git Automation ─────────────────────────────────────────────
+git:
+  auto_commit_predictions: true
+  auto_commit_trust_weights: true
+  commit_time_predictions: "09:10"   # After morning inference
+  commit_time_trust: "10:15"         # After Tier 1 update
