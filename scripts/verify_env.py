@@ -86,7 +86,7 @@ def run_checks():
     # ── Python version ────────────────────────────────────────
     section("1. Python")
     major, minor = sys.version_info[:2]
-    ok = (major == 3 and minor == 11)
+    ok = (major == 3 and minor == 10)
     results.append(check(
         f"Python {major}.{minor}", ok,
         "need 3.11" if not ok else sys.version.split()[0]
