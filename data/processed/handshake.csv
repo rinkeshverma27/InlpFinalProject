@@ -1,0 +1,7 @@
+date,ticker,sentiment_score,model_confidence,source
+2026-03-15,BHARTIARTL,-0.5022,0.5022,['Zee Business Hindi']
+2026-03-15,HDFCBANK,0.0,0.9961,['LiveMint']
+2026-03-15,ICICIBANK,-0.5021,0.5021,['Amar Ujala']
+2026-03-15,INFY,-0.502,0.502,['Navbharat Times']
+2026-03-15,RELIANCE,1.0,1.0,['Economic Times']
+2026-03-15,TCS,-1.0,1.0,['Moneycontrol']
