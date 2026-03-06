@@ -199,7 +199,8 @@ def compute_fisher_matrix(
 
     Returns a dict: param_name → fisher_diagonal tensor
     """
-    model.eval()
+    # MUST be in train mode for cudnn RNN backward to work!
+    model.train()
     fisher = {
         name: torch.zeros_like(p)
         for name, p in model.named_parameters()
@@ -230,4 +231,5 @@ def compute_fisher_matrix(
     for name in fisher:
         fisher[name] /= count
 
+    model.eval()
     return fisher

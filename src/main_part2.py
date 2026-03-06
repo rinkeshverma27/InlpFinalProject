@@ -34,7 +34,7 @@ DEFAULT_CONFIG = {
     "nlp_out_dim":      512,
     "head_dropout":     0.3,
     "batch_size":       64,
-    "epochs":           50,
+    "epochs":           2,
     "patience":         5,
     "ewc_epochs":       3,
     "ewc_lambda":       400.0,
@@ -157,7 +157,7 @@ def mode_predict(args, cfg, device):
 
     handshake = HandshakeDataset(handshake_dir) if handshake_dir else None
     ds        = StockDataset(feat_df, args.ticker, handshake)
-    loader    = DataLoader(ds, batch_size=1, shuffle=False)
+    loader    = DataLoader(ds, batch_size=cfg["batch_size"], shuffle=False)
 
     model   = TLSTMModel(**{k: cfg[k] for k in [
         "n_ohlcv_features", "lstm_hidden_dim", "lstm_layers",
