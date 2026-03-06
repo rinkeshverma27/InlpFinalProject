@@ -5,18 +5,48 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  # ── Python ────────────────────────────────────────────────────────────────
   - python=3.10
-  - pip
-  - pytorch=2.1.2
-  - torchvision=0.16.2
-  - torchaudio=2.1.2
-  - pytorch-cuda=11.8
-  - pandas=2.2.0
-  - numpy=1.26.3
-  - scikit-learn=1.4.0
-  - yfinance=0.2.36
-  - pyyaml=6.0.1
-  - tqdm
+
+  # ── PyTorch (CUDA 12.1 — works on RTX 5060, RTX 3050) ────────────────────
+  - pytorch=2.3.1
+  - torchvision=0.18.1
+  - torchaudio=2.3.1
+  - pytorch-cuda=12.1
+  # - cudatoolkit=12.1
+
+  # ── Core Data ─────────────────────────────────────────────────────────────
+  - numpy=1.26.4
+  - pandas=2.2.2
+  - scipy=1.13.1
+
+  # ── Technical Analysis ────────────────────────────────────────────────────
+  - ta-lib=0.4.28           # requires libta-lib system dep — see README
+
+  # ── Jupyter ────────────────────────────────────────────────────────────────
+  - jupyter=1.0.0
+  - ipykernel=6.29.5
+  - notebook=7.2.1
+
+  # ── Visualisation ─────────────────────────────────────────────────────────
+  - matplotlib=3.9.1
+  - seaborn=0.13.2
+
+  # ── ML / Eval Utils ───────────────────────────────────────────────────────
+  - scikit-learn=1.5.1
+  - tqdm=4.66.4
+
+  # ── Conda-forge extras ────────────────────────────────────────────────────
+  - conda-forge::python-dotenv=1.0.1
+  - conda-forge::pyyaml=6.0.1
+  - conda-forge::jsonlines=4.0.0
+  - conda-forge::feedparser=6.0.11     # RSS feed scraping
+  - conda-forge::requests=2.32.3
+  - conda-forge::aiohttp=3.9.5         # async HTTP for parallel scraping
+  - conda-forge::git=2.45.2
+
+  # ── Pip-only packages ─────────────────────────────────────────────────────
+  - pip=24.1.2
   - pip:
       - transformers==4.37.2
       - ta-lib==0.4.28
