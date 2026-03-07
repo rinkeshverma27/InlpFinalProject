@@ -47,7 +47,7 @@ from src.training.predict import run_prediction
 # ──────────────────────────────────────────────────────────────────────────────
 
 DEFAULT_CONFIG = {
-    "n_ohlcv_features": 11,
+    "n_ohlcv_features": 14,
     "lstm_hidden_dim":  256,
     "lstm_layers":      2,
     "lstm_dropout":     0.3,
@@ -100,38 +100,44 @@ def prepare_features(df: pd.DataFrame, nifty_df: pd.DataFrame) -> pd.DataFrame:
 # ──────────────────────────────────────────────────────────────────────────────
 
 def mode_train(args, cfg, device):
-    ohlcv_path   = pathlib.Path(args.ohlcv)
-    nifty_path   = pathlib.Path(args.nifty)
-    handshake_dir = pathlib.Path(args.handshake_dir) if args.handshake_dir else None
+    ohlcv_path = pathlib.Path(args.ohlcv)
 
-    df      = load_ohlcv(ohlcv_path, args.ticker)
-    nifty   = load_ohlcv(nifty_path, "NIFTY50")
-    feat_df = prepare_features(df, nifty)
+    # Load the unified dataset
+    df_raw = pd.read_csv(ohlcv_path, parse_dates=["Date"])
     
-    # User Request: Train on 2023+ timeframe. Provide 2022-10-01 for lookback window to prevent empty datasets.
-    feat_df = feat_df.loc["2022-10-01":]
+    # Filter for ticker (unified file might have multiple)
+    possible_tickers = [args.ticker, f"{args.ticker}.NS"]
+    ticker_df = df_raw[df_raw["ticker"].isin(possible_tickers)].sort_values("Date")
     
-    # Exclude final 30 days for live-testing
-    if len(feat_df) > 30:
-        cutoff_date = feat_df.index.max() - pd.Timedelta(days=30)
-        train_val_df = feat_df.loc[:cutoff_date]
-    else:
-        train_val_df = feat_df
-        
-    # Split train and validation (Use 80/20 simple split since dataset is < 2 years, walk-forward too complex)
-    split_idx = int(len(train_val_df) * 0.8)
-    train_df = train_val_df.iloc[:split_idx]
-    val_df   = train_val_df.iloc[split_idx:]
+    if ticker_df.empty:
+        raise ValueError(f"Ticker {args.ticker} not found in {ohlcv_path}")
 
-    handshake = HandshakeDataset(handshake_dir) if handshake_dir else None
+    # Re-run feature engineering to get the exact normalized columns model expects
+    # We use a dummy Nifty DF since nifty_ret_proxy is already handled or we can just pass the same df
+    feat_df = build_features(ticker_df.set_index("Date"))
+    
+    # Ensure adjusted_ret exists (consolidator used target_label or similar)
+    if "adjusted_ret" not in feat_df.columns:
+        if "target_label" in feat_df.columns:
+            feat_df["adjusted_ret"] = feat_df["target_label"]
+        elif "adjusted_ret" in ticker_df.columns: # It was in raw but got lost in build_features?
+             feat_df["adjusted_ret"] = ticker_df.set_index("Date")["adjusted_ret"]
+    
+    # Filter for training window (2023-2024)
+    train_val_df = feat_df.loc["2023-01-01":"2024-12-31"]
+    
+    # Split train and validation (80/20)
+    split_index = int(len(train_val_df) * 0.8)
+    train_df = train_val_df.iloc[:split_index]
+    val_df   = train_val_df.iloc[split_index:]
 
-    train_ds = StockDataset(train_df, args.ticker, handshake)
-    val_ds   = StockDataset(val_df,   args.ticker, handshake)
+    train_ds = StockDataset(train_df, args.ticker)
+    val_ds   = StockDataset(val_df,   args.ticker)
 
     train_loader = DataLoader(train_ds, batch_size=cfg["batch_size"], shuffle=True,  num_workers=2)
     val_loader   = DataLoader(val_ds,   batch_size=cfg["batch_size"], shuffle=False, num_workers=2)
 
-    model   = TLSTMModel(**{k: cfg[k] for k in [
+    model = TLSTMModel(**{k: cfg[k] for k in [
         "n_ohlcv_features", "lstm_hidden_dim", "lstm_layers",
         "lstm_dropout", "nlp_in_dim", "nlp_out_dim", "head_dropout"]
     })
@@ -180,53 +186,58 @@ def mode_ewc_nudge(args, cfg, device):
 
 
 def mode_predict(args, cfg, device):
-    ohlcv_path     = pathlib.Path(args.ohlcv)
-    nifty_path     = pathlib.Path(args.nifty)
-    handshake_dir  = pathlib.Path(args.handshake_dir) if args.handshake_dir else None
-    ckpt_path      = pathlib.Path(args.checkpoint)
+    p_train = pathlib.Path("data/prod_train.csv")
+    p_test  = pathlib.Path(args.ohlcv)
+    ckpt_path = pathlib.Path(args.checkpoint)
 
-    df      = load_ohlcv(ohlcv_path, args.ticker)
-    nifty   = load_ohlcv(nifty_path, "NIFTY50")
-    feat_df = prepare_features(df, nifty)
-
-    # User Request: Test Set is the final excluded month of the 2023+ data block
-    import torch
-    if len(feat_df) > 90:
-        max_date = feat_df.index.max()
-        cutoff_date = max_date - pd.Timedelta(days=30)
-        
-        # Test solely on the final month that was excluded from training
-        # IMPORTANT: retain the preceding 60 days on the dataframe so StockDataset can slice the lookback window
-        lookback_date = cutoff_date - pd.Timedelta(days=120)
-        feat_df = feat_df.loc[lookback_date:]
-        test_start_date = cutoff_date
-    else:
-        test_start_date = feat_df.index.min()
-
-    handshake = HandshakeDataset(handshake_dir) if handshake_dir else None
+    # Load both to provide context (StockDataset needs 60-day lookback)
+    df_train = pd.read_csv(p_train, parse_dates=["Date"])
+    df_test  = pd.read_csv(p_test,  parse_dates=["Date"])
     
-    # Create the dataset but only predict for dates >= test_start_date
-    ds        = StockDataset(feat_df, args.ticker, handshake)
+    # Filter for ticker
+    possible_tickers = [args.ticker, f"{args.ticker}.NS"]
+    t_train = df_train[df_train["ticker"].isin(possible_tickers)].sort_values("Date")
+    t_test  = df_test[df_test["ticker"].isin(possible_tickers)].sort_values("Date")
+
+    # Combine: Last 120 days of train + all test
+    # (120 ensures we have enough for 60-day lookback even with NaN drops)
+    feat_df = pd.concat([t_train.iloc[-120:], t_test]).set_index("Date").sort_index()
+
+    if feat_df.empty:
+        raise ValueError(f"Ticker {args.ticker} not found in prediction scope")
+
+    # Re-run feature engineering for normalization
+    feat_df = build_features(feat_df)
+
+    if "adjusted_ret" not in feat_df.columns and "target_label" in feat_df.columns:
+        feat_df["adjusted_ret"] = feat_df["target_label"]
+
+    # Now create the dataset. We want to ONLY predict the rows that came from t_test.
+    ds = StockDataset(feat_df, args.ticker)
     
-    # Filter dataset indices for actual prediction targets
+    # Determine the index where the actual test period starts in the Dataset
+    # ds.dates should be checked against t_test starting date
+    test_start_date = t_test["Date"].min()
     valid_indices = [i for i, date in enumerate(ds.dates) if pd.to_datetime(date) >= pd.to_datetime(test_start_date)]
-    if len(valid_indices) == 0:
-        print("No test dates found for the final month.")
+    
+    if not valid_indices:
+        print(f"  ⚠️ No valid test dates found for {args.ticker} starting from {test_start_date}")
         return
-        
+
     sub_ds = torch.utils.data.Subset(ds, valid_indices)
     loader = DataLoader(sub_ds, batch_size=cfg["batch_size"], shuffle=False)
 
-    model   = TLSTMModel(**{k: cfg[k] for k in [
+    model = TLSTMModel(**{k: cfg[k] for k in [
         "n_ohlcv_features", "lstm_hidden_dim", "lstm_layers",
         "lstm_dropout", "nlp_in_dim", "nlp_out_dim", "head_dropout"]
     })
+    
+    print(f"  Loading checkpoint: {ckpt_path.name}")
+    checkpoint = torch.load(ckpt_path, map_location=device)
+    model.load_state_dict(checkpoint["model_state_dict"])
+    model.to(device)
 
-    ckpt = torch.load(ckpt_path, map_location=device)
-    model.load_state_dict(ckpt["model_state_dict"])
-
-    # Get dates from the dataset (handles both 'Date' and 'date' columns)
-    date_col = "date" if "date" in ds.df.columns else "Date"
+    # Prepare metadata for output file
     dates   = [str(ds.dates[i]) for i in valid_indices]
     tickers = [args.ticker] * len(valid_indices)
 

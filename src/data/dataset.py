@@ -23,6 +23,9 @@ OHLCV_FEATURE_COLS = [
     "ma_delta_5_20",
     "realised_vol_5",
     "regime_flag",
+    "volume_delta",      # ← Order Flow / Liquidity
+    "sector_en_sentiment", # ← Macro Sentiment (English)
+    "sector_hi_sentiment", # ← Macro Sentiment (Hindi)
     "en_sentiment",
     "hi_sentiment",
 ]

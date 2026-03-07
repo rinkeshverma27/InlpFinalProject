@@ -51,6 +51,12 @@ def compute_regime_flag(realised_vol: pd.Series) -> pd.Series:
     return flag
 
 
+def compute_volume_delta(volume: pd.Series, period: int = 20) -> pd.Series:
+    """(Volume - MA_volume) / MA_volume — relative liquidity spike."""
+    ma_v = volume.rolling(period).mean()
+    return (volume - ma_v) / ma_v.replace(0, np.nan)
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Dynamic Window Sizer
 # ──────────────────────────────────────────────────────────────────────────────
@@ -108,6 +114,7 @@ def build_features(df: pd.DataFrame) -> pd.DataFrame:
     out["ma_delta_5_20"] = compute_ma_delta(df["Close"])
     out["realised_vol_5"]= compute_realised_vol(df["Close"])
     out["regime_flag"]   = compute_regime_flag(out["realised_vol_5"])
+    out["volume_delta"]  = compute_volume_delta(df["Volume"])
 
     # ── Dynamic window size per row ──────────────────────────────────────────
     hist_means = out["realised_vol_5"].expanding().mean()
