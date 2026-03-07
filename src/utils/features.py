@@ -160,4 +160,15 @@ def build_labels(
     out["nifty_ret"]     = nifty_aligned
     out["adjusted_ret"]  = stock_raw - nifty_aligned   # ← the prediction target
 
+    # --- DATA SANITY PHASE 1: Clip & Drop ---
+    # 1. Drop rows where the absolute actual return > 15% (almost certainly a split/anomaly).
+    # Since we need a contiguous index, we'll mark them as NaN here, and let the Dataset
+    # dropna() or we can drop them directly. It's safer to drop directly from the frame.
+    anomaly_mask = out["adjusted_ret"].abs() > 0.15
+    out = out[~anomaly_mask]
+    
+    # 2. Clip the remaining target labels to +/- 5% to prevent Huber exploding gradients
+    OUTLIER_CLIP = 0.05
+    out["adjusted_ret"] = out["adjusted_ret"].clip(lower=-OUTLIER_CLIP, upper=OUTLIER_CLIP)
+
     return out
