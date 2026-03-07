@@ -8,3 +8,9 @@ To run the project, execute the numbered scripts sequentially:
 - `05_handshake.py`: Fuses English and Hindi scores into daily `handshake.csv` files.
 - `generate_synthetic_hindi.py`: Generates synthetic data.
 - `train_hindi_muril.py`: Fine-tunes the MuRIL model.
+
+
+steps to run
+ conda run -n nifty-rtx5060 python src/scripts/train.py
+
+ conda run -n nifty-rtx5060 python src/scripts/predict.py
