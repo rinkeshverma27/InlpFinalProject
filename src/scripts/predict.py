@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import pandas as pd
 import numpy as np
+import argparse
 import os
 import sys
 import joblib
@@ -12,17 +13,33 @@ sys.path.append(str(Path(__file__).parent.parent.parent))
 
 from src.modeling.lstm_binary import BinaryLSTM
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run Binary LSTM prediction")
+    parser.add_argument("--model-path", default="models/prod_binary_lstm_best.pth")
+    parser.add_argument("--scaler-path", default="models/prod_scaler.joblib")
+    parser.add_argument("--test-path", default="data/inputs/prod_test.csv")
+    parser.add_argument("--output-path", default="data/predictions/production_predictions.csv")
+    return parser.parse_args()
+
 def main():
+    args = parse_args()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     # Paths
-    model_path = "models/prod_binary_lstm_best.pth"
-    scaler_path = "models/prod_scaler.joblib"
-    test_data_path = "data/inputs/prod_test.csv"
+    model_path = args.model_path
+    scaler_path = args.scaler_path
+    test_data_path = args.test_path
+    output_path = args.output_path
     
     if not os.path.exists(model_path):
         print("Error: Model not found.")
-        return
+        raise SystemExit(1)
+    if not os.path.exists(scaler_path):
+        print("Error: Scaler not found.")
+        raise SystemExit(1)
+    if not os.path.exists(test_data_path):
+        print("Error: Test data not found.")
+        raise SystemExit(1)
 
     # Load Assets
     scaler = joblib.load(scaler_path)
@@ -34,7 +51,7 @@ def main():
     ]
     
     model = BinaryLSTM(len(feature_cols)).to(device)
-    model.load_state_dict(torch.load(model_path))
+    model.load_state_dict(torch.load(model_path, map_location=device))
     model.eval()
 
     # Load Data
@@ -73,9 +90,8 @@ def main():
             
     # Save Results
     final_df = pd.DataFrame(results)
-    output_path = "data/predictions/production_predictions.csv"
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    final_df.sort_values('Confidence', ascending=False).to_csv(output_path, index=False)
+    final_df.to_csv(output_path, index=False)
     
     print(f"\n✅ Production Predictions generated at {output_path}")
     print(final_df)

@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 import pandas as pd
 import numpy as np
+import argparse
 import os
 import sys
 from sklearn.metrics import accuracy_score, classification_report
@@ -25,16 +26,28 @@ def set_seed(seed=42):
     random.seed(seed)
     torch.backends.cudnn.deterministic = True
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Train Binary LSTM model")
+    parser.add_argument("--train-path", default="data/inputs/prod_train.csv")
+    parser.add_argument("--test-path", default="data/inputs/prod_test.csv")
+    parser.add_argument("--model-out", default="models/prod_binary_lstm_best.pth")
+    parser.add_argument("--scaler-out", default="models/prod_scaler.joblib")
+    return parser.parse_args()
+
 def main():
+    args = parse_args()
     set_seed(42)  # Ensure reproducibility across runs
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using Device: {device}")
     
     # A. Load Data
-    train_path = "data/inputs/prod_train.csv"
-    test_path = "data/inputs/prod_test.csv"
+    train_path = args.train_path
+    test_path = args.test_path
+    model_out = args.model_out
+    scaler_out = args.scaler_out
     
-    os.makedirs("models", exist_ok=True) # Ensure directory exists
+    os.makedirs(Path(model_out).parent, exist_ok=True) # Ensure directory exists
+    os.makedirs(Path(scaler_out).parent, exist_ok=True) # Ensure directory exists
     
     print("Loading production datasets...")
     df_train = pd.read_csv(train_path)
@@ -130,7 +143,7 @@ def main():
             print(f"--> Improvement! Best Acc: {acc:.2%}. Saving model...")
             best_acc = acc
             trigger_times = 0
-            torch.save(model.state_dict(), "models/prod_binary_lstm_best.pth")
+            torch.save(model.state_dict(), model_out)
         else:
             trigger_times += 1
             if trigger_times >= patience:
@@ -138,7 +151,7 @@ def main():
                 break
                 
     # H. Final Evaluation
-    model.load_state_dict(torch.load("models/prod_binary_lstm_best.pth"))
+    model.load_state_dict(torch.load(model_out, map_location=device))
     model.eval()
     all_preds = []
     all_probs = []
@@ -168,8 +181,7 @@ def main():
         print(f"🔥 HIGH CONFIDENCE ACCURACY (p>0.6): {conf_acc:.2%}")
     
     # Save artifacts
-    os.makedirs("models", exist_ok=True)
-    joblib.dump(scaler, "models/prod_scaler.joblib")
+    joblib.dump(scaler, scaler_out)
     print("Model and Scaler saved.")
 
 if __name__ == "__main__":
