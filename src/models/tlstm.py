@@ -82,20 +82,27 @@ class NLPProjection(nn.Module):
 
 class OutputHead(nn.Module):
     """
-    FC 768→128 (ReLU, Dropout 0.3) → FC 128→1 (Linear)
+    Dual-Head Output:
+    1. Direction (Classification): Logits for Up/Down movement.
+    2. Magnitude (Regression): Predicted adjusted % move.
     """
 
     def __init__(self, fusion_dim: int = 768, dropout: float = 0.3):
         super().__init__()
-        self.net = nn.Sequential(
+        self.common = nn.Sequential(
             nn.Linear(fusion_dim, 128),
             nn.ReLU(),
             nn.Dropout(p=dropout),
-            nn.Linear(128, 1),   # raw float, no activation
         )
+        self.direction = nn.Linear(128, 1)  # Logits
+        self.magnitude = nn.Linear(128, 1)  # Raw float
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.net(x)   # (B, 1)
+    def forward(self, x: torch.Tensor) -> dict[str, torch.Tensor]:
+        feat = self.common(x)
+        return {
+            "direction": self.direction(feat),
+            "magnitude": self.magnitude(feat),
+        }
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -113,11 +120,9 @@ class TLSTMModel(nn.Module):
 
     Output
     ------
-    pred : (B, 1)  — predicted adjusted % move (raw float)
-
-    Training
-    --------
-    Use with nn.HuberLoss(delta=0.01).
+    dict:
+        direction : (B, 1) - logits for classification
+        magnitude : (B, 1) - raw float for regression
 
     Inference
     ---------
@@ -126,7 +131,7 @@ class TLSTMModel(nn.Module):
 
     def __init__(
         self,
-        n_ohlcv_features: int = 9,
+        n_ohlcv_features: int = 11,
         lstm_hidden_dim: int = 256,
         lstm_layers: int = 2,
         lstm_dropout: float = 0.3,
@@ -139,11 +144,11 @@ class TLSTMModel(nn.Module):
         self.nlp_projection = NLPProjection(nlp_in_dim, nlp_out_dim)
         self.output_head    = OutputHead(lstm_hidden_dim + nlp_out_dim, head_dropout)
 
-    def forward(self, ohlcv_seq: torch.Tensor, nlp_vec: torch.Tensor) -> torch.Tensor:
+    def forward(self, ohlcv_seq: torch.Tensor, nlp_vec: torch.Tensor) -> dict[str, torch.Tensor]:
         h_lstm = self.lstm_encoder(ohlcv_seq)       # (B, 256)
         h_nlp  = self.nlp_projection(nlp_vec)       # (B, 512)
         fused  = torch.cat([h_nlp, h_lstm], dim=-1) # (B, 768)
-        return self.output_head(fused)               # (B, 1)
+        return self.output_head(fused)
 
     @torch.no_grad()
     def mc_dropout_predict(
@@ -154,30 +159,28 @@ class TLSTMModel(nn.Module):
     ) -> dict[str, torch.Tensor]:
         """
         Monte Carlo Dropout inference.
-        Enables dropout at inference time for uncertainty estimation.
-
-        Returns
-        -------
-        dict with keys:
-            mean   : (B, 1) — point prediction
-            std    : (B, 1) — standard deviation across passes
-            ci_low : (B, 1) — 95% CI lower bound  (mean - 1.96*std)
-            ci_high: (B, 1) — 95% CI upper bound  (mean + 1.96*std)
         """
         self.train()   # enable dropout layers
-        preds = torch.stack(
-            [self.forward(ohlcv_seq, nlp_vec) for _ in range(n_passes)],
-            dim=0,
-        )  # (n_passes, B, 1)
+        outputs = [self.forward(ohlcv_seq, nlp_vec) for _ in range(n_passes)]
+        
+        dir_preds = torch.stack([o["direction"] for o in outputs], dim=0) # (n_passes, B, 1)
+        mag_preds = torch.stack([o["magnitude"] for o in outputs], dim=0) # (n_passes, B, 1)
+        
         self.eval()
 
-        mean = preds.mean(dim=0)
-        std  = preds.std(dim=0)
+        # For direction, we average the logits or probabilities. 
+        # Here we'll average the sigmoid outputs for a "probability" mean.
+        dir_probs = torch.sigmoid(dir_preds).mean(dim=0)
+        
+        mean_mag = mag_preds.mean(dim=0)
+        std_mag  = mag_preds.std(dim=0)
+        
         return {
-            "mean":    mean,
-            "std":     std,
-            "ci_low":  mean - 1.96 * std,
-            "ci_high": mean + 1.96 * std,
+            "direction_prob": dir_probs,
+            "mean":           mean_mag,
+            "std":            std_mag,
+            "ci_low":         mean_mag - 1.96 * std_mag,
+            "ci_high":        mean_mag + 1.96 * std_mag,
         }
 
 
@@ -193,13 +196,7 @@ def compute_fisher_matrix(
 ) -> dict[str, torch.Tensor]:
     """
     Approximate the diagonal Fisher Information Matrix for EWC.
-
-    Only tracked for the Tier-2 nudge layers:
-    output_head.net[0] (Linear 768→128) and output_head.net[3] (Linear 128→1).
-
-    Returns a dict: param_name → fisher_diagonal tensor
     """
-    # MUST be in train mode for cudnn RNN backward to work!
     model.train()
     fisher = {
         name: torch.zeros_like(p)
@@ -208,7 +205,9 @@ def compute_fisher_matrix(
     }
 
     count = 0
-    loss_fn = nn.HuberLoss(delta=0.01, reduction="sum")
+    # Use the same dual loss logic as the trainer for consistency
+    bce_fn = nn.BCEWithLogitsLoss(reduction="sum")
+    huber_fn = nn.HuberLoss(delta=0.01, reduction="sum")
 
     for ohlcv_seq, nlp_vec, label in dataloader:
         if count >= n_samples:
@@ -217,8 +216,14 @@ def compute_fisher_matrix(
             ohlcv_seq.to(device), nlp_vec.to(device), label.to(device)
         )
         model.zero_grad()
-        pred = model(ohlcv_seq, nlp_vec)
-        loss = loss_fn(pred, label)
+        outputs = model(ohlcv_seq, nlp_vec)
+        
+        # Combined Loss derivation for Fisher
+        dir_target = (label > 0).float()
+        loss_dir = bce_fn(outputs["direction"], dir_target)
+        loss_mag = huber_fn(outputs["magnitude"], label)
+        
+        loss = 0.6 * loss_dir + 0.4 * loss_mag
         loss.backward()
 
         for name, p in model.named_parameters():
@@ -227,7 +232,6 @@ def compute_fisher_matrix(
 
         count += ohlcv_seq.size(0)
 
-    # Normalise
     for name in fisher:
         fisher[name] /= count
 

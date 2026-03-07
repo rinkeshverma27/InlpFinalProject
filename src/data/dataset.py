@@ -23,6 +23,8 @@ OHLCV_FEATURE_COLS = [
     "ma_delta_5_20",
     "realised_vol_5",
     "regime_flag",
+    "en_sentiment",
+    "hi_sentiment",
 ]
 
 # Embedding columns in the handshake CSV

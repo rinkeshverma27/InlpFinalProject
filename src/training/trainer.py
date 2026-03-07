@@ -62,7 +62,7 @@ class Trainer:
         self,
         model: TLSTMModel,
         device: torch.device,
-        lr: float = 1e-3,
+        lr: float = 3e-4,     # Updated per Phase 4
         ewc_lr: float = 1e-5,
         ewc_lambda: float = 400.0,
         checkpoint_dir: pathlib.Path = pathlib.Path("models/checkpoints/stage2A"),
@@ -75,7 +75,9 @@ class Trainer:
         self.checkpoint_dir = checkpoint_dir
         self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-        self.loss_fn = nn.HuberLoss(delta=0.01)
+        # Dual Loss setup
+        self.classification_loss = nn.BCEWithLogitsLoss()
+        self.regression_loss     = nn.HuberLoss(delta=0.01)
 
         # EWC state — populated after full retrain
         self.fisher: dict[str, torch.Tensor] = {}
@@ -92,8 +94,25 @@ class Trainer:
             label     = label.to(self.device)
 
             optimizer.zero_grad()
-            pred = self.model(ohlcv_seq, nlp_vec)
-            loss = self.loss_fn(pred, label)
+            outputs = self.model(ohlcv_seq, nlp_vec)
+            
+            dir_pred = outputs["direction"]
+            mag_pred = outputs["magnitude"]
+
+            # 1. Classification (Direction) Loss
+            dir_target = (label > 0).float()
+            loss_dir   = self.classification_loss(dir_pred, dir_target)
+
+            # 2. Regression (Magnitude) Loss - with 0.5% threshold masking
+            mask = label.abs() > 0.005
+            if mask.any():
+                loss_mag = self.regression_loss(mag_pred[mask], label[mask])
+            else:
+                loss_mag = torch.tensor(0.0, device=self.device)
+
+            # 3. Blended Loss: 60% Direction, 40% Magnitude
+            loss = 0.6 * loss_dir + 0.4 * loss_mag
+            
             loss.backward()
             nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
             optimizer.step()
@@ -106,15 +125,16 @@ class Trainer:
         train_loader: DataLoader,
         val_loader: DataLoader,
         epochs: int = 50,
-        patience: int = 5,
+        patience: int = 10,
         tag: str = "model",
     ) -> float:
         """
-        Full training run with early stopping.
-        Returns the best validation MAE achieved.
+        Full training run with early stopping and CosineAnnealing scheduler.
         """
         optimizer = AdamW(self.model.parameters(), lr=self.lr, weight_decay=1e-4)
-        scheduler = ReduceLROnPlateau(optimizer, mode="min", patience=3, factor=0.5)
+        
+        from torch.optim.lr_scheduler import CosineAnnealingLR
+        scheduler = CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-6)
 
         best_val_mae = float("inf")
         patience_counter = 0
@@ -122,10 +142,13 @@ class Trainer:
 
         for epoch in range(1, epochs + 1):
             train_loss = self.train_epoch(train_loader, optimizer)
-            val_mae    = self.evaluate(val_loader)["mae"]
-            scheduler.step(val_mae)
+            val_metrics = self.evaluate(val_loader)
+            val_mae    = val_metrics["mae"]
+            val_acc    = val_metrics["direction_accuracy"]
+            
+            scheduler.step()
 
-            print(f"Epoch {epoch:3d} | train_loss={train_loss:.5f} | val_mae={val_mae:.5f}")
+            print(f"Epoch {epoch:3d} | train_loss={train_loss:.5f} | val_mae={val_mae:.5f} | val_acc={val_acc:.2%}")
 
             if val_mae < best_val_mae:
                 best_val_mae     = val_mae
@@ -154,10 +177,6 @@ class Trainer:
     ) -> bool:
         """
         Fine-tunes ONLY the last 2 FC layers using EWC regularisation.
-        Backbone (LSTM + NLP projection) is frozen.
-        Rolls back if validation MAE worsens (>2% tolerance).
-
-        Returns True if nudge was accepted, False if rolled back.
         """
         if not self.fisher:
             raise RuntimeError("Fisher matrix not computed. Call compute_and_store_fisher() first.")
@@ -194,10 +213,17 @@ class Trainer:
                 label     = label.to(self.device)
 
                 optimizer.zero_grad()
-                pred     = self.model(ohlcv_seq, nlp_vec)
-                task_loss= self.loss_fn(pred, label)
-                penalty  = ewc_penalty(self.model, self.fisher, self.old_params, self.ewc_lambda)
-                loss     = task_loss + penalty
+                outputs   = self.model(ohlcv_seq, nlp_vec)
+                
+                # Hybrid loss for nudge
+                dir_target = (label > 0).float()
+                loss_dir   = self.classification_loss(outputs["direction"], dir_target)
+                loss_mag   = self.regression_loss(outputs["magnitude"], label) 
+                
+                task_loss = 0.6 * loss_dir + 0.4 * loss_mag
+                penalty   = ewc_penalty(self.model, self.fisher, self.old_params, self.ewc_lambda)
+                loss      = task_loss + penalty
+                
                 loss.backward()
                 nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
                 optimizer.step()
@@ -237,23 +263,31 @@ class Trainer:
     def evaluate(self, loader: DataLoader) -> dict[str, float]:
         """
         Compute MAE and Direction Accuracy on a data loader.
-        Uses deterministic forward pass (no MC dropout).
         """
         self.model.eval()
-        preds_all, labels_all = [], []
+        mag_preds_all, dir_preds_all, labels_all = [], [], []
 
         for ohlcv_seq, nlp_vec, label in loader:
             ohlcv_seq = ohlcv_seq.to(self.device)
             nlp_vec   = nlp_vec.to(self.device)
-            pred      = self.model(ohlcv_seq, nlp_vec).cpu()
-            preds_all.append(pred)
+            outputs   = self.model(ohlcv_seq, nlp_vec)
+            
+            dir_logit = outputs["direction"].cpu()
+            mag_pred  = outputs["magnitude"].cpu()
+            
+            dir_preds_all.append(dir_logit)
+            mag_preds_all.append(mag_pred)
             labels_all.append(label)
 
-        preds_all  = torch.cat(preds_all).numpy().flatten()
-        labels_all = torch.cat(labels_all).numpy().flatten()
+        mag_preds_all  = torch.cat(mag_preds_all).numpy().flatten()
+        dir_logits_all = torch.cat(dir_preds_all).numpy().flatten()
+        labels_all     = torch.cat(labels_all).numpy().flatten()
 
-        mae      = float(np.mean(np.abs(preds_all - labels_all)))
-        dir_acc  = float(np.mean(np.sign(preds_all) == np.sign(labels_all)))
+        predicted_dir = (dir_logits_all > 0).astype(float)
+        actual_dir    = (labels_all > 0).astype(float)
+        dir_acc       = float(np.mean(predicted_dir == actual_dir))
+
+        mae           = float(np.mean(np.abs(mag_preds_all - labels_all)))
 
         return {"mae": mae, "direction_accuracy": dir_acc}
 

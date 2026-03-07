@@ -12,7 +12,28 @@ import argparse
 import pathlib
 import pandas as pd
 import torch
+import numpy as np
+import random
 from torch.utils.data import DataLoader
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Reproducibility (Phase 8)
+# ──────────────────────────────────────────────────────────────────────────────
+def set_seed(seed: int = 42):
+    """
+    Ensures that if we run the same data and settings twice, we get EXACTLY the same result.
+    1. torch.manual_seed: Fixes initial weights of LSTM/NLP heads.
+    2. np.random.seed: Fixes NumPy-based data noise.
+    3. random.seed: Fixes standard Python randomness.
+    """
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+set_seed(42)
 
 from src.utils.features import build_features, build_labels
 from src.data.dataset import StockDataset, HandshakeDataset, walk_forward_splits
@@ -26,7 +47,7 @@ from src.training.predict import run_prediction
 # ──────────────────────────────────────────────────────────────────────────────
 
 DEFAULT_CONFIG = {
-    "n_ohlcv_features": 9,
+    "n_ohlcv_features": 11,
     "lstm_hidden_dim":  256,
     "lstm_layers":      2,
     "lstm_dropout":     0.3,
@@ -34,12 +55,12 @@ DEFAULT_CONFIG = {
     "nlp_out_dim":      512,
     "head_dropout":     0.3,
     "batch_size":       64,
-    "epochs":           2,
-    "patience":         5,
+    "epochs":           55,     # Production-grade 50+ training
+    "patience":         10,     # Increased to match Trainer
     "ewc_epochs":       3,
     "ewc_lambda":       400.0,
     "ewc_lr":           1e-5,
-    "lr":               1e-3,
+    "lr":               3e-4,   # Lowered per Phase 4
     "n_mc_passes":      50,
 }
 
@@ -61,7 +82,9 @@ def get_device() -> torch.device:
 def load_ohlcv(ohlcv_path: pathlib.Path, ticker: str) -> pd.DataFrame:
     """Load and filter OHLCV CSV for a single ticker."""
     df = pd.read_csv(ohlcv_path, parse_dates=["Date"])
-    df = df[df["ticker"] == ticker].set_index("Date").sort_index()
+    # Handle both base ticker and .NS suffix
+    possible_tickers = [ticker, f"{ticker}.NS"]
+    df = df[df["ticker"].isin(possible_tickers)].set_index("Date").sort_index()
     return df
 
 
