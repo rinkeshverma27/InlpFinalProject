@@ -48,3 +48,20 @@ python src/main.py --mode ewc_nudge \
 
 ---
 **Note:** All consolidated tickers (15 total) follow the same path pattern: `data/price/{TICKER}/ohlcv.csv`.
+
+
+
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+steps to run
+    python src/scripts/train.py
+    python src/scripts/predict.py
+
+
+
+
+ <!-- conda run -n nifty-rtx5060 python src/scripts/train.py
+
+ conda run -n nifty-rtx5060 python src/scripts/predict.py -->
