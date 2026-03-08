@@ -1,0 +1,92 @@
+# ═══════════════════════════════════════════════
+#  News-Driven Financial Prediction Engine
+#  .gitignore
+# ═══════════════════════════════════════════════
+
+# ── Large Data Files (use Git LFS or external storage) ─────────
+data/price/
+data/news/raw/
+data/handshake/
+models/checkpoints/
+
+# ── Trust weights are committed (small JSON, versioned) ────────
+# data/trust_weights/  <-- DO commit these
+# data/predictions/    <-- DO commit these
+
+# ── Python ──────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+*.whl
+
+# ── Jupyter ─────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Environment ─────────────────────────────────────────────────
+.env
+.env.*
+*.env
+venv/
+env/
+ENV/
+.venv/
+
+# ── Conda ───────────────────────────────────────────────────────
+# environment.yml is committed — that's intentional
+*.conda
+
+# ── ML / Torch ──────────────────────────────────────────────────
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.safetensors
+wandb/
+runs/
+lightning_logs/
+
+# ── HuggingFace cache ───────────────────────────────────────────
+.cache/
+huggingface/
+
+# ── Logs ────────────────────────────────────────────────────────
+logs/
+*.log
+
+# ── OS ──────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+.Trash-*
+
+# ── IDE ─────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+
+# ── Secrets ─────────────────────────────────────────────────────
+secrets.yml
+secrets.yaml
+credentials.json
+*.key
+*.pem
+
+# ── Test / Coverage ─────────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
