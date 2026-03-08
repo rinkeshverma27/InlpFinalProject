@@ -1,6 +1,6 @@
 # InlpFinalProject — News-Driven Financial Market Prediction
 
-**Team YRP | IIIT Hyderabad**
+**Team YRP | IIIT Hyderabad | iNLP Course Project**
 
 | Member | Roll No. | 
 |---|---|
