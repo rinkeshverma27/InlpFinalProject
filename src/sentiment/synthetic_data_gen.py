@@ -4,9 +4,10 @@ from pathlib import Path
 import sys
 import os
 
-# Ensure the parent directory is in the path to import from src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from src.utils.paths import RAW_DATA_DIR
+# Resolve paths locally (src.utils.paths module does not exist as a standalone file)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
+RAW_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 def generate_synthetic_data():
     print("Generating synthetic Hindi/Hinglish financial dataset...")

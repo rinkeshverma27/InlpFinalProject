@@ -3,10 +3,16 @@ import torch
 from transformers import pipeline
 import sys
 import os
+from pathlib import Path
 
-# Ensure the parent directory is in the path to import from src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from src.utils.paths import NEWS_RAW_DIR, NEWS_PROCESSED_DIR
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+NEWS_RAW_DIR = PROJECT_ROOT / "data" / "news" / "raw"
+NEWS_PROCESSED_DIR = PROJECT_ROOT / "data" / "news" / "processed"
+
+for d in [NEWS_RAW_DIR, NEWS_PROCESSED_DIR]:
+    d.mkdir(parents=True, exist_ok=True)
+
+from transformers import pipeline, BertTokenizer, BertForSequenceClassification
 
 def run_english_sentiment():
     print("Initializing FinBERT Pipeline for English Sentiment...")
@@ -16,9 +22,14 @@ def run_english_sentiment():
     model_name = "yiyanghkust/finbert-tone"
     
     try:
+        # yiyanghkust/finbert-tone is missing model_type in config.json, so we must load it explicitly
+        tokenizer = BertTokenizer.from_pretrained(model_name)
+        model = BertForSequenceClassification.from_pretrained(model_name)
+        
         sentiment_pipeline = pipeline(
             "sentiment-analysis", 
-            model=model_name, 
+            model=model, 
+            tokenizer=tokenizer,
             device=device,
             model_kwargs={"torch_dtype": torch.float16} if device == 0 else {}
         )

@@ -1,0 +1,109 @@
+timestamp,ticker,source,sentiment_score,model_confidence,model_used
+2025-01-01 08:00:00,RELIANCE.NS,Navbharat Times,0.5011,0.5011,distilbert-multilingual
+2025-01-01 08:05:00,HDFCBANK.NS,Amar Ujala,0.5216,0.5216,distilbert-multilingual
+2025-01-01 08:10:00,ICICIBANK.NS,Zee Business Hindi,0.5657,0.5657,distilbert-multilingual
+2025-01-01 08:15:00,INFY.NS,Dainik Jagran,0.666,0.666,distilbert-multilingual
+2025-01-01 08:20:00,TATASTEEL.NS,Navbharat Times,0.4811,0.4811,distilbert-multilingual
+2025-01-01 08:25:00,SBIN.NS,Amar Ujala,0.5036,0.5036,distilbert-multilingual
+2025-01-01 08:30:00,BAJFINANCE.NS,Zee Business Hindi,0.5354,0.5354,distilbert-multilingual
+2025-01-01 08:35:00,BHARTIARTL.NS,Dainik Jagran,-0.3751,0.3751,distilbert-multilingual
+2025-01-01 08:40:00,WIPRO.NS,Navbharat Times,0.6671,0.6671,distilbert-multilingual
+2025-01-01 08:45:00,ITC.NS,Amar Ujala,-0.4848,0.4848,distilbert-multilingual
+2025-01-02 08:00:00,RELIANCE.NS,Zee Business Hindi,0.4868,0.4868,distilbert-multilingual
+2025-01-02 08:05:00,KOTAKBANK.NS,Dainik Jagran,0.5146,0.5146,distilbert-multilingual
+2025-01-02 08:10:00,NTPC.NS,Navbharat Times,0.8058,0.8058,distilbert-multilingual
+2025-01-02 08:15:00,POWERGRID.NS,Amar Ujala,0.5311,0.5311,distilbert-multilingual
+2025-01-02 08:20:00,ONGC.NS,Zee Business Hindi,-0.5271,0.5271,distilbert-multilingual
+2025-01-02 08:25:00,BPCL.NS,Dainik Jagran,-0.6718,0.6718,distilbert-multilingual
+2025-01-03 08:00:00,RELIANCE.NS,Navbharat Times,0.6484,0.6484,distilbert-multilingual
+2025-01-03 08:05:00,INFY.NS,Amar Ujala,-0.7019,0.7019,distilbert-multilingual
+2025-01-03 08:10:00,HDFCBANK.NS,Zee Business Hindi,0.5357,0.5357,distilbert-multilingual
+2025-01-03 08:15:00,TATASTEEL.NS,Dainik Jagran,-0.6882,0.6882,distilbert-multilingual
+2025-01-03 08:20:00,ICICIBANK.NS,Navbharat Times,0.6128,0.6128,distilbert-multilingual
+2025-01-03 08:25:00,SBIN.NS,Amar Ujala,-0.5512,0.5512,distilbert-multilingual
+2025-01-06 08:00:00,RELIANCE.NS,Zee Business Hindi,0.6283,0.6283,distilbert-multilingual
+2025-01-06 08:05:00,BAJFINANCE.NS,Dainik Jagran,0.5619,0.5619,distilbert-multilingual
+2025-01-06 08:10:00,BHARTIARTL.NS,Navbharat Times,0.732,0.732,distilbert-multilingual
+2025-01-06 08:15:00,WIPRO.NS,Amar Ujala,0.4586,0.4586,distilbert-multilingual
+2025-01-06 08:20:00,ITC.NS,Zee Business Hindi,0.4561,0.4561,distilbert-multilingual
+2025-01-06 08:25:00,KOTAKBANK.NS,Dainik Jagran,0.5651,0.5651,distilbert-multilingual
+2025-01-07 08:00:00,RELIANCE.NS,Navbharat Times,0.5882,0.5882,distilbert-multilingual
+2025-01-07 08:05:00,HDFCBANK.NS,Amar Ujala,-0.6905,0.6905,distilbert-multilingual
+2025-01-07 08:10:00,NTPC.NS,Zee Business Hindi,-0.4631,0.4631,distilbert-multilingual
+2025-01-07 08:15:00,ONGC.NS,Dainik Jagran,0.4475,0.4475,distilbert-multilingual
+2025-01-07 08:20:00,POWERGRID.NS,Navbharat Times,0.4627,0.4627,distilbert-multilingual
+2025-01-08 08:00:00,RELIANCE.NS,Amar Ujala,0.644,0.644,distilbert-multilingual
+2025-01-08 08:05:00,ICICIBANK.NS,Zee Business Hindi,0.3516,0.3516,distilbert-multilingual
+2025-01-08 08:10:00,INFY.NS,Dainik Jagran,0.5182,0.5182,distilbert-multilingual
+2025-01-08 08:15:00,SBIN.NS,Navbharat Times,0.0,0.4213,distilbert-multilingual
+2025-01-08 08:20:00,BPCL.NS,Amar Ujala,0.4204,0.4204,distilbert-multilingual
+2025-01-09 08:00:00,RELIANCE.NS,Zee Business Hindi,0.5495,0.5495,distilbert-multilingual
+2025-01-09 08:05:00,TATASTEEL.NS,Dainik Jagran,0.4903,0.4903,distilbert-multilingual
+2025-01-09 08:10:00,BAJFINANCE.NS,Navbharat Times,-0.6661,0.6661,distilbert-multilingual
+2025-01-09 08:15:00,WIPRO.NS,Amar Ujala,-0.4249,0.4249,distilbert-multilingual
+2025-01-09 08:20:00,HDFCBANK.NS,Zee Business Hindi,0.7407,0.7407,distilbert-multilingual
+2025-01-10 08:00:00,RELIANCE.NS,Dainik Jagran,0.5039,0.5039,distilbert-multilingual
+2025-01-10 08:05:00,ITC.NS,Navbharat Times,0.6008,0.6008,distilbert-multilingual
+2025-01-10 08:10:00,KOTAKBANK.NS,Amar Ujala,-0.7284,0.7284,distilbert-multilingual
+2025-01-10 08:15:00,NTPC.NS,Zee Business Hindi,0.6003,0.6003,distilbert-multilingual
+2025-01-10 08:20:00,ONGC.NS,Dainik Jagran,-0.4387,0.4387,distilbert-multilingual
+2025-01-13 08:00:00,RELIANCE.NS,Navbharat Times,0.7075,0.7075,distilbert-multilingual
+2025-01-13 08:05:00,ICICIBANK.NS,Amar Ujala,-0.6385,0.6385,distilbert-multilingual
+2025-01-13 08:10:00,BHARTIARTL.NS,Zee Business Hindi,0.5514,0.5514,distilbert-multilingual
+2025-01-13 08:15:00,SBIN.NS,Dainik Jagran,0.4552,0.4552,distilbert-multilingual
+2025-01-13 08:20:00,TATASTEEL.NS,Navbharat Times,0.4771,0.4771,distilbert-multilingual
+2025-01-14 08:00:00,RELIANCE.NS,Amar Ujala,0.4278,0.4278,distilbert-multilingual
+2025-01-14 08:05:00,HDFCBANK.NS,Zee Business Hindi,0.5081,0.5081,distilbert-multilingual
+2025-01-14 08:10:00,POWERGRID.NS,Dainik Jagran,0.5231,0.5231,distilbert-multilingual
+2025-01-14 08:15:00,BPCL.NS,Navbharat Times,-0.5655,0.5655,distilbert-multilingual
+2025-01-14 08:20:00,WIPRO.NS,Amar Ujala,0.5543,0.5543,distilbert-multilingual
+2025-01-15 08:00:00,RELIANCE.NS,Zee Business Hindi,0.5494,0.5494,distilbert-multilingual
+2025-01-15 08:05:00,INFY.NS,Dainik Jagran,0.5327,0.5327,distilbert-multilingual
+2025-01-15 08:10:00,BAJFINANCE.NS,Navbharat Times,-0.5338,0.5338,distilbert-multilingual
+2025-01-15 08:15:00,KOTAKBANK.NS,Amar Ujala,0.6871,0.6871,distilbert-multilingual
+2025-01-15 08:20:00,ITC.NS,Zee Business Hindi,0.5596,0.5596,distilbert-multilingual
+2025-01-16 08:00:00,RELIANCE.NS,Dainik Jagran,0.6118,0.6118,distilbert-multilingual
+2025-01-16 08:05:00,NTPC.NS,Navbharat Times,-0.5065,0.5065,distilbert-multilingual
+2025-01-16 08:10:00,SBIN.NS,Amar Ujala,0.4085,0.4085,distilbert-multilingual
+2025-01-16 08:15:00,ONGC.NS,Zee Business Hindi,0.7506,0.7506,distilbert-multilingual
+2025-01-16 08:20:00,HDFCBANK.NS,Dainik Jagran,-0.5933,0.5933,distilbert-multilingual
+2025-01-17 08:00:00,RELIANCE.NS,Navbharat Times,0.6112,0.6112,distilbert-multilingual
+2025-01-17 08:05:00,TATASTEEL.NS,Amar Ujala,-0.3869,0.3869,distilbert-multilingual
+2025-01-17 08:10:00,ICICIBANK.NS,Zee Business Hindi,0.6781,0.6781,distilbert-multilingual
+2025-01-17 08:15:00,BHARTIARTL.NS,Dainik Jagran,0.8377,0.8377,distilbert-multilingual
+2025-01-17 08:20:00,WIPRO.NS,Navbharat Times,0.4413,0.4413,distilbert-multilingual
+2025-01-20 08:00:00,RELIANCE.NS,Amar Ujala,0.5421,0.5421,distilbert-multilingual
+2025-01-20 08:05:00,BAJFINANCE.NS,Zee Business Hindi,0.4811,0.4811,distilbert-multilingual
+2025-01-20 08:10:00,POWERGRID.NS,Dainik Jagran,0.5818,0.5818,distilbert-multilingual
+2025-01-20 08:15:00,BPCL.NS,Navbharat Times,0.4706,0.4706,distilbert-multilingual
+2025-01-20 08:20:00,KOTAKBANK.NS,Amar Ujala,0.6639,0.6639,distilbert-multilingual
+2025-01-21 08:00:00,RELIANCE.NS,Zee Business Hindi,0.5065,0.5065,distilbert-multilingual
+2025-01-21 08:05:00,INFY.NS,Dainik Jagran,0.6147,0.6147,distilbert-multilingual
+2025-01-21 08:10:00,HDFCBANK.NS,Navbharat Times,0.7018,0.7018,distilbert-multilingual
+2025-01-21 08:15:00,SBIN.NS,Amar Ujala,0.7047,0.7047,distilbert-multilingual
+2025-01-21 08:20:00,ITC.NS,Zee Business Hindi,-0.3938,0.3938,distilbert-multilingual
+2025-01-22 08:00:00,RELIANCE.NS,Dainik Jagran,0.6018,0.6018,distilbert-multilingual
+2025-01-22 08:05:00,NTPC.NS,Navbharat Times,0.4687,0.4687,distilbert-multilingual
+2025-01-22 08:10:00,TATASTEEL.NS,Amar Ujala,0.5107,0.5107,distilbert-multilingual
+2025-01-22 08:15:00,ONGC.NS,Zee Business Hindi,0.4092,0.4092,distilbert-multilingual
+2025-01-22 08:20:00,ICICIBANK.NS,Dainik Jagran,-0.4137,0.4137,distilbert-multilingual
+2025-01-23 08:00:00,RELIANCE.NS,Navbharat Times,0.4006,0.4006,distilbert-multilingual
+2025-01-23 08:05:00,BHARTIARTL.NS,Amar Ujala,0.5652,0.5652,distilbert-multilingual
+2025-01-23 08:10:00,WIPRO.NS,Zee Business Hindi,0.5774,0.5774,distilbert-multilingual
+2025-01-23 08:15:00,BAJFINANCE.NS,Dainik Jagran,0.5381,0.5381,distilbert-multilingual
+2025-01-23 08:20:00,POWERGRID.NS,Navbharat Times,-0.6825,0.6825,distilbert-multilingual
+2025-01-24 08:00:00,RELIANCE.NS,Amar Ujala,0.7223,0.7223,distilbert-multilingual
+2025-01-24 08:05:00,HDFCBANK.NS,Zee Business Hindi,-0.5002,0.5002,distilbert-multilingual
+2025-01-24 08:10:00,SBIN.NS,Dainik Jagran,0.4416,0.4416,distilbert-multilingual
+2025-01-24 08:15:00,BPCL.NS,Navbharat Times,0.5788,0.5788,distilbert-multilingual
+2025-01-24 08:20:00,ITC.NS,Amar Ujala,0.7413,0.7413,distilbert-multilingual
+2025-01-27 08:00:00,RELIANCE.NS,Zee Business Hindi,0.5246,0.5246,distilbert-multilingual
+2025-01-27 08:05:00,TATASTEEL.NS,Dainik Jagran,0.6565,0.6565,distilbert-multilingual
+2025-01-27 08:10:00,KOTAKBANK.NS,Navbharat Times,0.5974,0.5974,distilbert-multilingual
+2025-01-27 08:15:00,NTPC.NS,Amar Ujala,0.4612,0.4612,distilbert-multilingual
+2025-01-27 08:20:00,ONGC.NS,Zee Business Hindi,0.4995,0.4995,distilbert-multilingual
+2025-01-28 08:00:00,RELIANCE.NS,Dainik Jagran,0.5252,0.5252,distilbert-multilingual
+2025-01-28 08:05:00,ICICIBANK.NS,Navbharat Times,0.8139,0.8139,distilbert-multilingual
+2025-01-28 08:10:00,INFY.NS,Amar Ujala,-0.4192,0.4192,distilbert-multilingual
+2025-01-28 08:15:00,BHARTIARTL.NS,Zee Business Hindi,0.5802,0.5802,distilbert-multilingual
+2025-01-28 08:20:00,WIPRO.NS,Dainik Jagran,-0.7406,0.7406,distilbert-multilingual
