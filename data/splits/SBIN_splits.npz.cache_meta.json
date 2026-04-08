@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-04-08T20:18:05.008366+00:00",
+  "output": "/home/rinkesh-verma/Desktop/gemini/data/splits/SBIN_splits.npz",
+  "ticker": "SBIN",
+  "n_train": 54,
+  "n_val": 40,
+  "n_test": 34
+}

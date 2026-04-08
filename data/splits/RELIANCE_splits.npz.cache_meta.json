@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-04-08T20:18:05.007954+00:00",
+  "output": "/home/rinkesh-verma/Desktop/gemini/data/splits/RELIANCE_splits.npz",
+  "ticker": "RELIANCE",
+  "n_train": 60,
+  "n_val": 36,
+  "n_test": 34
+}

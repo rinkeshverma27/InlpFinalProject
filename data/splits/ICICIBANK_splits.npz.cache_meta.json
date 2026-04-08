@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-04-08T20:18:05.007067+00:00",
+  "output": "/home/rinkesh-verma/Desktop/gemini/data/splits/ICICIBANK_splits.npz",
+  "ticker": "ICICIBANK",
+  "n_train": 58,
+  "n_val": 34,
+  "n_test": 36
+}

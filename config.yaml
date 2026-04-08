@@ -1,0 +1,217 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# config.yaml — Single source of truth for the Stock Direction Predictor
+# Edit this file to change ANY hyperparameter. Nothing is hardcoded in src/.
+#
+# VRAM PROFILES (uncomment one):
+#   vram_profile: "4gb"   → safe on 4 GB GPU (testing / laptop)
+#   vram_profile: "8gb"   → standard (RTX 3070/4060)
+#   vram_profile: "full"  → maximum quality, ≥12 GB GPU
+# ═══════════════════════════════════════════════════════════════════════════════
+
+vram_profile: "8gb"   # ← change this to switch profiles
+
+# ─────────────────────────────────────────────────────────────────────────────
+# VRAM PROFILES — all model dims and batch sizes per profile
+# These override the [model] and [training] sections when active.
+# ─────────────────────────────────────────────────────────────────────────────
+profiles:
+  "4gb":
+    # Model dims
+    price_hidden_size: 128
+    price_num_layers: 2
+    sentiment_hidden_size: 32
+    sentiment_num_layers: 1
+    fc_hidden_dim: 64
+    mc_dropout_passes: 10
+    # Batch sizes
+    finbert_batch_size: 8
+    muril_batch_size: 8
+    train_batch_size: 32
+    muril_train_batch_size: 8
+    # Training length
+    epochs: 30
+    muril_epochs: 3
+    # Quantization
+    use_int8_inference: true    # reduces NLP VRAM by ~50%
+
+  "8gb":
+    price_hidden_size: 192
+    price_num_layers: 3
+    sentiment_hidden_size: 64
+    sentiment_num_layers: 2
+    fc_hidden_dim: 128
+    mc_dropout_passes: 30
+    finbert_batch_size: 32
+    muril_batch_size: 32
+    train_batch_size: 64
+    muril_train_batch_size: 16
+    epochs: 50
+    muril_epochs: 5
+    use_int8_inference: false
+
+  "full":
+    price_hidden_size: 256
+    price_num_layers: 3
+    sentiment_hidden_size: 128
+    sentiment_num_layers: 2
+    fc_hidden_dim: 256
+    mc_dropout_passes: 50
+    finbert_batch_size: 64
+    muril_batch_size: 64
+    train_batch_size: 128
+    muril_train_batch_size: 32
+    epochs: 100
+    muril_epochs: 8
+    use_int8_inference: false
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DATA PATHS
+# ─────────────────────────────────────────────────────────────────────────────
+data:
+  news_dir:       data/raw/news/
+  ohlcv_dir:      data/raw/ohlcv/
+  datasets_dir:   data/datasets/
+  sentiment_dir:  data/processed/sentiment/
+  features_dir:   data/processed/features/
+  splits_dir:     data/splits/
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TICKER UNIVERSE
+# Change `active_tickers` to switch between subset (testing) and full Nifty-50
+# ─────────────────────────────────────────────────────────────────────────────
+tickers:
+  subset_5:    ["RELIANCE", "SBIN", "HDFCBANK", "INFY", "ICICIBANK"]
+  nifty_10:   ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ICICIBANK",
+                "HINDUNILVR", "BAJFINANCE", "WIPRO", "MARUTI", "AXISBANK"]
+  nifty_50:   null   # null = load all from ohlcv_dir
+  active:      "subset_5"   # ← change to "nifty_10" or "nifty_50" for full run
+
+# ─────────────────────────────────────────────────────────────────────────────
+# CACHE CONTROL
+# ─────────────────────────────────────────────────────────────────────────────
+cache:
+  force_rerun: false           # true = ignore all caches globally
+  sentiment_ttl_days: 1        # re-score if older than N days
+  features_ttl_days: 7
+  splits_ttl_days: 30
+  fusion_ttl_days: 7
+
+# ─────────────────────────────────────────────────────────────────────────────
+# GRACEFUL FAILURE & MEMORY MANAGEMENT
+# ─────────────────────────────────────────────────────────────────────────────
+resilience:
+  max_retries: 3               # retry on transient failures (network, CUDA OOM)
+  retry_backoff_seconds: 5     # wait between retries
+  oom_batch_shrink_factor: 0.5 # on OOM: multiply batch_size by this & retry
+  oom_min_batch_size: 1        # never go below this batch size
+  crash_checkpoint_every: 100  # save inference checkpoint every N batches
+  # Memory thresholds for warnings
+  cpu_ram_warn_gb: 6.0         # warn if RSS exceeds this
+  gpu_vram_warn_gb: 3.5        # warn if GPU allocated exceeds this (4GB profile)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# NLP PIPELINE
+# ─────────────────────────────────────────────────────────────────────────────
+nlp:
+  lang_confidence_threshold: 0.85   # below this → "unknown"
+  hindi_min_articles: 3
+  sentiment_windows: [1, 3, 7]      # rolling aggregation windows (days)
+  finbert_model_id: "ProsusAI/finbert"
+  muril_model_id:  "google/muril-base-cased"
+  muril_freeze_layers: 8            # freeze bottom N of 12 encoder layers
+  # Distillation settings (FinBERT teacher → MuRIL student)
+  distill_temperature: 4.0          # soft target temperature
+  distill_alpha: 0.7                # weight of soft loss vs hard label loss
+  distill_max_samples: 5000         # max synthetic examples
+
+# ─────────────────────────────────────────────────────────────────────────────
+# DUAL-STREAM LSTM MODEL (defaults — overridden by active profile)
+# ─────────────────────────────────────────────────────────────────────────────
+model:
+  price_input_dim: 11
+  price_hidden_size: 192        # overridden by profile
+  price_num_layers: 3           # overridden by profile
+  price_dropout: 0.3
+  sentiment_input_dim: 9        # 3 scores × 3 windows
+  sentiment_hidden_size: 64     # overridden by profile
+  sentiment_num_layers: 2       # overridden by profile
+  sentiment_dropout: 0.3
+  fusion_dim: null              # auto-computed: price_hidden + sentiment_hidden
+  fc_hidden_dim: 128            # overridden by profile
+  output_dropout: 0.3
+  mc_dropout_passes: 30         # overridden by profile
+  confidence_threshold: 0.65    # abstain if MC variance > (1 - this)
+  use_int8_inference: false     # overridden by profile
+
+# ─────────────────────────────────────────────────────────────────────────────
+# FEATURE ENGINEERING
+# ─────────────────────────────────────────────────────────────────────────────
+features:
+  rsi_period: 14
+  ma_periods: [10, 20, 50]       # Reduced from 200 for 1-year testing
+  atr_period: 14
+  bollinger_period: 20
+  volume_norm_window: 20
+  zscore_window: 50              # Reduced from 252 for 1-year testing
+  window_min: 5
+  window_max: 15                 # Reduced from 60 to fit small dataset
+  window_atr_scale: 20
+
+# ─────────────────────────────────────────────────────────────────────────────
+# TRAINING
+# ─────────────────────────────────────────────────────────────────────────────
+training:
+  learning_rate: 3.0e-4
+  weight_decay: 1.0e-5
+  epochs: 50                    # overridden by profile
+  batch_size: 64                # overridden by profile
+  grad_clip_norm: 1.0
+  label_threshold: 0.003        # drop |return| < 0.3% (near-flat days)
+  label_horizon_days: 1         # next-day prediction
+  early_stopping_patience: 10
+  cosine_t0: 10
+  # Walk-forward split tailored for the 1-year (2025-2026) dummy dataset
+  train_start: "2025-01-01"
+  train_end:   "2025-08-31"
+  val_start:   "2025-09-01"
+  val_end:     "2025-11-15"
+  test_start:  "2025-11-16"
+  test_end:    "2026-12-31"
+  # MuRIL fine-tuning (distillation)
+  muril_lr: 2.0e-5
+  muril_epochs: 5               # overridden by profile
+  muril_batch_size: 16          # overridden by profile
+  muril_warmup_ratio: 0.1
+
+# ─────────────────────────────────────────────────────────────────────────────
+# PERFORMANCE EVALUATION
+# ─────────────────────────────────────────────────────────────────────────────
+evaluation:
+  confidence_tiers: [0.55, 0.65, 0.75, 0.85]   # accuracy reported at each tier
+  rolling_window_days: 30        # for temporal accuracy chart
+  calibration_bins: 10           # ECE calibration bins
+  output_report_path: "logs/eval_report/"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ADAPTIVE LEARNING
+# ─────────────────────────────────────────────────────────────────────────────
+adaptive:
+  tier1_decay: 0.95
+  tier2_ewc_lambda: 400
+  tier2_nudge_days: 5
+  tier2_nudge_lr: 1.0e-5
+  tier3_window_years: 3
+
+# ─────────────────────────────────────────────────────────────────────────────
+# SOURCE TRUST WEIGHTS (Tier 1 updates these dynamically at runtime)
+# ─────────────────────────────────────────────────────────────────────────────
+source_weights:
+  reuters: 1.0
+  nse_bse_official: 1.0
+  economic_times: 0.9
+  business_standard: 0.85
+  moneycontrol: 0.8
+  moneycontrol_hindi: 0.8
+  ndtv_profit: 0.75
+  syndicated: 0.3
+  default: 0.5
