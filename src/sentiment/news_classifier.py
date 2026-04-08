@@ -1,20 +1,23 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
+import sys
+from pathlib import Path
 import pandas as pd
 
-train_path = r'data/20year_train.csv'
-news_path = r'data/Nifty50_news_data(2020Jan_2024April).csv'
+# Project root (src/sentiment/ → src/ → project root)
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
-top15_companies_output = r'data/top15_priority_news_companies.csv'
-top15_news_output = r'data/top15_news.csv'
-top15_stocks_output = r'data/top15_stocks.csv'
+# ── Blueprint rule: zero hardcoded path strings. Use pathlib only. ──
+train_path = PROJECT_ROOT / "data" / "inputs" / "prod_train.csv"
+news_path  = PROJECT_ROOT / "dataset" / "raw_dataset" / "english_news_nifty50.csv"
+
+top15_companies_output = PROJECT_ROOT / "data" / "inputs" / "top15_priority_news_companies.csv"
+top15_news_output      = PROJECT_ROOT / "data" / "inputs" / "top15_news.csv"
+top15_stocks_output    = PROJECT_ROOT / "data" / "inputs" / "top15_stocks.csv"
 
 train_df = pd.read_csv(train_path)
-news_df = pd.read_csv(news_path)
+news_df  = pd.read_csv(news_path)
 
 train_df['symbol_key'] = (
     train_df['Ticker']

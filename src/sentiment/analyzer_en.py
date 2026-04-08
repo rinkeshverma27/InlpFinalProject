@@ -1,11 +1,13 @@
+import contextlib
 import pandas as pd
 import torch
 from transformers import pipeline
 import sys
 import os
+from pathlib import Path
 
-# Ensure the parent directory is in the path to import from src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+# Ensure project root is importable
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 from src.utils.paths import NEWS_RAW_DIR, NEWS_PROCESSED_DIR
 
 def run_english_sentiment():
@@ -55,7 +57,9 @@ def run_english_sentiment():
     batch_size = 16
     headlines = df['headline'].tolist()
     
-    with torch.cuda.amp.autocast() if device == 0 else open(os.devnull, 'w'):
+    # Use AMP on GPU, no-op context manager on CPU
+    amp_ctx = torch.cuda.amp.autocast() if device == 0 else contextlib.nullcontext()
+    with amp_ctx:
         for i in range(0, len(headlines), batch_size):
             batch = headlines[i:i + batch_size]
             batch_results = sentiment_pipeline(batch)

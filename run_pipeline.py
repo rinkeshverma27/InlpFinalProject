@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-master_pipeline.py
-Orchestrates the entire NIFTY-NLP workflow from Stage 0 (data cleaning) 
-through Stage 3 (model execution & prediction).
+run_pipeline.py
+Orchestrates the entire NIFTY-NLP workflow.
 
 Usage:
-    conda activate nifty-nlp
-    python master_pipeline.py --ticker RELIANCE
+    conda activate nifty-rtx5060
+    python run_pipeline.py
+    python run_pipeline.py --skip-nlp          # Skip NLP if handshake CSVs exist
+    python run_pipeline.py --skip-train-lstm   # Skip LSTM training (use saved model)
+    python run_pipeline.py --skip-sentiment-train  # Skip MuRIL fine-tuning
 """
 
 import argparse
@@ -15,98 +17,129 @@ import sys
 import pathlib
 import datetime
 
-def run_step(script_path: str, args: list[str], description: str):
-    """Helper to run a step of the pipeline safely."""
+ROOT = pathlib.Path(__file__).resolve().parent
+
+
+def run_step(script_path: str, args: list[str], description: str) -> None:
+    """Run one pipeline step as a subprocess, halt on failure."""
     print(f"\n{'='*80}")
     print(f"🚀 RUNNING: {description}")
     print(f"📦 COMMAND: python {script_path} {' '.join(args)}")
     try:
         subprocess.run([sys.executable, script_path] + args, check=True)
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         print(f"\n❌ ERROR in {script_path}. Pipeline halted.")
         sys.exit(1)
 
-def main():
+
+def main() -> None:
     parser = argparse.ArgumentParser(description="NIFTY-NLP Master Pipeline")
-    parser.add_argument("--ticker", type=str, default="RELIANCE", help="Target ticker (e.g. RELIANCE)")
-    parser.add_argument("--epochs", type=int, default=50, help="Training epochs for TLSTM")
-    parser.add_argument("--train-years", type=int, default=17, help="Walk forward split training years")
-    # Use real datasets by default, but allow overriding for tests
-    parser.add_argument("--news-data", type=str, default="data/inputs/Nifty50_news_data(2020Jan_2024April).csv")
-    parser.add_argument("--price-data", type=str, default="data/price/{ticker}/ohlcv.csv")
-    parser.add_argument("--nifty-data", type=str, default="data/price/NIFTY50/ohlcv.csv")
-    parser.add_argument("--skip-nlp", action="store_true", help="Skip the long NLP processing if handshakes exist")
+    parser.add_argument(
+        "--skip-nlp",
+        action="store_true",
+        help="Skip NLP scoring steps (requires en/hi_sentiment CSVs to exist)",
+    )
+    parser.add_argument(
+        "--skip-sentiment-train",
+        action="store_true",
+        help="Skip MuRIL fine-tuning (use pre-trained model in models/muril_financial_sentiment_v1/)",
+    )
+    parser.add_argument(
+        "--skip-train-lstm",
+        action="store_true",
+        help="Skip LSTM training (requires models/prod_binary_lstm_best.pth to exist)",
+    )
+    parser.add_argument(
+        "--train-path",
+        default=str(ROOT / "data" / "inputs" / "prod_train.csv"),
+        help="Path to LSTM training CSV",
+    )
+    parser.add_argument(
+        "--test-path",
+        default=str(ROOT / "data" / "inputs" / "prod_test.csv"),
+        help="Path to LSTM test CSV",
+    )
+    parser.add_argument(
+        "--model-out",
+        default=str(ROOT / "models" / "prod_binary_lstm_best.pth"),
+        help="Output path for trained LSTM model",
+    )
+    parser.add_argument(
+        "--scaler-out",
+        default=str(ROOT / "models" / "prod_scaler.joblib"),
+        help="Output path for StandardScaler",
+    )
     args = parser.parse_args()
 
-    active_price_data = args.price_data.replace("{ticker}", args.ticker)
     today_str = datetime.datetime.now().strftime("%Y-%m-%d")
-    
-    print("\n" + "="*80)
-    print(f"📊 NIFTY-NLP PIPELINE STARTING FOR TICKER: {args.ticker}")
-    print("="*80)
+    print("\n" + "=" * 80)
+    print("📊 NIFTY-NLP PIPELINE STARTING")
+    print(f"   Date: {today_str}")
+    print("=" * 80)
 
-    # ---------------------------------------------------------
-    # STAGE 0 & 1: Data Preparation & NLP Scoring
-    # ---------------------------------------------------------
-    if not args.skip_nlp:
-        # Step 1: Clean Raw News
-        run_step("src/01_data_cleaning.py", 
-                 ["--input", args.news_data], 
-                 "Stage 1: Cleaning Raw News Data")
-        
-        # Step 2: Separate English & Hindi News
-        run_step("src/02_news_separator.py", 
-                 ["--input", "data/outputs/cleaned_news.csv"], 
-                 "Stage 1: Language Language Separation")
-
-        # Step 3: English FinBERT Scoring
-        run_step("src/03_finbert_score.py", 
-                 ["--input", "data/outputs/english_news.csv", "--ticker", args.ticker], 
-                 "Stage 1: FinBERT Sentiment Scoring (English)")
-                 
-        # Step 4: Hindi MuRIL Scoring
-        run_step("src/04_muril_score.py", 
-                 ["--input", "data/outputs/hindi_news.csv", "--ticker", args.ticker], 
-                 "Stage 1: MuRIL Sentiment Scoring (Hindi)")
-                 
-        # Step 5: Trust-weighting and Handshake matrix generation
-        run_step("src/05_handshake.py", 
-                 ["--ticker", args.ticker], 
-                 "Stage 1: Generating Trust-Weighted Handshake Vectors")
+    # ── STAGE A: MuRIL Sentiment Model ────────────────────────────────────────
+    if not args.skip_sentiment_train:
+        run_step(
+            str(ROOT / "src" / "scripts" / "train_sentiment_model.py"),
+            [],
+            "Stage A: Fine-tune MuRIL on Synthetic Hindi/Hinglish Financial Data",
+        )
     else:
-        print("\n⏩ SKIPPING Stage 1 (NLP Processing). Assuming handshake matrices exist in data/handshake/")
+        print("\n⏩ SKIPPING MuRIL fine-tuning (--skip-sentiment-train).")
 
-    # ---------------------------------------------------------
-    # STAGE 3: Model Dual-Stream Execution
-    # ---------------------------------------------------------
-    
-    # Step 6: Train the T-LSTM Model
-    run_step("src/main.py",
-             [
-                 "--mode", "train", 
-                 "--ticker", args.ticker, 
-                 "--ohlcv", active_price_data,
-                 "--nifty", args.nifty_data,
-                 "--train_years", str(args.train_years)
-             ],
-             f"Stage 3: Training T-LSTM Dual-Stream Model for {args.epochs} epochs")
+    # ── STAGE B: NLP Scoring (FinBERT + MuRIL → Handshake CSV) ──────────────
+    if not args.skip_nlp:
+        run_step(
+            str(ROOT / "src" / "sentiment" / "analyzer_en.py"),
+            [],
+            "Stage B-1: FinBERT English Sentiment Scoring",
+        )
+        run_step(
+            str(ROOT / "src" / "sentiment" / "analyzer_hi.py"),
+            [],
+            "Stage B-2: MuRIL Hindi/Hinglish Sentiment Scoring",
+        )
+        run_step(
+            str(ROOT / "src" / "preprocessing" / "signal_merging.py"),
+            [],
+            "Stage B-3: Trust-Weight Fusion → Handshake CSV",
+        )
+    else:
+        print("\n⏩ SKIPPING NLP scoring (--skip-nlp). Using existing sentiment CSVs.")
 
-    # Step 7: Prediction Sequence (Daily Run)
-    ckpt_path = f"outputs/checkpoints/model_{today_str}.pt"
-    run_step("src/main.py",
-             [
-                 "--mode", "predict", 
-                 "--ticker", args.ticker,
-                 "--ohlcv", active_price_data,
-                 "--nifty", args.nifty_data,
-                 "--checkpoint", ckpt_path
-             ],
-             f"Stage 3: Monte Carlo Dropout Prediction Sequence")
+    # ── STAGE C: LSTM Training ────────────────────────────────────────────────
+    if not args.skip_train_lstm:
+        run_step(
+            str(ROOT / "src" / "scripts" / "train.py"),
+            [
+                "--train-path", args.train_path,
+                "--test-path",  args.test_path,
+                "--model-out",  args.model_out,
+                "--scaler-out", args.scaler_out,
+            ],
+            "Stage C: Train Binary LSTM (up to 100 epochs, early-stop @ patience=15)",
+        )
+    else:
+        print("\n⏩ SKIPPING LSTM training (--skip-train-lstm). Using saved model.")
 
-    print("\n" + "="*80)
+    # ── STAGE D: Prediction ───────────────────────────────────────────────────
+    run_step(
+        str(ROOT / "src" / "scripts" / "predict.py"),
+        [
+            "--model-path",  args.model_out,
+            "--scaler-path", args.scaler_out,
+            "--test-path",   args.test_path,
+            "--output-path", str(ROOT / "data" / "predictions" / "production_predictions.csv"),
+        ],
+        "Stage D: MC Dropout Prediction (50 forward passes per ticker)",
+    )
+
+    print("\n" + "=" * 80)
     print("✅ PIPELINE COMPLETED SUCCESSFULLY!")
-    print(f"👉 Check data/predictions/predictions_{today_str}.csv for the latest trading signals.")
-    print("="*80)
+    print(
+        f"👉 Check data/predictions/production_predictions.csv for the latest signals."
+    )
+    print("=" * 80)
 
 
 if __name__ == "__main__":
