@@ -20,6 +20,7 @@ from typing import Optional, List
 
 from src.utils.logger import get_logger
 from src.utils.paths import EVAL_REPORT_DIR
+from src.utils.plotting import plot_evaluation_bundle
 
 log = get_logger("evaluate")
 
@@ -169,6 +170,10 @@ def evaluate(
         "rolling_accuracy_min":  round(float(rolling_acc.min()), 4),
         "rolling_accuracy_max":  round(float(rolling_acc.max()), 4),
         "rolling_accuracy_mean": round(float(rolling_acc.mean()), 4),
+        "rolling_accuracy_series": [
+            {"date": idx.strftime("%Y-%m-%d"), "accuracy": round(float(val), 4)}
+            for idx, val in rolling_acc.items()
+        ],
     }
 
     # ── 6. Calibration (ECE) ──────────────────────────────────────────────────
@@ -245,5 +250,6 @@ def evaluate(
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
     log.info(f"  Full report saved → {report_path}")
+    plot_evaluation_bundle(report, out_dir)
 
     return report

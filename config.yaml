@@ -58,10 +58,10 @@ profiles:
     mc_dropout_passes: 50
     finbert_batch_size: 64
     muril_batch_size: 64
-    train_batch_size: 128
+    train_batch_size: 64
     muril_train_batch_size: 32
     epochs: 100
-    muril_epochs: 8
+    muril_epochs: 25
     use_int8_inference: false
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -81,10 +81,12 @@ data:
 # ─────────────────────────────────────────────────────────────────────────────
 tickers:
   subset_5:    ["RELIANCE", "SBIN", "HDFCBANK", "INFY", "ICICIBANK"]
+  pilot_10:    ["RELIANCE", "SBIN", "HDFCBANK", "INFY", "ICICIBANK",
+                "BAJFINANCE", "BPCL", "NTPC", "ONGC", "WIPRO"]
   nifty_10:   ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ICICIBANK",
                 "HINDUNILVR", "BAJFINANCE", "WIPRO", "MARUTI", "AXISBANK"]
   nifty_50:   null   # null = load all from ohlcv_dir
-  active:      "subset_5"   # ← change to "nifty_10" or "nifty_50" for full run
+  active:      "pilot_10"   # available local tickers with enough OHLCV history
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CACHE CONTROL
@@ -161,22 +163,22 @@ features:
 # TRAINING
 # ─────────────────────────────────────────────────────────────────────────────
 training:
-  learning_rate: 3.0e-4
+  learning_rate: 1.5e-4
   weight_decay: 1.0e-5
   epochs: 50                    # overridden by profile
   batch_size: 64                # overridden by profile
   grad_clip_norm: 1.0
-  label_threshold: 0.003        # drop |return| < 0.3% (near-flat days)
-  label_horizon_days: 1         # next-day prediction
-  early_stopping_patience: 10
-  cosine_t0: 10
-  # Walk-forward split tailored for the 1-year (2025-2026) dummy dataset
+  label_threshold: 0.008        # drop |return| < 0.5% to reduce label noise
+  label_horizon_days: 3         # predict a 3-day move instead of next-day noise
+  early_stopping_patience: 20
+  cosine_t0: 20
+  # Walk-forward split aligned to the currently available fused data range
   train_start: "2021-01-01"
-  train_end:   "2024-08-31"
-  val_start:   "2024-09-01"
-  val_end:     "2025-6-15"
-  test_start:  "2025-7-16"
-  test_end:    "2026-1-28"
+  train_end:   "2024-06-30"
+  val_start:   "2024-07-01"
+  val_end:     "2024-10-31"
+  test_start:  "2024-11-01"
+  test_end:    "2025-01-27"
   # MuRIL fine-tuning (distillation)
   muril_lr: 2.0e-5
   muril_epochs: 5               # overridden by profile

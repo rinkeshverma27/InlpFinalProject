@@ -1,6 +1,13 @@
 {
-  "completed_at": "2026-04-09T13:02:21.345524+00:00",
+  "completed_at": "2026-04-09T16:02:49.965754+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/RELIANCE.pt",
   "ticker": "RELIANCE",
-  "n_samples": 5359
+  "n_samples": 5011,
+  "fusion_config": {
+    "label_horizon_days": 3,
+    "label_threshold": 0.008,
+    "window_min": 5,
+    "window_max": 15,
+    "window_atr_scale": 20
+  }
 }

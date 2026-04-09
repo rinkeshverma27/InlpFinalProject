@@ -13,7 +13,7 @@ import torch
 from typing import Optional
 
 from src.utils.logger import get_logger
-from src.utils.cache import stage_exists, mark_stage_done
+from src.utils.cache import stage_exists, mark_stage_done, read_stage_meta
 from src.utils.paths import SENTIMENT_DIR, FEATURES_DIR
 from src.data.ohlcv_loader import load_ohlcv, FEATURE_COLS
 
@@ -24,6 +24,19 @@ SENTIMENT_COLS = [
     "pos_3d", "neg_3d", "neu_3d",
     "pos_7d", "neg_7d", "neu_7d",
 ]
+
+
+def _fusion_signature(cfg: dict) -> dict:
+    """Capture config values that affect fused tensor contents."""
+    feat_cfg = cfg.get("features", {})
+    train_cfg = cfg.get("training", {})
+    return {
+        "label_horizon_days": train_cfg.get("label_horizon_days", 1),
+        "label_threshold": train_cfg.get("label_threshold", 0.003),
+        "window_min": feat_cfg.get("window_min", 10),
+        "window_max": feat_cfg.get("window_max", 60),
+        "window_atr_scale": feat_cfg.get("window_atr_scale", 50),
+    }
 
 
 def _build_label(price_df: pd.DataFrame, horizon: int = 1, threshold: float = 0.003) -> pd.Series:
@@ -58,10 +71,14 @@ def fuse_ticker(
     """
     out_path = FEATURES_DIR / f"{ticker}.pt"
     ttl      = cfg.get("cache", {}).get("fusion_ttl_days", 7)
+    sig      = _fusion_signature(cfg)
 
     if stage_exists(out_path, ttl, force, cfg):
-        log.info(f"[{ticker}] Loading fused tensors from cache …")
-        return torch.load(out_path, weights_only=False)
+        meta = read_stage_meta(out_path)
+        if meta.get("fusion_config") == sig:
+            log.info(f"[{ticker}] Loading fused tensors from cache …")
+            return torch.load(out_path, weights_only=False)
+        log.info(f"[{ticker}] Fusion cache invalidated: config changed.")
 
     # ── Load price features ───────────────────────────────────────────────────
     try:
@@ -162,6 +179,10 @@ def fuse_ticker(
     }
 
     torch.save(result, out_path)
-    mark_stage_done(out_path, {"ticker": ticker, "n_samples": len(labels)})
+    mark_stage_done(out_path, {
+        "ticker": ticker,
+        "n_samples": len(labels),
+        "fusion_config": sig,
+    })
     log.info(f"[{ticker}] Fused {len(labels)} sequences → {out_path.name}")
     return result

@@ -23,6 +23,7 @@ from typing import List, Optional, Tuple
 from src.utils.logger import get_logger
 from src.utils.errors import run_stage
 from src.utils.paths import CHECKPOINTS_DIR, PRODUCTION_DIR, TRAIN_LOGS_DIR
+from src.utils.plotting import plot_training_history
 from src.training.dataset import StockSequenceDataset, make_splits, collate_fn
 from src.model.dual_stream_lstm import build_model
 
@@ -147,14 +148,22 @@ def train(
     train_ds = ConcatDataset(train_sets)
     val_ds   = ConcatDataset(val_sets)
 
-    n_workers = min(4, torch.get_num_threads())
+    # Some restricted environments block multiprocessing semaphores entirely.
+    # Falling back to single-process loading keeps training portable.
+    n_workers = 0
     train_loader = DataLoader(train_ds, batch_size=batch_sz, shuffle=True,
                               num_workers=n_workers, collate_fn=collate_fn, pin_memory=True)
     val_loader   = DataLoader(val_ds,   batch_size=batch_sz, shuffle=False,
                               num_workers=n_workers, collate_fn=collate_fn, pin_memory=True)
 
     # ── Class weights ─────────────────────────────────────────────────────────
-    all_labels = np.concatenate([fd["labels"].numpy() for fd in fused_datasets])
+    train_labels = []
+    for fd in fused_datasets:
+        ticker = fd["ticker"]
+        tr_idx, _, _ = make_splits(fd, cfg, ticker)
+        if len(tr_idx) > 0:
+            train_labels.append(fd["labels"][tr_idx].numpy())
+    all_labels = np.concatenate(train_labels)
     n_pos      = all_labels.sum()
     n_neg      = len(all_labels) - n_pos
     pos_weight = torch.tensor([n_neg / (n_pos + 1e-9)], device=device)
@@ -203,6 +212,7 @@ def train(
         record = {
             "epoch": epoch + 1, "train_loss": round(tr_loss, 4), "train_acc": round(tr_acc, 4),
             "val_loss": round(va_loss, 4), "val_acc": round(va_acc, 4), "elapsed_s": round(elapsed, 1),
+            "lr": scheduler.get_last_lr()[0],
         }
         history.append(record)
         log.info(
@@ -239,6 +249,7 @@ def train(
     hist_path = TRAIN_LOGS_DIR / "training_history.json"
     with open(hist_path, "w") as f:
         json.dump(history, f, indent=2)
+    plot_training_history(history, TRAIN_LOGS_DIR)
 
     # ── Promote best to production ────────────────────────────────────────────
     if best_ckpt_path:

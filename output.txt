@@ -1,0 +1,354 @@
+python main.py train
+20:38:37 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+20:38:37 | INFO     | main | Command: train | Profile: full | Force: False
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+20:38:37 | INFO     | errors | ▶  Starting stage: train
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:38:38 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+20:38:39 | INFO     | trainer | Epoch   1/100 | train_loss=0.6280 acc=0.4896 | val_loss=0.6288 acc=0.5272 | 0.7s | LR=1.49e-04
+20:38:39 | INFO     | trainer |   ★ New best: val_acc=0.5272
+20:38:39 | INFO     | trainer | Epoch   2/100 | train_loss=0.6268 acc=0.5050 | val_loss=0.6237 acc=0.4728 | 0.5s | LR=1.46e-04
+20:38:40 | INFO     | trainer | Epoch   3/100 | train_loss=0.6262 acc=0.4913 | val_loss=0.6255 acc=0.5199 | 0.4s | LR=1.42e-04
+20:38:40 | INFO     | trainer | Epoch   4/100 | train_loss=0.6251 acc=0.4957 | val_loss=0.6245 acc=0.5052 | 0.4s | LR=1.36e-04
+20:38:41 | INFO     | trainer | Epoch   5/100 | train_loss=0.6234 acc=0.5172 | val_loss=0.6262 acc=0.4728 | 0.4s | LR=1.28e-04
+20:38:41 | INFO     | trainer | Epoch   6/100 | train_loss=0.6248 acc=0.4981 | val_loss=0.6263 acc=0.5317 | 0.4s | LR=1.19e-04
+20:38:41 | INFO     | trainer |   ★ New best: val_acc=0.5317
+20:38:41 | INFO     | trainer | Epoch   7/100 | train_loss=0.6237 acc=0.4979 | val_loss=0.6239 acc=0.4728 | 0.4s | LR=1.09e-04
+20:38:42 | INFO     | trainer | Epoch   8/100 | train_loss=0.6231 acc=0.4967 | val_loss=0.6263 acc=0.5272 | 0.4s | LR=9.82e-05
+20:38:42 | INFO     | trainer | Epoch   9/100 | train_loss=0.6237 acc=0.5103 | val_loss=0.6241 acc=0.5007 | 0.5s | LR=8.67e-05
+20:38:43 | INFO     | trainer | Epoch  10/100 | train_loss=0.6226 acc=0.4975 | val_loss=0.6240 acc=0.5214 | 0.5s | LR=7.50e-05
+20:38:43 | INFO     | trainer | Epoch  11/100 | train_loss=0.6229 acc=0.5073 | val_loss=0.6235 acc=0.4728 | 0.4s | LR=6.33e-05
+20:38:44 | INFO     | trainer | Epoch  12/100 | train_loss=0.6230 acc=0.4987 | val_loss=0.6241 acc=0.5258 | 0.4s | LR=5.18e-05
+20:38:44 | INFO     | trainer | Epoch  13/100 | train_loss=0.6234 acc=0.4923 | val_loss=0.6242 acc=0.5214 | 0.5s | LR=4.10e-05
+20:38:45 | INFO     | trainer | Epoch  14/100 | train_loss=0.6230 acc=0.5094 | val_loss=0.6238 acc=0.4742 | 0.4s | LR=3.09e-05
+20:38:45 | INFO     | trainer | Epoch  15/100 | train_loss=0.6225 acc=0.4924 | val_loss=0.6245 acc=0.5140 | 0.5s | LR=2.20e-05
+20:38:46 | INFO     | trainer | Epoch  16/100 | train_loss=0.6226 acc=0.5086 | val_loss=0.6245 acc=0.5125 | 0.5s | LR=1.43e-05
+20:38:46 | INFO     | trainer | Epoch  17/100 | train_loss=0.6228 acc=0.4982 | val_loss=0.6242 acc=0.5199 | 0.5s | LR=8.17e-06
+20:38:47 | INFO     | trainer | Epoch  18/100 | train_loss=0.6221 acc=0.5106 | val_loss=0.6244 acc=0.5066 | 0.5s | LR=3.67e-06
+20:38:47 | INFO     | trainer | Epoch  19/100 | train_loss=0.6220 acc=0.5121 | val_loss=0.6243 acc=0.5066 | 0.4s | LR=9.23e-07
+20:38:47 | INFO     | trainer | Epoch  20/100 | train_loss=0.6225 acc=0.5110 | val_loss=0.6243 acc=0.5066 | 0.4s | LR=1.50e-04
+20:38:48 | INFO     | trainer | Epoch  21/100 | train_loss=0.6230 acc=0.4974 | val_loss=0.6239 acc=0.4713 | 0.4s | LR=1.49e-04
+20:38:48 | INFO     | trainer | Epoch  22/100 | train_loss=0.6232 acc=0.5080 | val_loss=0.6257 acc=0.5331 | 0.4s | LR=1.46e-04
+20:38:48 | INFO     | trainer |   ★ New best: val_acc=0.5331
+20:38:49 | INFO     | trainer | Epoch  23/100 | train_loss=0.6235 acc=0.5053 | val_loss=0.6240 acc=0.4683 | 0.4s | LR=1.42e-04
+20:38:49 | INFO     | trainer | Epoch  24/100 | train_loss=0.6230 acc=0.4987 | val_loss=0.6274 acc=0.5272 | 0.4s | LR=1.36e-04
+20:38:50 | INFO     | trainer | Epoch  25/100 | train_loss=0.6225 acc=0.5130 | val_loss=0.6236 acc=0.5125 | 0.4s | LR=1.28e-04
+20:38:50 | INFO     | trainer | Epoch  26/100 | train_loss=0.6236 acc=0.4909 | val_loss=0.6247 acc=0.5125 | 0.4s | LR=1.19e-04
+20:38:50 | INFO     | trainer | Epoch  27/100 | train_loss=0.6217 acc=0.5057 | val_loss=0.6252 acc=0.5317 | 0.4s | LR=1.09e-04
+20:38:51 | INFO     | trainer | Epoch  28/100 | train_loss=0.6216 acc=0.5157 | val_loss=0.6236 acc=0.4860 | 0.4s | LR=9.82e-05
+20:38:51 | INFO     | trainer | Epoch  29/100 | train_loss=0.6225 acc=0.5091 | val_loss=0.6237 acc=0.4816 | 0.4s | LR=8.67e-05
+20:38:52 | INFO     | trainer | Epoch  30/100 | train_loss=0.6208 acc=0.5107 | val_loss=0.6239 acc=0.5096 | 0.4s | LR=7.50e-05
+20:38:52 | INFO     | trainer | Epoch  31/100 | train_loss=0.6214 acc=0.5097 | val_loss=0.6266 acc=0.5243 | 0.4s | LR=6.33e-05
+20:38:53 | INFO     | trainer | Epoch  32/100 | train_loss=0.6208 acc=0.5317 | val_loss=0.6237 acc=0.5007 | 0.4s | LR=5.18e-05
+20:38:53 | INFO     | trainer | Epoch  33/100 | train_loss=0.6203 acc=0.5252 | val_loss=0.6238 acc=0.5214 | 0.5s | LR=4.10e-05
+20:38:54 | INFO     | trainer | Epoch  34/100 | train_loss=0.6205 acc=0.5334 | val_loss=0.6242 acc=0.5169 | 0.4s | LR=3.09e-05
+20:38:54 | INFO     | trainer | Epoch  35/100 | train_loss=0.6200 acc=0.5247 | val_loss=0.6245 acc=0.5125 | 0.4s | LR=2.20e-05
+20:38:54 | INFO     | trainer | Epoch  36/100 | train_loss=0.6200 acc=0.5201 | val_loss=0.6258 acc=0.5184 | 0.4s | LR=1.43e-05
+20:38:55 | INFO     | trainer | Epoch  37/100 | train_loss=0.6200 acc=0.5283 | val_loss=0.6255 acc=0.5169 | 0.4s | LR=8.17e-06
+20:38:55 | INFO     | trainer | Epoch  38/100 | train_loss=0.6186 acc=0.5315 | val_loss=0.6255 acc=0.5184 | 0.4s | LR=3.67e-06
+20:38:56 | INFO     | trainer | Epoch  39/100 | train_loss=0.6195 acc=0.5330 | val_loss=0.6255 acc=0.5155 | 0.4s | LR=9.23e-07
+20:38:56 | INFO     | trainer | Epoch  40/100 | train_loss=0.6188 acc=0.5332 | val_loss=0.6256 acc=0.5199 | 0.4s | LR=1.50e-04
+20:38:56 | INFO     | trainer | Epoch  41/100 | train_loss=0.6208 acc=0.5219 | val_loss=0.6254 acc=0.5169 | 0.4s | LR=1.49e-04
+20:38:57 | INFO     | trainer | Epoch  42/100 | train_loss=0.6199 acc=0.5301 | val_loss=0.6274 acc=0.5007 | 0.4s | LR=1.46e-04
+20:38:57 | INFO     | trainer |   Early stopping at epoch 42 (patience=20).
+20:38:57 | INFO     | trainer | ✓ Best model (val_acc=0.5331) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+20:38:57 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+20:38:57 | INFO     | trainer | Fisher matrix saved.
+20:38:57 | INFO     | errors | ✓  Stage 'train' completed in 20.1s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$ python main.py eval --split test
+20:39:03 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+20:39:03 | INFO     | main | Command: eval | Profile: full | Force: False
+20:39:03 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+20:39:03 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+20:39:03 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+20:39:03 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:39:04 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+20:39:04 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+20:39:04 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:39:05 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+20:39:05 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+20:39:05 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:39:05 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+20:39:05 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+20:39:05 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:39:06 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+20:39:06 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+20:39:06 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:39:07 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+20:39:07 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+20:39:07 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:39:07 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+20:39:07 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+20:39:07 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:39:08 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+20:39:08 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+20:39:08 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:39:09 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+20:39:09 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+20:39:09 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:39:10 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+20:39:10 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+20:39:10 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:39:10 | INFO     | errors | ▶  Starting stage: evaluate
+20:39:10 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000344 var_std=0.000073 | threshold=0.000454
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   Overall Accuracy  : 57.08%
+20:39:10 | INFO     | evaluate |   Macro F1          : 0.5663
+20:39:10 | INFO     | evaluate |   Abstention Rate   : 6.22%  (coverage=93.78%)
+20:39:10 | INFO     | evaluate |   ECE (calibration) : 0.0643  (lower=better, 0=perfect)
+20:39:10 | INFO     | evaluate |   acc@var<0.5σ             : 58.33%  (n=264)
+20:39:10 | INFO     | evaluate |   acc@var<1.0σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate |   acc@var<1.5σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate |   acc@var<2.0σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate | ------------------------------------------------------------
+20:39:10 | INFO     | evaluate |   [BAJFINANCE  ] acc=65.91% f1=0.6442 abstain=6.38%
+20:39:10 | INFO     | evaluate |   [BPCL        ] acc=60.00% f1=0.5994 abstain=5.66%
+20:39:10 | INFO     | evaluate |   [HDFCBANK    ] acc=75.00% f1=0.7488 abstain=4.35%
+20:39:10 | INFO     | evaluate |   [ICICIBANK   ] acc=54.76% f1=0.5474 abstain=2.33%
+20:39:10 | INFO     | evaluate |   [INFY        ] acc=38.46% f1=0.3743 abstain=9.30%
+20:39:10 | INFO     | evaluate |   [NTPC        ] acc=33.33% f1=0.2726 abstain=4.26%
+20:39:10 | INFO     | evaluate |   [ONGC        ] acc=63.27% f1=0.6198 abstain=5.77%
+20:39:10 | INFO     | evaluate |   [RELIANCE    ] acc=58.33% f1=0.5556 abstain=5.88%
+20:39:10 | INFO     | evaluate |   [SBIN        ] acc=61.70% f1=0.6126 abstain=9.62%
+20:39:10 | INFO     | evaluate |   [WIPRO       ] acc=56.82% f1=0.5625 abstain=8.33%
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+20:39:11 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.14 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ python main.py train
+21:17:40 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+21:17:40 | INFO     | main | Command: train | Profile: full | Force: False
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+21:17:40 | INFO     | errors | ▶  Starting stage: train
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [BAJFINANCE] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [BAJFINANCE] Splits: train=649, val=62, test=43
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [BPCL] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [BPCL] Splits: train=654, val=67, test=48
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [HDFCBANK] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [HDFCBANK] Splits: train=596, val=55, test=37
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [ICICIBANK] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [ICICIBANK] Splits: train=600, val=61, test=39
+21:17:40 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [INFY] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [INFY] Splits: train=613, val=55, test=49
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [NTPC] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [NTPC] Splits: train=641, val=66, test=41
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [ONGC] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [ONGC] Splits: train=673, val=63, test=50
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [RELIANCE] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [RELIANCE] Splits: train=637, val=55, test=44
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [SBIN] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [SBIN] Splits: train=647, val=56, test=41
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [WIPRO] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [WIPRO] Splits: train=639, val=59, test=45
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+21:17:41 | INFO     | trainer | Epoch   1/100 | train_loss=0.6307 acc=0.4990 | val_loss=0.6250 acc=0.4758 | 0.7s | LR=1.49e-04
+21:17:41 | INFO     | trainer |   ★ New best: val_acc=0.4758
+21:17:42 | INFO     | trainer | Epoch   2/100 | train_loss=0.6255 acc=0.4996 | val_loss=0.6238 acc=0.4808 | 0.5s | LR=1.46e-04
+21:17:42 | INFO     | trainer |   ★ New best: val_acc=0.4808
+21:17:42 | INFO     | trainer | Epoch   3/100 | train_loss=0.6241 acc=0.5092 | val_loss=0.6239 acc=0.4925 | 0.5s | LR=1.42e-04
+21:17:42 | INFO     | trainer |   ★ New best: val_acc=0.4925
+21:17:43 | INFO     | trainer | Epoch   4/100 | train_loss=0.6234 acc=0.5091 | val_loss=0.6252 acc=0.5008 | 0.4s | LR=1.36e-04
+21:17:43 | INFO     | trainer |   ★ New best: val_acc=0.5008
+21:17:43 | INFO     | trainer | Epoch   5/100 | train_loss=0.6243 acc=0.5154 | val_loss=0.6265 acc=0.5109 | 0.4s | LR=1.28e-04
+21:17:43 | INFO     | trainer |   ★ New best: val_acc=0.5109
+21:17:44 | INFO     | trainer | Epoch   6/100 | train_loss=0.6225 acc=0.5084 | val_loss=0.6243 acc=0.5209 | 0.5s | LR=1.19e-04
+21:17:44 | INFO     | trainer |   ★ New best: val_acc=0.5209
+21:17:44 | INFO     | trainer | Epoch   7/100 | train_loss=0.6221 acc=0.5169 | val_loss=0.6300 acc=0.5159 | 0.4s | LR=1.09e-04
+21:17:45 | INFO     | trainer | Epoch   8/100 | train_loss=0.6229 acc=0.5176 | val_loss=0.6270 acc=0.5109 | 0.4s | LR=9.82e-05
+21:17:45 | INFO     | trainer | Epoch   9/100 | train_loss=0.6223 acc=0.5239 | val_loss=0.6246 acc=0.5192 | 0.4s | LR=8.67e-05
+21:17:46 | INFO     | trainer | Epoch  10/100 | train_loss=0.6222 acc=0.5141 | val_loss=0.6240 acc=0.5175 | 0.4s | LR=7.50e-05
+21:17:46 | INFO     | trainer | Epoch  11/100 | train_loss=0.6224 acc=0.5105 | val_loss=0.6240 acc=0.5109 | 0.4s | LR=6.33e-05
+21:17:46 | INFO     | trainer | Epoch  12/100 | train_loss=0.6216 acc=0.5092 | val_loss=0.6240 acc=0.5075 | 0.4s | LR=5.18e-05
+21:17:47 | INFO     | trainer | Epoch  13/100 | train_loss=0.6224 acc=0.5042 | val_loss=0.6248 acc=0.5225 | 0.4s | LR=4.10e-05
+21:17:47 | INFO     | trainer |   ★ New best: val_acc=0.5225
+21:17:47 | INFO     | trainer | Epoch  14/100 | train_loss=0.6216 acc=0.5264 | val_loss=0.6242 acc=0.5125 | 0.4s | LR=3.09e-05
+21:17:48 | INFO     | trainer | Epoch  15/100 | train_loss=0.6210 acc=0.5111 | val_loss=0.6246 acc=0.5192 | 0.4s | LR=2.20e-05
+21:17:48 | INFO     | trainer | Epoch  16/100 | train_loss=0.6209 acc=0.5235 | val_loss=0.6242 acc=0.5092 | 0.4s | LR=1.43e-05
+21:17:49 | INFO     | trainer | Epoch  17/100 | train_loss=0.6212 acc=0.5138 | val_loss=0.6242 acc=0.5092 | 0.4s | LR=8.17e-06
+21:17:49 | INFO     | trainer | Epoch  18/100 | train_loss=0.6219 acc=0.5106 | val_loss=0.6243 acc=0.5092 | 0.4s | LR=3.67e-06
+21:17:49 | INFO     | trainer | Epoch  19/100 | train_loss=0.6209 acc=0.5144 | val_loss=0.6243 acc=0.5109 | 0.4s | LR=9.23e-07
+21:17:50 | INFO     | trainer | Epoch  20/100 | train_loss=0.6212 acc=0.5130 | val_loss=0.6243 acc=0.5109 | 0.4s | LR=1.50e-04
+21:17:50 | INFO     | trainer | Epoch  21/100 | train_loss=0.6211 acc=0.5224 | val_loss=0.6244 acc=0.5025 | 0.4s | LR=1.49e-04
+21:17:51 | INFO     | trainer | Epoch  22/100 | train_loss=0.6225 acc=0.5187 | val_loss=0.6248 acc=0.4891 | 0.4s | LR=1.46e-04
+21:17:51 | INFO     | trainer | Epoch  23/100 | train_loss=0.6215 acc=0.5163 | val_loss=0.6258 acc=0.5309 | 0.4s | LR=1.42e-04
+21:17:51 | INFO     | trainer |   ★ New best: val_acc=0.5309
+21:17:51 | INFO     | trainer | Epoch  24/100 | train_loss=0.6205 acc=0.5221 | val_loss=0.6291 acc=0.5209 | 0.4s | LR=1.36e-04
+21:17:52 | INFO     | trainer | Epoch  25/100 | train_loss=0.6221 acc=0.5207 | val_loss=0.6258 acc=0.4992 | 0.4s | LR=1.28e-04
+21:17:52 | INFO     | trainer | Epoch  26/100 | train_loss=0.6204 acc=0.5165 | val_loss=0.6316 acc=0.4775 | 0.5s | LR=1.19e-04
+21:17:53 | INFO     | trainer | Epoch  27/100 | train_loss=0.6189 acc=0.5258 | val_loss=0.6353 acc=0.5092 | 0.4s | LR=1.09e-04
+21:17:53 | INFO     | trainer | Epoch  28/100 | train_loss=0.6186 acc=0.5239 | val_loss=0.6331 acc=0.5025 | 0.4s | LR=9.82e-05
+21:17:54 | INFO     | trainer | Epoch  29/100 | train_loss=0.6184 acc=0.5349 | val_loss=0.6294 acc=0.4925 | 0.4s | LR=8.67e-05
+21:17:54 | INFO     | trainer | Epoch  30/100 | train_loss=0.6179 acc=0.5395 | val_loss=0.6301 acc=0.4841 | 0.4s | LR=7.50e-05
+21:17:54 | INFO     | trainer | Epoch  31/100 | train_loss=0.6185 acc=0.5357 | val_loss=0.6329 acc=0.4858 | 0.4s | LR=6.33e-05
+21:17:55 | INFO     | trainer | Epoch  32/100 | train_loss=0.6168 acc=0.5365 | val_loss=0.6311 acc=0.4992 | 0.4s | LR=5.18e-05
+21:17:55 | INFO     | trainer | Epoch  33/100 | train_loss=0.6163 acc=0.5382 | val_loss=0.6356 acc=0.4925 | 0.4s | LR=4.10e-05
+21:17:56 | INFO     | trainer | Epoch  34/100 | train_loss=0.6168 acc=0.5391 | val_loss=0.6363 acc=0.4875 | 0.4s | LR=3.09e-05
+21:17:56 | INFO     | trainer | Epoch  35/100 | train_loss=0.6165 acc=0.5445 | val_loss=0.6336 acc=0.4725 | 0.4s | LR=2.20e-05
+21:17:56 | INFO     | trainer | Epoch  36/100 | train_loss=0.6162 acc=0.5424 | val_loss=0.6352 acc=0.4975 | 0.4s | LR=1.43e-05
+21:17:57 | INFO     | trainer | Epoch  37/100 | train_loss=0.6164 acc=0.5434 | val_loss=0.6347 acc=0.4891 | 0.4s | LR=8.17e-06
+21:17:57 | INFO     | trainer | Epoch  38/100 | train_loss=0.6155 acc=0.5436 | val_loss=0.6344 acc=0.4891 | 0.4s | LR=3.67e-06
+21:17:58 | INFO     | trainer | Epoch  39/100 | train_loss=0.6158 acc=0.5445 | val_loss=0.6344 acc=0.4875 | 0.4s | LR=9.23e-07
+21:17:58 | INFO     | trainer | Epoch  40/100 | train_loss=0.6154 acc=0.5385 | val_loss=0.6344 acc=0.4891 | 0.4s | LR=1.50e-04
+21:17:58 | INFO     | trainer | Epoch  41/100 | train_loss=0.6166 acc=0.5388 | val_loss=0.6392 acc=0.4608 | 0.4s | LR=1.49e-04
+21:17:59 | INFO     | trainer | Epoch  42/100 | train_loss=0.6184 acc=0.5404 | val_loss=0.6304 acc=0.4925 | 0.4s | LR=1.46e-04
+21:17:59 | INFO     | trainer | Epoch  43/100 | train_loss=0.6172 acc=0.5442 | val_loss=0.6397 acc=0.4975 | 0.4s | LR=1.42e-04
+21:17:59 | INFO     | trainer |   Early stopping at epoch 43 (patience=20).
+21:18:00 | INFO     | trainer | ✓ Best model (val_acc=0.5309) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+21:18:00 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+21:18:00 | INFO     | trainer | Fisher matrix saved.
+21:18:00 | INFO     | errors | ✓  Stage 'train' completed in 19.7s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$ python main.py eval --split test
+21:18:05 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+21:18:05 | INFO     | main | Command: eval | Profile: full | Force: False
+21:18:05 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+21:18:05 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+21:18:05 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+21:18:05 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.0d old) — skipping stage.
+21:18:06 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+21:18:06 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+21:18:06 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.0d old) — skipping stage.
+21:18:07 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+21:18:07 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+21:18:07 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.0d old) — skipping stage.
+21:18:08 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+21:18:08 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+21:18:08 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.0d old) — skipping stage.
+21:18:08 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+21:18:08 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+21:18:08 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.0d old) — skipping stage.
+21:18:09 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+21:18:09 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+21:18:09 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.0d old) — skipping stage.
+21:18:10 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+21:18:10 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+21:18:10 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.0d old) — skipping stage.
+21:18:10 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+21:18:10 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+21:18:10 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.0d old) — skipping stage.
+21:18:11 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+21:18:11 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+21:18:11 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.0d old) — skipping stage.
+21:18:12 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+21:18:12 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+21:18:12 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.0d old) — skipping stage.
+21:18:12 | INFO     | errors | ▶  Starting stage: evaluate
+21:18:12 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000432 var_std=0.000094 | threshold=0.000574
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   Overall Accuracy  : 60.15%
+21:18:12 | INFO     | evaluate |   Macro F1          : 0.5976
+21:18:12 | INFO     | evaluate |   Abstention Rate   : 9.84%  (coverage=90.16%)
+21:18:12 | INFO     | evaluate |   ECE (calibration) : 0.0882  (lower=better, 0=perfect)
+21:18:12 | INFO     | evaluate |   acc@var<0.5σ             : 60.31%  (n=262)
+21:18:12 | INFO     | evaluate |   acc@var<1.0σ             : 60.15%  (n=394)
+21:18:12 | INFO     | evaluate |   acc@var<1.5σ             : 60.15%  (n=394)
+21:18:12 | INFO     | evaluate |   acc@var<2.0σ             : 60.00%  (n=430)
+21:18:12 | INFO     | evaluate | ------------------------------------------------------------
+21:18:12 | INFO     | evaluate |   [BAJFINANCE  ] acc=71.79% f1=0.6762 abstain=9.30%
+21:18:12 | INFO     | evaluate |   [BPCL        ] acc=63.04% f1=0.6303 abstain=4.17%
+21:18:12 | INFO     | evaluate |   [HDFCBANK    ] acc=76.47% f1=0.7647 abstain=8.11%
+21:18:12 | INFO     | evaluate |   [ICICIBANK   ] acc=64.71% f1=0.6458 abstain=12.82%
+21:18:12 | INFO     | evaluate |   [INFY        ] acc=51.11% f1=0.4666 abstain=8.16%
+21:18:12 | INFO     | evaluate |   [NTPC        ] acc=25.81% f1=0.2051 abstain=24.39%
+21:18:12 | INFO     | evaluate |   [ONGC        ] acc=68.18% f1=0.6709 abstain=12.00%
+21:18:12 | INFO     | evaluate |   [RELIANCE    ] acc=51.22% f1=0.5096 abstain=6.82%
+21:18:12 | INFO     | evaluate |   [SBIN        ] acc=68.42% f1=0.6833 abstain=7.32%
+21:18:12 | INFO     | evaluate |   [WIPRO       ] acc=57.14% f1=0.5675 abstain=6.67%
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+21:18:13 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB

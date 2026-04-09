@@ -1,8 +1,20 @@
 {
-  "completed_at": "2026-04-08T20:18:05.006623+00:00",
-  "output": "/home/rinkesh-verma/Desktop/gemini/data/splits/HDFCBANK_splits.npz",
+  "completed_at": "2026-04-09T16:02:50.310167+00:00",
+  "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/splits/HDFCBANK_splits.npz",
   "ticker": "HDFCBANK",
-  "n_train": 59,
-  "n_val": 27,
-  "n_test": 33
+  "n_train": 596,
+  "n_val": 55,
+  "n_test": 37,
+  "split_config": {
+    "train_start": "2021-01-01",
+    "train_end": "2024-06-30",
+    "val_start": "2024-07-01",
+    "val_end": "2024-10-31",
+    "test_start": "2024-11-01",
+    "test_end": "2025-01-27",
+    "label_horizon_days": 3,
+    "label_threshold": 0.008,
+    "window_min": 5,
+    "window_max": 15
+  }
 }

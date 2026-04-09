@@ -219,45 +219,13 @@ def cmd_eval(args, cfg):
 
 
 def cmd_predict(args, cfg):
-    """Predict direction for a specific ticker (latest data)."""
-    from src.data.data_fusion import fuse_ticker
-    from src.model.dual_stream_lstm import build_model
-    from src.model.mc_dropout import predict_single
-    from src.utils.paths import PRODUCTION_DIR
+    """Predict latest direction and save a predictions.csv file."""
+    from src.predictions import generate_predictions_csv
 
-    ticker = args.ticker.upper() if hasattr(args, "ticker") and args.ticker else None
-    if not ticker:
-        log.error("Provide --ticker TICKER for predict command.")
-        sys.exit(1)
-
-    device     = _device(args)
-    model_path = PRODUCTION_DIR / "best_model.pt"
-    if not model_path.exists():
-        log.error("No production model. Run `python main.py train` first.")
-        sys.exit(1)
-
-    model = build_model(cfg).to(device)
-    state = torch.load(model_path, map_location=device, weights_only=False)
-    model.load_state_dict(state["model"])
-
-    fd = fuse_ticker(ticker, cfg, force=False)
-    if fd is None:
-        log.error(f"No fused data for {ticker}.")
-        sys.exit(1)
-
-    # Use the last available sequence
-    price_seq = fd["price_seq"][-1]
-    sent_seq  = fd["sentiment_seq"][-1]
-    date_str  = fd["dates"][-1]
-
-    # predict_single inside mc_dropout.py handles the logit-to-prob conversion
-    result = predict_single(model, price_seq, sent_seq, cfg, device)
-    print(f"\n{'='*50}")
-    print(f"  Prediction for {ticker} — trade date: {date_str}")
-    print(f"  Direction   : {result['direction']}")
-    print(f"  P(UP)       : {result['probability']:.4f}")
-    print(f"  Confidence  : {result['confidence']:.4f}  (variance={result['variance']:.4f})")
-    print(f"{'='*50}\n")
+    tickers = _get_tickers(cfg, args)
+    output = pathlib.Path(args.output) if getattr(args, "output", None) else None
+    out_path = run_stage("predict", generate_predictions_csv, tickers, cfg, _device(args), output)
+    print(f"\nPredictions saved to: {out_path}\n")
 
 
 def cmd_tier1(args, cfg):
@@ -356,6 +324,7 @@ def build_parser() -> argparse.ArgumentParser:
                    help="Split to evaluate (used by eval command)")
     p.add_argument("--resume",   default=None,            help="Path to checkpoint to resume from")
     p.add_argument("--date",     default=None,            help="Target date for tier1 (YYYY-MM-DD)")
+    p.add_argument("--output",   default=None,            help="Output CSV path for predict command")
     return p
 
 

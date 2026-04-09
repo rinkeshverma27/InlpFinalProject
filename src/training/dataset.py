@@ -11,9 +11,27 @@ from typing import List, Tuple, Optional
 
 from src.utils.logger import get_logger
 from src.utils.paths import FEATURES_DIR, SPLITS_DIR
-from src.utils.cache import stage_exists, mark_stage_done
+from src.utils.cache import stage_exists, mark_stage_done, read_stage_meta
 
 log = get_logger("dataset")
+
+
+def _split_signature(cfg: dict) -> dict:
+    """Capture the date-window config that defines a cached split file."""
+    t_cfg = cfg.get("training", {})
+    feat_cfg = cfg.get("features", {})
+    return {
+        "train_start": t_cfg.get("train_start", "2019-01-01"),
+        "train_end": t_cfg.get("train_end", "2021-12-31"),
+        "val_start": t_cfg.get("val_start", "2022-01-01"),
+        "val_end": t_cfg.get("val_end", "2022-12-31"),
+        "test_start": t_cfg.get("test_start", "2023-01-01"),
+        "test_end": t_cfg.get("test_end", "2023-12-31"),
+        "label_horizon_days": t_cfg.get("label_horizon_days", 1),
+        "label_threshold": t_cfg.get("label_threshold", 0.003),
+        "window_min": feat_cfg.get("window_min", 10),
+        "window_max": feat_cfg.get("window_max", 60),
+    }
 
 
 class StockSequenceDataset(Dataset):
@@ -62,20 +80,24 @@ def make_splits(
     """
     split_path = SPLITS_DIR / f"{ticker}_splits.npz"
     ttl        = cfg.get("cache", {}).get("splits_ttl_days", 30)
+    sig        = _split_signature(cfg)
 
     if stage_exists(split_path, ttl, force, cfg):
-        npz = np.load(split_path)
-        return npz["train"], npz["val"], npz["test"]
+        meta = read_stage_meta(split_path)
+        cached_sig = meta.get("split_config")
+        if cached_sig == sig:
+            npz = np.load(split_path)
+            return npz["train"], npz["val"], npz["test"]
+        log.info(f"[{ticker}] Split cache invalidated: config window changed.")
 
     dates_pd = np.array(fused_data["dates"])   # ['2019-01-02', ...]
 
-    t_cfg    = cfg.get("training", {})
-    train_s  = t_cfg.get("train_start", "2019-01-01")
-    train_e  = t_cfg.get("train_end",   "2021-12-31")
-    val_s    = t_cfg.get("val_start",   "2022-01-01")
-    val_e    = t_cfg.get("val_end",     "2022-12-31")
-    test_s   = t_cfg.get("test_start",  "2023-01-01")
-    test_e   = t_cfg.get("test_end",    "2023-12-31")
+    train_s  = sig["train_start"]
+    train_e  = sig["train_end"]
+    val_s    = sig["val_start"]
+    val_e    = sig["val_end"]
+    test_s   = sig["test_start"]
+    test_e   = sig["test_end"]
 
     train_idx = np.where((dates_pd >= train_s) & (dates_pd <= train_e))[0]
     val_idx   = np.where((dates_pd >= val_s)   & (dates_pd <= val_e))[0]
@@ -83,10 +105,13 @@ def make_splits(
 
     SPLITS_DIR.mkdir(parents=True, exist_ok=True)
     np.savez(split_path, train=train_idx, val=val_idx, test=test_idx)
-    mark_stage_done(split_path, {"ticker": ticker,
-                                 "n_train": len(train_idx),
-                                 "n_val": len(val_idx),
-                                 "n_test": len(test_idx)})
+    mark_stage_done(split_path, {
+        "ticker": ticker,
+        "n_train": len(train_idx),
+        "n_val": len(val_idx),
+        "n_test": len(test_idx),
+        "split_config": sig,
+    })
     log.info(
         f"[{ticker}] Splits: train={len(train_idx)}, "
         f"val={len(val_idx)}, test={len(test_idx)}"
