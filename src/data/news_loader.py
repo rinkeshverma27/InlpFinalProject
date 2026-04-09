@@ -25,6 +25,7 @@ log = get_logger("news_loader")
 
 IST_OFFSET = pd.Timedelta("5h30min")
 MARKET_CLOSE_IST = pd.Timedelta("15h30min")   # 3:30 PM IST
+MASTER_NEWS_FILE = "final_news_master.csv"
 
 
 def _hash_row(row: pd.Series) -> str:
@@ -91,7 +92,13 @@ def load_news(
         pd.DataFrame with columns:
             trade_date, headline, body, lang, source, ticker, pub_dt, row_hash
     """
-    csv_files = sorted(news_dir.glob("*.csv"))
+    master_file = news_dir / MASTER_NEWS_FILE
+    if master_file.exists():
+        csv_files = [master_file]
+        log.info(f"Using master news file only: {master_file.name}")
+    else:
+        csv_files = sorted(news_dir.glob("*.csv"))
+
     if not csv_files:
         log.warning(f"No CSV files found in {news_dir}. Returning empty DataFrame.")
         return pd.DataFrame()

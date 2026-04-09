@@ -1,6 +1,6 @@
 {
-  "completed_at": "2026-04-09T14:01:23.814695+00:00",
+  "completed_at": "2026-04-09T17:23:10.785470+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/sentiment/WIPRO.parquet",
   "ticker": "WIPRO",
-  "n_days": 2
+  "n_days": 71
 }

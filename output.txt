@@ -352,3 +352,102 @@ python main.py train
 21:18:12 | INFO     | evaluate | ============================================================
 21:18:12 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
 21:18:13 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+new data-set
+
+22:53:20 | INFO     | trainer | Epoch   1/100 | train_loss=0.6274 acc=0.4979 | val_loss=0.6324 acc=0.5242 | 0.8s | LR=1.49e-04
+22:53:20 | INFO     | trainer |   ★ New best: val_acc=0.5242
+22:53:21 | INFO     | trainer | Epoch   2/100 | train_loss=0.6245 acc=0.4985 | val_loss=0.6293 acc=0.5109 | 0.5s | LR=1.46e-04
+22:53:21 | INFO     | trainer | Epoch   3/100 | train_loss=0.6253 acc=0.4987 | val_loss=0.6282 acc=0.5125 | 0.5s | LR=1.42e-04
+22:53:22 | INFO     | trainer | Epoch   4/100 | train_loss=0.6225 acc=0.5168 | val_loss=0.6281 acc=0.5175 | 0.5s | LR=1.36e-04
+22:53:22 | INFO     | trainer | Epoch   5/100 | train_loss=0.6255 acc=0.4947 | val_loss=0.6269 acc=0.5259 | 0.5s | LR=1.28e-04
+22:53:22 | INFO     | trainer |   ★ New best: val_acc=0.5259
+22:53:23 | INFO     | trainer | Epoch   6/100 | train_loss=0.6236 acc=0.5069 | val_loss=0.6257 acc=0.5008 | 0.5s | LR=1.19e-04
+22:53:23 | INFO     | trainer | Epoch   7/100 | train_loss=0.6237 acc=0.5020 | val_loss=0.6305 acc=0.5042 | 0.5s | LR=1.09e-04
+22:53:24 | INFO     | trainer | Epoch   8/100 | train_loss=0.6227 acc=0.5141 | val_loss=0.6249 acc=0.4841 | 0.5s | LR=9.82e-05
+22:53:24 | INFO     | trainer | Epoch   9/100 | train_loss=0.6225 acc=0.5102 | val_loss=0.6274 acc=0.5259 | 0.5s | LR=8.67e-05
+22:53:25 | INFO     | trainer | Epoch  10/100 | train_loss=0.6222 acc=0.5204 | val_loss=0.6249 acc=0.4858 | 0.5s | LR=7.50e-05
+22:53:25 | INFO     | trainer | Epoch  11/100 | train_loss=0.6226 acc=0.5073 | val_loss=0.6249 acc=0.4942 | 0.5s | LR=6.33e-05
+22:53:26 | INFO     | trainer | Epoch  12/100 | train_loss=0.6211 acc=0.5172 | val_loss=0.6271 acc=0.5075 | 0.5s | LR=5.18e-05
+22:53:26 | INFO     | trainer | Epoch  13/100 | train_loss=0.6216 acc=0.5188 | val_loss=0.6274 acc=0.5175 | 0.5s | LR=4.10e-05
+22:53:27 | INFO     | trainer | Epoch  14/100 | train_loss=0.6219 acc=0.5169 | val_loss=0.6260 acc=0.4942 | 0.5s | LR=3.09e-05
+22:53:27 | INFO     | trainer | Epoch  15/100 | train_loss=0.6227 acc=0.5127 | val_loss=0.6269 acc=0.5025 | 0.5s | LR=2.20e-05
+22:53:28 | INFO     | trainer | Epoch  16/100 | train_loss=0.6216 acc=0.5221 | val_loss=0.6267 acc=0.5092 | 0.5s | LR=1.43e-05
+22:53:28 | INFO     | trainer | Epoch  17/100 | train_loss=0.6218 acc=0.5076 | val_loss=0.6267 acc=0.5142 | 0.5s | LR=8.17e-06
+22:53:29 | INFO     | trainer | Epoch  18/100 | train_loss=0.6211 acc=0.5273 | val_loss=0.6269 acc=0.5092 | 0.5s | LR=3.67e-06
+22:53:29 | INFO     | trainer | Epoch  19/100 | train_loss=0.6215 acc=0.5179 | val_loss=0.6268 acc=0.5142 | 0.5s | LR=9.23e-07
+22:53:30 | INFO     | trainer | Epoch  20/100 | train_loss=0.6210 acc=0.5294 | val_loss=0.6268 acc=0.5159 | 0.5s | LR=1.50e-04
+22:53:31 | INFO     | trainer | Epoch  21/100 | train_loss=0.6230 acc=0.5160 | val_loss=0.6274 acc=0.5092 | 0.6s | LR=1.49e-04
+22:53:31 | INFO     | trainer | Epoch  22/100 | train_loss=0.6228 acc=0.5043 | val_loss=0.6261 acc=0.5075 | 0.5s | LR=1.46e-04
+22:53:32 | INFO     | trainer | Epoch  23/100 | train_loss=0.6210 acc=0.5280 | val_loss=0.6321 acc=0.5192 | 0.5s | LR=1.42e-04
+22:53:32 | INFO     | trainer | Epoch  24/100 | train_loss=0.6227 acc=0.5177 | val_loss=0.6255 acc=0.4908 | 0.5s | LR=1.36e-04
+22:53:33 | INFO     | trainer | Epoch  25/100 | train_loss=0.6209 acc=0.5182 | val_loss=0.6287 acc=0.5042 | 0.6s | LR=1.28e-04
+22:53:33 | INFO     | trainer |   Early stopping at epoch 25 (patience=20).
+22:53:33 | INFO     | trainer | ✓ Best model (val_acc=0.5259) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+22:53:33 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+22:53:34 | INFO     | trainer | Fisher matrix saved.
+22:53:34 | INFO     | errors | ✓  Stage 'train' completed in 15.3s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$    python main.py eval --split test
+22:53:55 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+22:53:55 | INFO     | main | Command: eval | Profile: full | Force: False
+22:53:55 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+22:53:56 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+22:53:56 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+22:53:56 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+22:53:56 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+22:53:56 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+22:53:56 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+22:53:57 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+22:53:57 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+22:53:57 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+22:53:58 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+22:53:58 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+22:53:58 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+22:53:58 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+22:53:58 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+22:53:58 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+22:53:59 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+22:53:59 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+22:53:59 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+22:54:00 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+22:54:00 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+22:54:00 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+22:54:01 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+22:54:01 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+22:54:01 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+22:54:01 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+22:54:01 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+22:54:01 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+22:54:02 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+22:54:02 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+22:54:02 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+22:54:02 | INFO     | errors | ▶  Starting stage: evaluate
+22:54:02 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000706 var_std=0.000149 | threshold=0.000930
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   Overall Accuracy  : 56.13%
+22:54:02 | INFO     | evaluate |   Macro F1          : 0.4998
+22:54:02 | INFO     | evaluate |   Abstention Rate   : 6.64%  (coverage=93.36%)
+22:54:02 | INFO     | evaluate |   ECE (calibration) : 0.0555  (lower=better, 0=perfect)
+22:54:02 | INFO     | evaluate |   acc@var<0.5σ             : 53.63%  (n=289)
+22:54:02 | INFO     | evaluate |   acc@var<1.0σ             : 55.77%  (n=364)
+22:54:02 | INFO     | evaluate |   acc@var<1.5σ             : 56.13%  (n=408)
+22:54:02 | INFO     | evaluate |   acc@var<2.0σ             : 55.92%  (n=431)
+22:54:02 | INFO     | evaluate | ------------------------------------------------------------
+22:54:02 | INFO     | evaluate |   [BAJFINANCE  ] acc=47.37% f1=0.4493 abstain=11.63%
+22:54:02 | INFO     | evaluate |   [BPCL        ] acc=54.35% f1=0.4496 abstain=4.17%
+22:54:02 | INFO     | evaluate |   [HDFCBANK    ] acc=74.19% f1=0.7182 abstain=16.22%
+22:54:02 | INFO     | evaluate |   [ICICIBANK   ] acc=54.55% f1=0.4058 abstain=15.38%
+22:54:02 | INFO     | evaluate |   [INFY        ] acc=45.83% f1=0.4429 abstain=2.04%
+22:54:02 | INFO     | evaluate |   [NTPC        ] acc=60.00% f1=0.4984 abstain=2.44%
+22:54:02 | INFO     | evaluate |   [ONGC        ] acc=68.75% f1=0.6427 abstain=4.00%
+22:54:02 | INFO     | evaluate |   [RELIANCE    ] acc=53.66% f1=0.3919 abstain=6.82%
+22:54:02 | INFO     | evaluate |   [SBIN        ] acc=67.50% f1=0.6366 abstain=2.44%
+22:54:02 | INFO     | evaluate |   [WIPRO       ] acc=39.53% f1=0.3116 abstain=4.44%
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+22:54:03 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB

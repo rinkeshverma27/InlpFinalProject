@@ -1,6 +1,6 @@
 {
-  "completed_at": "2026-04-09T14:01:09.399816+00:00",
+  "completed_at": "2026-04-09T17:22:51.745248+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/sentiment/HDFCBANK.parquet",
   "ticker": "HDFCBANK",
-  "n_days": 12
+  "n_days": 213
 }
