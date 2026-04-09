@@ -22,10 +22,13 @@ class VariationalDropout(nn.Module):
         self.p = p
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x: [B, T, H]
+        # x can be [B, T, H] or [B, H]
         if not self.training or self.p == 0:
             return x
-        mask = x.new_ones(x.size(0), 1, x.size(2)).bernoulli_(1 - self.p) / (1 - self.p)
+        if x.dim() == 3:
+            mask = x.new_ones(x.size(0), 1, x.size(2)).bernoulli_(1 - self.p) / (1 - self.p)
+        else:
+            mask = x.new_ones(x.size(0), x.size(1)).bernoulli_(1 - self.p) / (1 - self.p)
         return x * mask
 
 
@@ -46,10 +49,16 @@ class LSTMStream(nn.Module):
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # x: [B, T, input_dim] → returns [B, hidden_dim]
         out = x
-        for lstm, drop in zip(self.layers, self.dropouts):
+        for i, (lstm, drop) in enumerate(zip(self.layers, self.dropouts)):
             out, _ = lstm(out)   # [B, T, H]
-            out    = drop(out)
-        return out[:, -1, :]    # take final timestep hidden state
+            if i < len(self.layers) - 1:
+                out = drop(out)  # apply to full sequence for intermediate layers
+            else:
+                # Last layer: only dropout the final timestep before returning
+                out = out[:, -1, :]
+                out = drop(out)
+                return out
+        return out[:, -1, :]
 
 
 class DualStreamLSTM(nn.Module):
@@ -100,7 +109,7 @@ class DualStreamLSTM(nn.Module):
         out     = self.fc1(fused)
         out     = self.act(out)
         out     = self.fc2(out)                       # [B, 1]  raw logit
-        return torch.sigmoid(out).squeeze(-1)         # [B]     Prob(up)
+        return out.squeeze(-1)                        # [B]     Logits
 
     @property
     def n_params(self) -> int:

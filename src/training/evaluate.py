@@ -89,13 +89,24 @@ def evaluate(
         return {}
 
     eval_cfg   = cfg.get("evaluation", {})
-    conf_tiers = eval_cfg.get("confidence_tiers", [0.55, 0.65, 0.75, 0.85])
     roll_win   = eval_cfg.get("rolling_window_days", 30)
     cal_bins   = eval_cfg.get("calibration_bins", 10)
 
-    # Columns needed
+    # ── 0. Dynamic Calibration ───────────────────────────────────────────────
+    # Compute dynamic threshold: mean + 1.5 * std of variance
+    v_mean = df["variance"].mean()
+    v_std  = df["variance"].std()
+    # If std is 0 (all identical), use a small epsilon
+    dynamic_abstain_threshold = v_mean + 1.5 * v_std
+    
+    log.info(f"Dynamic Calibration ({split_name}) | var_mean={v_mean:.6f} var_std={v_std:.6f} | threshold={dynamic_abstain_threshold:.6f}")
+
+    # Re-apply abstention based on dynamic threshold
+    df["abstained"]   = df["variance"] > dynamic_abstain_threshold
+    df["direction"]   = np.where(df["abstained"], "ABSTAIN", 
+                                 np.where(df["prob"] >= 0.5, "UP", "DOWN"))
+    
     df["pred_binary"] = (df["direction"] == "UP").astype(int)
-    df["abstained"]   = (df["direction"] == "ABSTAIN")
     df_active         = df[~df["abstained"]]
 
     # ── 1. Overall metrics ────────────────────────────────────────────────────
@@ -106,15 +117,19 @@ def evaluate(
 
     # ── 2. Confidence tier accuracy ───────────────────────────────────────────
     tier_metrics = {}
-    for thresh in conf_tiers:
-        high_conf = df[(df["variance"] <= (1 - thresh)) & ~df["abstained"]]
+    # Tiers now represent "Top X% most confident" rather than hardcoded 0.65
+    # or we can use multipliers of sigma. Let's use multipliers: 0.5s, 1.0s, 1.5s, 2.0s
+    sigmas = [0.5, 1.0, 1.5, 2.0]
+    for s in sigmas:
+        t_val = v_mean + s * v_std
+        high_conf = df[df["variance"] <= t_val]
         if len(high_conf) == 0:
-            tier_metrics[f"acc@conf>{thresh}"] = None
+            tier_metrics[f"acc@var<{s}σ"] = None
         else:
-            tier_metrics[f"acc@conf>{thresh}"] = round(
-                _accuracy(high_conf["label"], (high_conf["direction"] == "UP").astype(int)), 4
+            tier_metrics[f"acc@var<{s}σ"] = round(
+                _accuracy(high_conf["label"], (high_conf["prob"] >= 0.5).astype(int)), 4
             )
-            tier_metrics[f"n@conf>{thresh}"] = len(high_conf)
+            tier_metrics[f"n@var<{s}σ"] = len(high_conf)
 
     # ── 3. Abstention rate ────────────────────────────────────────────────────
     abstention_rate = float(df["abstained"].mean())

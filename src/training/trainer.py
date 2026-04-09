@@ -45,7 +45,7 @@ def compute_fisher(model, loader, device, n_batches=50):
         price, sent, labels = price.to(device), sent.to(device), labels.to(device)
         model.zero_grad()
         out  = model(price, sent)
-        loss = criterion(out, labels)
+        loss = nn.functional.binary_cross_entropy_with_logits(out, labels)
         loss.backward()
         for n, p in model.named_parameters():
             if p.requires_grad and p.grad is not None:
@@ -74,7 +74,7 @@ def _train_epoch(model, loader, optimizer, criterion, device, grad_clip):
         optimizer.step()
 
         total_loss += loss.item() * len(labels)
-        preds  = (out >= 0.5).float()
+        preds  = (out >= 0.0).float()
         correct += (preds == labels).sum().item()
         total  += len(labels)
 
@@ -90,7 +90,7 @@ def _eval_epoch(model, loader, criterion, device):
         out   = model(price, sent)
         loss  = criterion(out, labels)
         total_loss += loss.item() * len(labels)
-        preds = (out >= 0.5).float()
+        preds = (out >= 0.0).float()
         correct += (preds == labels).sum().item()
         total   += len(labels)
     return total_loss / total, correct / total
@@ -158,12 +158,7 @@ def train(
     n_pos      = all_labels.sum()
     n_neg      = len(all_labels) - n_pos
     pos_weight = torch.tensor([n_neg / (n_pos + 1e-9)], device=device)
-    criterion  = nn.BCELoss(weight=None)   # using pos_weight via BCEWithLogitsLoss pattern
-    # Proper weighted BCE:
-    criterion  = lambda out, lbl: nn.functional.binary_cross_entropy(
-        out, lbl,
-        weight=(lbl * pos_weight[0] + (1 - lbl) * 1.0)
-    )
+    criterion  = nn.BCEWithLogitsLoss(pos_weight=pos_weight)
 
     # ── Model ─────────────────────────────────────────────────────────────────
     model     = build_model(cfg).to(device)

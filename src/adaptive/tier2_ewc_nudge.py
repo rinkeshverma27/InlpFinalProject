@@ -45,7 +45,7 @@ def run_tier2(recent_loader, cfg: dict, device: Optional[torch.device] = None):
 
     ewc_loss = EWCLoss(model, fisher, ref_params, lamda)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    criterion = nn.BCELoss()
+    criterion = nn.BCEWithLogitsLoss()
 
     model.train()
     total_loss = 0.0

@@ -199,9 +199,11 @@ def cmd_eval(args, cfg):
 
             for price, sent, labels, dates in loader:
                 price, sent = price.to(device), sent.to(device)
-                mean, var, abstain = mc_predict(model, price, sent, n_passes, thresh)
+                mean, var = mc_predict(model, price, sent, n_passes)
                 for i in range(len(labels)):
-                    direction = "ABSTAIN" if abstain[i].item() else ("UP" if mean[i].item() >= 0.5 else "DOWN")
+                    # Direction will be re-calibrated in evaluate.py, 
+                    # but we provide a default here for consistency.
+                    direction = "UP" if mean[i].item() >= 0.5 else "DOWN"
                     rows.append({
                         "date":      dates[i],
                         "ticker":    ticker,
@@ -248,6 +250,7 @@ def cmd_predict(args, cfg):
     sent_seq  = fd["sentiment_seq"][-1]
     date_str  = fd["dates"][-1]
 
+    # predict_single inside mc_dropout.py handles the logit-to-prob conversion
     result = predict_single(model, price_seq, sent_seq, cfg, device)
     print(f"\n{'='*50}")
     print(f"  Prediction for {ticker} — trade date: {date_str}")
