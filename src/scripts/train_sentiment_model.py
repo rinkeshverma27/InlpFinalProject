@@ -14,56 +14,64 @@ from transformers import (
 
 # Ensure the parent directory is in the path to import from src
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from src.utils.paths import RAW_DATA_DIR, PROJECT_ROOT
+# Define paths locally since src.utils.paths is missing
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 
 def train_muril_sentiment():
     print("Initiating MuRIL Fine-Tuning for Financial Sentiment...")
     print("Optimization target: 4GB VRAM strict constraints")
     
-    data_path = RAW_DATA_DIR / "synthetic_hindi_financial_train.csv"
+    data_path = PROJECT_ROOT / "data" / "inputs" / "mega_synthetic_hindi_train.csv"
     if not data_path.exists():
         print(f"Error: Training data not found at {data_path}")
         return
         
     df = pd.read_csv(data_path)
-    print(f"Loaded {len(df)} samples.")
+    # ── Focus on Distinct Sentences ──
+    df = df.drop_duplicates(subset=['text']).copy()
+    print(f"Loaded {len(df)} distinct samples.")
     
     # Split into train/validation
     train_df, val_df = train_test_split(df, test_size=0.1, random_state=42)
     
-    # Convert to HuggingFace Datasets
+    # ... (Dataset conversion same) ...
     train_dataset = Dataset.from_pandas(train_df)
     val_dataset = Dataset.from_pandas(val_df)
     
     model_name = "google/muril-base-cased"
-    
-    print(f"Downloading/Loading tokenizer and base model {model_name}...")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     
     def tokenize_function(examples):
-        return tokenizer(examples["text"], padding="max_length", truncation=True, max_length=64)
+        return tokenizer(examples["text"], padding="max_length", truncation=True, max_length=32) # Compact
         
     tokenized_train = train_dataset.map(tokenize_function, batched=True)
     tokenized_val = val_dataset.map(tokenize_function, batched=True)
     
-    # We load num_labels=2 for Binary Sentiment (Positive/Negative)
     model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=2)
+    
+    # ── FREEZE ALL BRAIN CELLS (Encoder) ──
+    # We only train the classification head
+    for name, param in model.named_parameters():
+        if "classifier" not in name: # Only keep the 'head' active
+            param.requires_grad = False
     
     output_dir = PROJECT_ROOT / "models" / "muril_financial_sentiment_v1"
     
-    # Strict parameters to run steadily without crashing
+    print(f"🚀 Turbo Training on: GPU (CUDA + Frozen Encoder)")
+
     training_args = TrainingArguments(
         output_dir=output_dir,
-        num_train_epochs=3,              
-        per_device_train_batch_size=4,   
-        per_device_eval_batch_size=4,
-        gradient_accumulation_steps=4,   
+        num_train_epochs=5,               # More epochs since we only train the head
+        per_device_train_batch_size=8,    # Can fit more in VRAM now!
+        per_device_eval_batch_size=8,
+        gradient_accumulation_steps=2,   
         warmup_steps=50,
         weight_decay=0.01,
-        learning_rate=2e-5,
+        learning_rate=1e-3,               # Higher LR for head training
         evaluation_strategy="epoch",
         save_strategy="epoch",
-        use_cpu=True,                    # FORCE CPU TRAINING TO BYPASS 4GB VRAM LIMIT
+        fp16=True,                        # Essential
         logging_dir='./logs/muril_train',
         logging_steps=10,
         load_best_model_at_end=True,

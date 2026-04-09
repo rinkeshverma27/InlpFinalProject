@@ -52,7 +52,10 @@ def main():
     
     model = BinaryLSTM(len(feature_cols)).to(device)
     model.load_state_dict(torch.load(model_path, map_location=device))
-    model.eval()
+    
+    # ── MC Dropout Requirement ──
+    # Keep the model in train mode to leave Dropout layers ACTIVE during inference
+    model.train()
 
     # Load Data
     df = pd.read_csv(test_data_path)
@@ -71,21 +74,39 @@ def main():
         
         with torch.no_grad():
             x_tensor = torch.tensor(last_window, dtype=torch.float32).unsqueeze(0).to(device)
-            logits = model(x_tensor)
-            probs = torch.softmax(logits, dim=1).cpu().numpy()[0]
-            pred_class = np.argmax(probs)
-            confidence = probs[pred_class]
+            
+            # ── 50-Pass MC Dropout Inference ──
+            mc_passes = 50
+            mc_probs = []
+            
+            for _ in range(mc_passes):
+                logits = model(x_tensor)
+                probs = torch.softmax(logits, dim=1).cpu().numpy()[0]
+                mc_probs.append(probs)
+                
+            # Calculate Mean and Variance
+            mc_probs = np.array(mc_probs)
+            mean_probs = mc_probs.mean(axis=0)       # Mean confidence
+            std_probs = mc_probs.std(axis=0)         # Variance / Uncertainty Risk
+            
+            pred_class = np.argmax(mean_probs)
+            confidence = mean_probs[pred_class]
+            uncertainty = std_probs[pred_class]
             
             direction = "UP" if pred_class == 1 else "DOWN"
+            
+            # Blueprint: Significant signal = high confidence + low MC uncertainty
+            # Aligns with production_predictions.csv schema (YES / NO column)
+            is_significant = (uncertainty < 0.10 and confidence > 0.55)
             
             results.append({
                 'Ticker': ticker,
                 'Date': group['Date'].iloc[-1],
                 'Prediction': direction,
                 'Confidence': f"{confidence:.2%}",
-                'Probability_UP': f"{probs[1]:.2%}",
-                'Probability_DOWN': f"{probs[0]:.2%}",
-                'Significant_Signal': "YES" if confidence > 0.60 else "NO"
+                'Probability_UP': f"{mean_probs[1]:.2%}",
+                'Probability_DOWN': f"{mean_probs[0]:.2%}",
+                'Significant_Signal': "YES" if is_significant else "NO"
             })
             
     # Save Results

@@ -4,9 +4,14 @@ from transformers import pipeline
 import sys
 import os
 
-# Ensure the parent directory is in the path to import from src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
-from src.utils.paths import NEWS_RAW_DIR, NEWS_PROCESSED_DIR
+from pathlib import Path
+# Define paths locally
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+NEWS_RAW_DIR = PROJECT_ROOT / "data" / "news" / "raw"
+NEWS_PROCESSED_DIR = PROJECT_ROOT / "data" / "news" / "processed"
+
+# Ensure directories exist
+NEWS_PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
 def run_hindi_sentiment():
     print("Initializing Evaluator for Hindi/Hinglish Sentiment (MuRIL/IndicBERT)...")
@@ -15,22 +20,19 @@ def run_hindi_sentiment():
     # For Stage 0 evaluate MuRIL. Can switch to ai4bharat/indic-bert if needed.
     # Note: Using a generic sentiment model or a fine-tuned MuRIL if available.
     # We will use an available multilingual/Hindi model for demonstration of the pipeline.
-    model_name = "google/muril-base-cased"
-    print(f"Selected Model: {model_name}")
+    # Load the newly trained Custom MuRIL model
+    model_path = str(PROJECT_ROOT / "models" / "muril_financial_sentiment_v1")
+    print(f"Selected Custom Model: {model_path}")
     
     try:
-        # Note: If google/muril-base-cased is not fine-tuned for sentiment, we would need 
-        # to load a specific fine-tuned version. For now, we simulate the pipeline load.
-        # IF this fails due to no classification head, we catch it and use a placeholder or 
-        # a known multilingual sentiment model fine-tuned on Hindi.
         sentiment_pipeline = pipeline(
             "text-classification", 
-            model=model_name, 
+            model=model_path, 
             device=device
         )
     except Exception as e:
-        print(f"Pipeline init note: Using base MuRIL without fine-tuned head requires custom training.")
-        print("Falling back to lxyuan/distilbert-base-multilingual-cased-sentiments-student TEMPORARILY for pipeline validation")
+        print(f"Error loading custom model: {e}")
+        print("Falling back to lxyuan/distilbert-base-multilingual-cased-sentiments-student")
         sentiment_pipeline = pipeline(
             "sentiment-analysis", 
             model="lxyuan/distilbert-base-multilingual-cased-sentiments-student", 
