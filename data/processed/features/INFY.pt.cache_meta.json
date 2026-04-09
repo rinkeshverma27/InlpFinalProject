@@ -1,6 +1,6 @@
 {
-  "completed_at": "2026-04-08T20:39:37.724578+00:00",
-  "output": "/home/rinkesh-verma/Desktop/gemini/data/processed/features/INFY.pt",
+  "completed_at": "2026-04-09T06:17:55.543002+00:00",
+  "output": "/home/rinkesh-verma/Desktop/INLP Final Project/InlpFinalProject/data/processed/features/INFY.pt",
   "ticker": "INFY",
-  "n_samples": 137
+  "n_samples": 5339
 }

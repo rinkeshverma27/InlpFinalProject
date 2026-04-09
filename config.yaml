@@ -8,7 +8,7 @@
 #   vram_profile: "full"  → maximum quality, ≥12 GB GPU
 # ═══════════════════════════════════════════════════════════════════════════════
 
-vram_profile: "8gb"   # ← change this to switch profiles
+vram_profile: "4gb"   # ← change this to switch profiles
 
 # ─────────────────────────────────────────────────────────────────────────────
 # VRAM PROFILES — all model dims and batch sizes per profile

@@ -128,7 +128,7 @@ def aggregate_ticker(
 
     scores = pd.concat([en_scores, hi_scores]).sort_index()
     news_df = news_df.join(scores, rsuffix="_score")
-    news_df[SCORE_COLS] = news_df[SCORE_COLS].fillna(np.array([0.0, 0.0, 1.0]))
+    news_df[SCORE_COLS] = news_df[SCORE_COLS].fillna({"pos": 0.0, "neg": 0.0, "neu": 1.0})
 
     # ── Daily aggregation ────────────────────────────────────────────────────
     daily_records = []

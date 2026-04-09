@@ -89,6 +89,10 @@ def fuse_ticker(
         sent_df.index = pd.to_datetime(sent_df.index)
 
     # ── Join ──────────────────────────────────────────────────────────────────
+    # Normalize both indices to tz-naive date-only so they can be joined.
+    # The 20-year OHLCV CSV carries IST timezone info; sentiment parquet is tz-naive.
+    price_df.index = pd.to_datetime(price_df.index).tz_localize(None).normalize()
+    sent_df.index  = pd.to_datetime(sent_df.index).tz_localize(None).normalize()
     fused = price_df.join(sent_df[SENTIMENT_COLS], how="left")
     # Forward-fill missing sentiment (sparse Hindi days, weekends)
     fused[SENTIMENT_COLS] = fused[SENTIMENT_COLS].ffill(limit=5).fillna(0.0)

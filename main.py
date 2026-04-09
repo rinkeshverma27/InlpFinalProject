@@ -366,12 +366,7 @@ def main():
         log.error(f"config.yaml not found at {cfg_path}. Are you in the project root?")
         sys.exit(1)
 
-    cfg = load_config(cfg_path)
-
-    # Apply CLI profile override
-    if args.profile:
-        cfg["vram_profile"] = args.profile
-        cfg = load_config(cfg_path)   # re-parse with new profile
+    cfg = load_config(cfg_path, profile_override=args.profile)
 
     # Create all directories
     ensure_dirs()

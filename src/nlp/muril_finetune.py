@@ -70,6 +70,15 @@ def _get_soft_labels(texts, cfg, device, temperature=4.0) -> np.ndarray:
     # Temperature scaling: sharpen/soften teacher distribution
     logits    = np.log(probs + 1e-9) / temperature
     soft_labs = np.exp(logits) / np.exp(logits).sum(axis=1, keepdims=True)
+
+    # FIX 1: Evict FinBERT from GPU immediately after use.
+    # Both Teacher + Student cannot coexist in 4GB VRAM.
+    import gc
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        log.info(f"[MEM] GPU cache cleared after FinBERT. Free VRAM: "
+                 f"{torch.cuda.mem_get_info()[0]/1e9:.2f} GB")
     return soft_labs
 
 
@@ -96,6 +105,7 @@ def finetune_muril(cfg: dict, force: bool = False, device: Optional[torch.device
 
     nlp_cfg    = cfg.get("nlp", {})
     train_cfg  = cfg.get("training", {})
+    model_cfg  = cfg.get("model", {})
     model_id   = nlp_cfg.get("muril_model_id", "google/muril-base-cased")
     freeze_n   = nlp_cfg.get("muril_freeze_layers", 8)
     temp       = nlp_cfg.get("distill_temperature", 4.0)
@@ -105,9 +115,22 @@ def finetune_muril(cfg: dict, force: bool = False, device: Optional[torch.device
     epochs     = train_cfg.get("muril_epochs", 5)
     batch_sz   = train_cfg.get("muril_batch_size", 16)
     warmup_r   = train_cfg.get("muril_warmup_ratio", 0.1)
+    # In 4gb/int8 mode: use GPU only for fast teacher inference, train student on CPU.
+    # MuRIL (180M params) + AdamW optimizer states need ~3GB alone — too much for 4GB GPU.
+    is_low_vram = model_cfg.get("use_int8_inference", False)
+    if is_low_vram:
+        max_samp = min(max_samp, 64)
+        log.info("[4GB MODE] Capping distillation samples to 64 for quick smoke-test.")
 
     if device is None:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Teacher runs on GPU (fast), Student trains on CPU (unlimited RAM)
+    teacher_device = device
+    student_device = torch.device("cpu") if is_low_vram else device
+    use_amp = (student_device.type == "cuda")
+    if is_low_vram:
+        log.info("[4GB MODE] Student (MuRIL) will train on CPU to avoid VRAM OOM.")
 
     # ── Load dataset ──────────────────────────────────────────────────────────
     hi_csv = DATASETS_DIR / "hindi_hinglish_financial.csv"
@@ -136,7 +159,7 @@ def finetune_muril(cfg: dict, force: bool = False, device: Optional[torch.device
     hard_labels = df["hard_int"].tolist()
 
     # ── Generate soft labels from FinBERT teacher ─────────────────────────────
-    soft_labels = _get_soft_labels(texts, cfg, device, temperature=temp)
+    soft_labels = _get_soft_labels(texts, cfg, teacher_device, temperature=temp)
 
     # ── Load MuRIL student ────────────────────────────────────────────────────
     cache_dir = PRETRAINED_DIR / "muril"
@@ -159,19 +182,25 @@ def finetune_muril(cfg: dict, force: bool = False, device: Optional[torch.device
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     log.info(f"MuRIL trainable parameters: {trainable:,}  (frozen first {freeze_n} layers)")
 
-    model.to(device)
+    model.to(student_device)
 
     # ── DataLoader ────────────────────────────────────────────────────────────
     dataset    = HindiDistillDataset(texts, hard_labels, soft_labels, tokenizer)
-    loader     = DataLoader(dataset, batch_size=batch_sz, shuffle=True, num_workers=2)
+    # num_workers=0 avoids the tokenizer fork/parallelism warning
+    loader     = DataLoader(dataset, batch_size=batch_sz, shuffle=True, num_workers=0)
 
+    # FIX 3: foreach=False disables the multi-tensor batched AdamW update
+    # that causes the 578MB allocation spike seen in the OOM traceback.
     optimizer  = torch.optim.AdamW(
-        [p for p in model.parameters() if p.requires_grad], lr=lr, weight_decay=1e-4
+        [p for p in model.parameters() if p.requires_grad],
+        lr=lr, weight_decay=1e-4, foreach=False,
     )
     total_steps = len(loader) * epochs
     scheduler   = get_linear_schedule_with_warmup(
         optimizer, int(total_steps * warmup_r), total_steps
     )
+    # FIX 4: AMP GradScaler — halves VRAM by using fp16 for forward/backward
+    scaler = torch.cuda.amp.GradScaler(enabled=use_amp)
 
     # ── Training loop ─────────────────────────────────────────────────────────
     CKPT_DIR = CHECKPOINTS_DIR / "muril_finetune"
@@ -182,25 +211,25 @@ def finetune_muril(cfg: dict, force: bool = False, device: Optional[torch.device
         model.train()
         epoch_loss = 0.0
         for step, batch in enumerate(loader):
-            input_ids  = batch["input_ids"].to(device)
-            attn_mask  = batch["attention_mask"].to(device)
-            hard_label = batch["hard_label"].to(device)
-            soft_label = batch["soft_label"].to(device)
-
-            logits     = model(input_ids=input_ids, attention_mask=attn_mask).logits
-            log_probs  = F.log_softmax(logits / temp, dim=-1)
-
-            # Distillation loss (KL divergence with soft targets)
-            kl_loss    = F.kl_div(log_probs, soft_label, reduction="batchmean")
-            # Hard label cross-entropy
-            ce_loss    = F.cross_entropy(logits, hard_label)
-
-            loss = alpha * kl_loss + (1 - alpha) * ce_loss
+            input_ids  = batch["input_ids"].to(student_device)
+            attn_mask  = batch["attention_mask"].to(student_device)
+            hard_label = batch["hard_label"].to(student_device)
+            soft_label = batch["soft_label"].to(student_device)
 
             optimizer.zero_grad()
-            loss.backward()
+
+            with torch.cuda.amp.autocast(enabled=use_amp):
+                logits    = model(input_ids=input_ids, attention_mask=attn_mask).logits
+                log_probs = F.log_softmax(logits / temp, dim=-1)
+                kl_loss   = F.kl_div(log_probs, soft_label, reduction="batchmean")
+                ce_loss   = F.cross_entropy(logits, hard_label)
+                loss      = alpha * kl_loss + (1 - alpha) * ce_loss
+
+            scaler.scale(loss).backward()
+            scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            optimizer.step()
+            scaler.step(optimizer)
+            scaler.update()
             scheduler.step()
             epoch_loss += loss.item()
 

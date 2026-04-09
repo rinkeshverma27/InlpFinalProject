@@ -8,6 +8,8 @@ data/price/
 data/news/raw/
 data/handshake/
 models/checkpoints/
+models/pretrained/
+models/finetuned/
 
 # ── Trust weights are committed (small JSON, versioned) ────────
 # data/trust_weights/  <-- DO commit these

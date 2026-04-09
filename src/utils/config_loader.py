@@ -12,7 +12,7 @@ log = get_logger("config")
 _CONFIG_PATH = pathlib.Path(__file__).resolve().parents[2] / "config.yaml"
 
 
-def load_config(path: pathlib.Path = _CONFIG_PATH) -> dict:
+def load_config(path: pathlib.Path = _CONFIG_PATH, profile_override: str = None) -> dict:
     """
     Load config.yaml and overlay the active VRAM profile's values onto the
     model/training sections. Returns a single merged dict.
@@ -20,7 +20,7 @@ def load_config(path: pathlib.Path = _CONFIG_PATH) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
 
-    profile_name = cfg.get("vram_profile", "8gb")
+    profile_name = profile_override or cfg.get("vram_profile", "8gb")
     profiles     = cfg.get("profiles", {})
     profile      = profiles.get(profile_name, {})
 
