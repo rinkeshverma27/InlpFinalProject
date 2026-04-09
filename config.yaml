@@ -8,7 +8,7 @@
 #   vram_profile: "full"  → maximum quality, ≥12 GB GPU
 # ═══════════════════════════════════════════════════════════════════════════════
 
-vram_profile: "4gb"   # ← change this to switch profiles
+vram_profile: "full"   # ← change this to switch profiles
 
 # ─────────────────────────────────────────────────────────────────────────────
 # VRAM PROFILES — all model dims and batch sizes per profile
@@ -171,12 +171,12 @@ training:
   early_stopping_patience: 10
   cosine_t0: 10
   # Walk-forward split tailored for the 1-year (2025-2026) dummy dataset
-  train_start: "2025-01-01"
-  train_end:   "2025-08-31"
-  val_start:   "2025-09-01"
-  val_end:     "2025-11-15"
-  test_start:  "2025-11-16"
-  test_end:    "2026-12-31"
+  train_start: "2021-01-01"
+  train_end:   "2024-08-31"
+  val_start:   "2024-09-01"
+  val_end:     "2025-6-15"
+  test_start:  "2025-7-16"
+  test_end:    "2026-1-28"
   # MuRIL fine-tuning (distillation)
   muril_lr: 2.0e-5
   muril_epochs: 5               # overridden by profile
