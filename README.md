@@ -1,6 +1,6 @@
 # Dual-Stream Stock Direction Predictor (Nifty-50)
 
-![Stock Direction Predictor Pipeline](stock_direction_predictor_pipeline.svg)
+![Stock Direction Predictor Pipeline](architecture.jpeg)
 
 A production-ready deep learning pipeline designed to predict stock price direction (`UP` or `DOWN`) by fusing **Cross-Lingual Financial Sentiment** with **High-Frequency Technical Indicators**.
 
