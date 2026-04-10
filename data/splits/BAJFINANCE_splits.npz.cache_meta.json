@@ -1,0 +1,20 @@
+{
+  "completed_at": "2026-04-09T16:02:50.308652+00:00",
+  "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/splits/BAJFINANCE_splits.npz",
+  "ticker": "BAJFINANCE",
+  "n_train": 649,
+  "n_val": 62,
+  "n_test": 43,
+  "split_config": {
+    "train_start": "2021-01-01",
+    "train_end": "2024-06-30",
+    "val_start": "2024-07-01",
+    "val_end": "2024-10-31",
+    "test_start": "2024-11-01",
+    "test_end": "2025-01-27",
+    "label_horizon_days": 3,
+    "label_threshold": 0.008,
+    "window_min": 5,
+    "window_max": 15
+  }
+}

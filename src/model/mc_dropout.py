@@ -1,0 +1,112 @@
+"""
+src/model/mc_dropout.py — Monte Carlo Dropout inference.
+
+Runs the model in train() mode (dropout active) for N forward passes.
+Mean = direction probability. Variance = uncertainty estimate.
+High variance → model is confused → abstain.
+"""
+
+import torch
+import numpy as np
+from typing import Tuple
+
+
+def mc_predict(
+    model,
+    price_seq: torch.Tensor,
+    sentiment_seq: torch.Tensor,
+    n_passes: int,
+    seed: int | None = None,
+) -> Tuple[torch.Tensor, torch.Tensor]:
+    """
+    Run Monte Carlo Dropout inference.
+
+    Args:
+        model         : DualStreamLSTM instance.
+        price_seq     : [B, T, 11]
+        sentiment_seq : [B, T, 9]
+        n_passes      : Number of stochastic forward passes.
+        seed          : Optional fixed seed for reproducible MC dropout.
+
+    Returns:
+        mean     : [B] mean probability of UP (direction call)
+        variance : [B] variance across passes (uncertainty)
+    """
+    model.train()   # KEEP dropout active during inference
+    preds = []
+
+    if seed is not None:
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed(seed)
+            torch.cuda.manual_seed_all(seed)
+
+    with torch.no_grad():
+        for _ in range(n_passes):
+            logits = model(price_seq, sentiment_seq)   # [B]
+            probs  = torch.sigmoid(logits)
+            preds.append(probs.detach())               # Detach to save memory
+
+    preds    = torch.stack(preds, dim=0)           # [N_passes, B]
+    mean     = preds.mean(dim=0)                   # [B]
+    variance = preds.var(dim=0)                    # [B]
+
+    return mean, variance
+
+
+def predict_single(
+    model,
+    price_seq: torch.Tensor,
+    sentiment_seq: torch.Tensor,
+    cfg: dict,
+    device: torch.device,
+) -> dict:
+    """
+    Convenience wrapper for predicting a single sample.
+
+    Returns:
+        dict with:
+            direction   : "UP" | "DOWN" | "ABSTAIN"
+            probability : float [0,1] - probability of UP
+            variance    : float - MC uncertainty
+            direction_strength : float [0,1] - directional certainty from probability distance to 0.5
+            stability          : float [0,1] - inverse uncertainty from MC variance
+            confidence         : float [0,1] - combined score using both direction and stability
+    """
+    m_cfg    = cfg.get("model", {})
+    n_passes = m_cfg.get("mc_dropout_passes", 30)
+    thresh   = m_cfg.get("confidence_threshold", 0.65)
+
+    if price_seq.dim() == 2:
+        price_seq     = price_seq.unsqueeze(0)
+    if sentiment_seq.dim() == 2:
+        sentiment_seq = sentiment_seq.unsqueeze(0)
+
+    price_seq     = price_seq.to(device)
+    sentiment_seq = sentiment_seq.to(device)
+
+    seed = int(cfg.get("reproducibility", {}).get("seed", 42))
+    mean, var = mc_predict(model, price_seq, sentiment_seq, n_passes, seed=seed)
+
+    prob   = mean[0].item()
+    varval = var[0].item()
+    
+    # If variance is very high, we abstain.
+    do_abs = varval > (1.0 - thresh)
+    direction_strength = abs(prob - 0.5) * 2.0
+    stability = max(0.0, min(1.0, 1.0 - varval))
+    confidence = direction_strength * stability
+
+    if do_abs:
+        direction = "ABSTAIN"
+    else:
+        direction = "UP" if prob >= 0.5 else "DOWN"
+
+    return {
+        "direction":   direction,
+        "probability": round(prob, 4),
+        "variance":    round(varval, 4),
+        "direction_strength": round(direction_strength, 4),
+        "stability":   round(stability, 4),
+        "confidence":  round(confidence, 4),
+    }

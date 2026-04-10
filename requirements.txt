@@ -1,0 +1,28 @@
+
+torch>=2.1.0
+transformers>=4.38.0
+datasets>=2.18.0
+accelerate>=0.27.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+# Data
+pandas>=2.0.0
+pyarrow>=14.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# NLP
+lingua-language-detector>=2.0.0
+
+# Config & utils
+pyyaml>=6.0.1
+tqdm>=4.66.0
+psutil>=5.9.0
+
+# Adaptive learning
+python-dateutil>=2.8.2
+
+# Optional: for notebook-based evaluation
+matplotlib>=3.8.0
+# seaborn>=0.13.0

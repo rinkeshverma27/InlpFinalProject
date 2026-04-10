@@ -1,0 +1,736 @@
+python main.py train
+20:38:37 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+20:38:37 | INFO     | main | Command: train | Profile: full | Force: False
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+20:38:37 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+20:38:37 | INFO     | errors | ▶  Starting stage: train
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:38:37 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:38:38 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+20:38:39 | INFO     | trainer | Epoch   1/100 | train_loss=0.6280 acc=0.4896 | val_loss=0.6288 acc=0.5272 | 0.7s | LR=1.49e-04
+20:38:39 | INFO     | trainer |   ★ New best: val_acc=0.5272
+20:38:39 | INFO     | trainer | Epoch   2/100 | train_loss=0.6268 acc=0.5050 | val_loss=0.6237 acc=0.4728 | 0.5s | LR=1.46e-04
+20:38:40 | INFO     | trainer | Epoch   3/100 | train_loss=0.6262 acc=0.4913 | val_loss=0.6255 acc=0.5199 | 0.4s | LR=1.42e-04
+20:38:40 | INFO     | trainer | Epoch   4/100 | train_loss=0.6251 acc=0.4957 | val_loss=0.6245 acc=0.5052 | 0.4s | LR=1.36e-04
+20:38:41 | INFO     | trainer | Epoch   5/100 | train_loss=0.6234 acc=0.5172 | val_loss=0.6262 acc=0.4728 | 0.4s | LR=1.28e-04
+20:38:41 | INFO     | trainer | Epoch   6/100 | train_loss=0.6248 acc=0.4981 | val_loss=0.6263 acc=0.5317 | 0.4s | LR=1.19e-04
+20:38:41 | INFO     | trainer |   ★ New best: val_acc=0.5317
+20:38:41 | INFO     | trainer | Epoch   7/100 | train_loss=0.6237 acc=0.4979 | val_loss=0.6239 acc=0.4728 | 0.4s | LR=1.09e-04
+20:38:42 | INFO     | trainer | Epoch   8/100 | train_loss=0.6231 acc=0.4967 | val_loss=0.6263 acc=0.5272 | 0.4s | LR=9.82e-05
+20:38:42 | INFO     | trainer | Epoch   9/100 | train_loss=0.6237 acc=0.5103 | val_loss=0.6241 acc=0.5007 | 0.5s | LR=8.67e-05
+20:38:43 | INFO     | trainer | Epoch  10/100 | train_loss=0.6226 acc=0.4975 | val_loss=0.6240 acc=0.5214 | 0.5s | LR=7.50e-05
+20:38:43 | INFO     | trainer | Epoch  11/100 | train_loss=0.6229 acc=0.5073 | val_loss=0.6235 acc=0.4728 | 0.4s | LR=6.33e-05
+20:38:44 | INFO     | trainer | Epoch  12/100 | train_loss=0.6230 acc=0.4987 | val_loss=0.6241 acc=0.5258 | 0.4s | LR=5.18e-05
+20:38:44 | INFO     | trainer | Epoch  13/100 | train_loss=0.6234 acc=0.4923 | val_loss=0.6242 acc=0.5214 | 0.5s | LR=4.10e-05
+20:38:45 | INFO     | trainer | Epoch  14/100 | train_loss=0.6230 acc=0.5094 | val_loss=0.6238 acc=0.4742 | 0.4s | LR=3.09e-05
+20:38:45 | INFO     | trainer | Epoch  15/100 | train_loss=0.6225 acc=0.4924 | val_loss=0.6245 acc=0.5140 | 0.5s | LR=2.20e-05
+20:38:46 | INFO     | trainer | Epoch  16/100 | train_loss=0.6226 acc=0.5086 | val_loss=0.6245 acc=0.5125 | 0.5s | LR=1.43e-05
+20:38:46 | INFO     | trainer | Epoch  17/100 | train_loss=0.6228 acc=0.4982 | val_loss=0.6242 acc=0.5199 | 0.5s | LR=8.17e-06
+20:38:47 | INFO     | trainer | Epoch  18/100 | train_loss=0.6221 acc=0.5106 | val_loss=0.6244 acc=0.5066 | 0.5s | LR=3.67e-06
+20:38:47 | INFO     | trainer | Epoch  19/100 | train_loss=0.6220 acc=0.5121 | val_loss=0.6243 acc=0.5066 | 0.4s | LR=9.23e-07
+20:38:47 | INFO     | trainer | Epoch  20/100 | train_loss=0.6225 acc=0.5110 | val_loss=0.6243 acc=0.5066 | 0.4s | LR=1.50e-04
+20:38:48 | INFO     | trainer | Epoch  21/100 | train_loss=0.6230 acc=0.4974 | val_loss=0.6239 acc=0.4713 | 0.4s | LR=1.49e-04
+20:38:48 | INFO     | trainer | Epoch  22/100 | train_loss=0.6232 acc=0.5080 | val_loss=0.6257 acc=0.5331 | 0.4s | LR=1.46e-04
+20:38:48 | INFO     | trainer |   ★ New best: val_acc=0.5331
+20:38:49 | INFO     | trainer | Epoch  23/100 | train_loss=0.6235 acc=0.5053 | val_loss=0.6240 acc=0.4683 | 0.4s | LR=1.42e-04
+20:38:49 | INFO     | trainer | Epoch  24/100 | train_loss=0.6230 acc=0.4987 | val_loss=0.6274 acc=0.5272 | 0.4s | LR=1.36e-04
+20:38:50 | INFO     | trainer | Epoch  25/100 | train_loss=0.6225 acc=0.5130 | val_loss=0.6236 acc=0.5125 | 0.4s | LR=1.28e-04
+20:38:50 | INFO     | trainer | Epoch  26/100 | train_loss=0.6236 acc=0.4909 | val_loss=0.6247 acc=0.5125 | 0.4s | LR=1.19e-04
+20:38:50 | INFO     | trainer | Epoch  27/100 | train_loss=0.6217 acc=0.5057 | val_loss=0.6252 acc=0.5317 | 0.4s | LR=1.09e-04
+20:38:51 | INFO     | trainer | Epoch  28/100 | train_loss=0.6216 acc=0.5157 | val_loss=0.6236 acc=0.4860 | 0.4s | LR=9.82e-05
+20:38:51 | INFO     | trainer | Epoch  29/100 | train_loss=0.6225 acc=0.5091 | val_loss=0.6237 acc=0.4816 | 0.4s | LR=8.67e-05
+20:38:52 | INFO     | trainer | Epoch  30/100 | train_loss=0.6208 acc=0.5107 | val_loss=0.6239 acc=0.5096 | 0.4s | LR=7.50e-05
+20:38:52 | INFO     | trainer | Epoch  31/100 | train_loss=0.6214 acc=0.5097 | val_loss=0.6266 acc=0.5243 | 0.4s | LR=6.33e-05
+20:38:53 | INFO     | trainer | Epoch  32/100 | train_loss=0.6208 acc=0.5317 | val_loss=0.6237 acc=0.5007 | 0.4s | LR=5.18e-05
+20:38:53 | INFO     | trainer | Epoch  33/100 | train_loss=0.6203 acc=0.5252 | val_loss=0.6238 acc=0.5214 | 0.5s | LR=4.10e-05
+20:38:54 | INFO     | trainer | Epoch  34/100 | train_loss=0.6205 acc=0.5334 | val_loss=0.6242 acc=0.5169 | 0.4s | LR=3.09e-05
+20:38:54 | INFO     | trainer | Epoch  35/100 | train_loss=0.6200 acc=0.5247 | val_loss=0.6245 acc=0.5125 | 0.4s | LR=2.20e-05
+20:38:54 | INFO     | trainer | Epoch  36/100 | train_loss=0.6200 acc=0.5201 | val_loss=0.6258 acc=0.5184 | 0.4s | LR=1.43e-05
+20:38:55 | INFO     | trainer | Epoch  37/100 | train_loss=0.6200 acc=0.5283 | val_loss=0.6255 acc=0.5169 | 0.4s | LR=8.17e-06
+20:38:55 | INFO     | trainer | Epoch  38/100 | train_loss=0.6186 acc=0.5315 | val_loss=0.6255 acc=0.5184 | 0.4s | LR=3.67e-06
+20:38:56 | INFO     | trainer | Epoch  39/100 | train_loss=0.6195 acc=0.5330 | val_loss=0.6255 acc=0.5155 | 0.4s | LR=9.23e-07
+20:38:56 | INFO     | trainer | Epoch  40/100 | train_loss=0.6188 acc=0.5332 | val_loss=0.6256 acc=0.5199 | 0.4s | LR=1.50e-04
+20:38:56 | INFO     | trainer | Epoch  41/100 | train_loss=0.6208 acc=0.5219 | val_loss=0.6254 acc=0.5169 | 0.4s | LR=1.49e-04
+20:38:57 | INFO     | trainer | Epoch  42/100 | train_loss=0.6199 acc=0.5301 | val_loss=0.6274 acc=0.5007 | 0.4s | LR=1.46e-04
+20:38:57 | INFO     | trainer |   Early stopping at epoch 42 (patience=20).
+20:38:57 | INFO     | trainer | ✓ Best model (val_acc=0.5331) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+20:38:57 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+20:38:57 | INFO     | trainer | Fisher matrix saved.
+20:38:57 | INFO     | errors | ✓  Stage 'train' completed in 20.1s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$ python main.py eval --split test
+20:39:03 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+20:39:03 | INFO     | main | Command: eval | Profile: full | Force: False
+20:39:03 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+20:39:03 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+20:39:03 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+20:39:03 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+20:39:04 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+20:39:04 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+20:39:04 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+20:39:05 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+20:39:05 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+20:39:05 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+20:39:05 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+20:39:05 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+20:39:05 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+20:39:06 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+20:39:06 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+20:39:06 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+20:39:07 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+20:39:07 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+20:39:07 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+20:39:07 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+20:39:07 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+20:39:07 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+20:39:08 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+20:39:08 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+20:39:08 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+20:39:09 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+20:39:09 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+20:39:09 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+20:39:10 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+20:39:10 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+20:39:10 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+20:39:10 | INFO     | errors | ▶  Starting stage: evaluate
+20:39:10 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000344 var_std=0.000073 | threshold=0.000454
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   Overall Accuracy  : 57.08%
+20:39:10 | INFO     | evaluate |   Macro F1          : 0.5663
+20:39:10 | INFO     | evaluate |   Abstention Rate   : 6.22%  (coverage=93.78%)
+20:39:10 | INFO     | evaluate |   ECE (calibration) : 0.0643  (lower=better, 0=perfect)
+20:39:10 | INFO     | evaluate |   acc@var<0.5σ             : 58.33%  (n=264)
+20:39:10 | INFO     | evaluate |   acc@var<1.0σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate |   acc@var<1.5σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate |   acc@var<2.0σ             : 57.08%  (n=452)
+20:39:10 | INFO     | evaluate | ------------------------------------------------------------
+20:39:10 | INFO     | evaluate |   [BAJFINANCE  ] acc=65.91% f1=0.6442 abstain=6.38%
+20:39:10 | INFO     | evaluate |   [BPCL        ] acc=60.00% f1=0.5994 abstain=5.66%
+20:39:10 | INFO     | evaluate |   [HDFCBANK    ] acc=75.00% f1=0.7488 abstain=4.35%
+20:39:10 | INFO     | evaluate |   [ICICIBANK   ] acc=54.76% f1=0.5474 abstain=2.33%
+20:39:10 | INFO     | evaluate |   [INFY        ] acc=38.46% f1=0.3743 abstain=9.30%
+20:39:10 | INFO     | evaluate |   [NTPC        ] acc=33.33% f1=0.2726 abstain=4.26%
+20:39:10 | INFO     | evaluate |   [ONGC        ] acc=63.27% f1=0.6198 abstain=5.77%
+20:39:10 | INFO     | evaluate |   [RELIANCE    ] acc=58.33% f1=0.5556 abstain=5.88%
+20:39:10 | INFO     | evaluate |   [SBIN        ] acc=61.70% f1=0.6126 abstain=9.62%
+20:39:10 | INFO     | evaluate |   [WIPRO       ] acc=56.82% f1=0.5625 abstain=8.33%
+20:39:10 | INFO     | evaluate | ============================================================
+20:39:10 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+20:39:11 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.14 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ python main.py train
+21:17:40 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+21:17:40 | INFO     | main | Command: train | Profile: full | Force: False
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+21:17:40 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+21:17:40 | INFO     | errors | ▶  Starting stage: train
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [BAJFINANCE] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [BAJFINANCE] Splits: train=649, val=62, test=43
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [BPCL] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [BPCL] Splits: train=654, val=67, test=48
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [HDFCBANK] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [HDFCBANK] Splits: train=596, val=55, test=37
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [ICICIBANK] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [ICICIBANK] Splits: train=600, val=61, test=39
+21:17:40 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [INFY] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [INFY] Splits: train=613, val=55, test=49
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [NTPC] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [NTPC] Splits: train=641, val=66, test=41
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [ONGC] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [ONGC] Splits: train=673, val=63, test=50
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [RELIANCE] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [RELIANCE] Splits: train=637, val=55, test=44
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [SBIN] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [SBIN] Splits: train=647, val=56, test=41
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+21:17:40 | INFO     | dataset | [WIPRO] Split cache invalidated: config window changed.
+21:17:40 | INFO     | dataset | [WIPRO] Splits: train=639, val=59, test=45
+21:17:40 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.0d old) — skipping stage.
+21:17:40 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+21:17:41 | INFO     | trainer | Epoch   1/100 | train_loss=0.6307 acc=0.4990 | val_loss=0.6250 acc=0.4758 | 0.7s | LR=1.49e-04
+21:17:41 | INFO     | trainer |   ★ New best: val_acc=0.4758
+21:17:42 | INFO     | trainer | Epoch   2/100 | train_loss=0.6255 acc=0.4996 | val_loss=0.6238 acc=0.4808 | 0.5s | LR=1.46e-04
+21:17:42 | INFO     | trainer |   ★ New best: val_acc=0.4808
+21:17:42 | INFO     | trainer | Epoch   3/100 | train_loss=0.6241 acc=0.5092 | val_loss=0.6239 acc=0.4925 | 0.5s | LR=1.42e-04
+21:17:42 | INFO     | trainer |   ★ New best: val_acc=0.4925
+21:17:43 | INFO     | trainer | Epoch   4/100 | train_loss=0.6234 acc=0.5091 | val_loss=0.6252 acc=0.5008 | 0.4s | LR=1.36e-04
+21:17:43 | INFO     | trainer |   ★ New best: val_acc=0.5008
+21:17:43 | INFO     | trainer | Epoch   5/100 | train_loss=0.6243 acc=0.5154 | val_loss=0.6265 acc=0.5109 | 0.4s | LR=1.28e-04
+21:17:43 | INFO     | trainer |   ★ New best: val_acc=0.5109
+21:17:44 | INFO     | trainer | Epoch   6/100 | train_loss=0.6225 acc=0.5084 | val_loss=0.6243 acc=0.5209 | 0.5s | LR=1.19e-04
+21:17:44 | INFO     | trainer |   ★ New best: val_acc=0.5209
+21:17:44 | INFO     | trainer | Epoch   7/100 | train_loss=0.6221 acc=0.5169 | val_loss=0.6300 acc=0.5159 | 0.4s | LR=1.09e-04
+21:17:45 | INFO     | trainer | Epoch   8/100 | train_loss=0.6229 acc=0.5176 | val_loss=0.6270 acc=0.5109 | 0.4s | LR=9.82e-05
+21:17:45 | INFO     | trainer | Epoch   9/100 | train_loss=0.6223 acc=0.5239 | val_loss=0.6246 acc=0.5192 | 0.4s | LR=8.67e-05
+21:17:46 | INFO     | trainer | Epoch  10/100 | train_loss=0.6222 acc=0.5141 | val_loss=0.6240 acc=0.5175 | 0.4s | LR=7.50e-05
+21:17:46 | INFO     | trainer | Epoch  11/100 | train_loss=0.6224 acc=0.5105 | val_loss=0.6240 acc=0.5109 | 0.4s | LR=6.33e-05
+21:17:46 | INFO     | trainer | Epoch  12/100 | train_loss=0.6216 acc=0.5092 | val_loss=0.6240 acc=0.5075 | 0.4s | LR=5.18e-05
+21:17:47 | INFO     | trainer | Epoch  13/100 | train_loss=0.6224 acc=0.5042 | val_loss=0.6248 acc=0.5225 | 0.4s | LR=4.10e-05
+21:17:47 | INFO     | trainer |   ★ New best: val_acc=0.5225
+21:17:47 | INFO     | trainer | Epoch  14/100 | train_loss=0.6216 acc=0.5264 | val_loss=0.6242 acc=0.5125 | 0.4s | LR=3.09e-05
+21:17:48 | INFO     | trainer | Epoch  15/100 | train_loss=0.6210 acc=0.5111 | val_loss=0.6246 acc=0.5192 | 0.4s | LR=2.20e-05
+21:17:48 | INFO     | trainer | Epoch  16/100 | train_loss=0.6209 acc=0.5235 | val_loss=0.6242 acc=0.5092 | 0.4s | LR=1.43e-05
+21:17:49 | INFO     | trainer | Epoch  17/100 | train_loss=0.6212 acc=0.5138 | val_loss=0.6242 acc=0.5092 | 0.4s | LR=8.17e-06
+21:17:49 | INFO     | trainer | Epoch  18/100 | train_loss=0.6219 acc=0.5106 | val_loss=0.6243 acc=0.5092 | 0.4s | LR=3.67e-06
+21:17:49 | INFO     | trainer | Epoch  19/100 | train_loss=0.6209 acc=0.5144 | val_loss=0.6243 acc=0.5109 | 0.4s | LR=9.23e-07
+21:17:50 | INFO     | trainer | Epoch  20/100 | train_loss=0.6212 acc=0.5130 | val_loss=0.6243 acc=0.5109 | 0.4s | LR=1.50e-04
+21:17:50 | INFO     | trainer | Epoch  21/100 | train_loss=0.6211 acc=0.5224 | val_loss=0.6244 acc=0.5025 | 0.4s | LR=1.49e-04
+21:17:51 | INFO     | trainer | Epoch  22/100 | train_loss=0.6225 acc=0.5187 | val_loss=0.6248 acc=0.4891 | 0.4s | LR=1.46e-04
+21:17:51 | INFO     | trainer | Epoch  23/100 | train_loss=0.6215 acc=0.5163 | val_loss=0.6258 acc=0.5309 | 0.4s | LR=1.42e-04
+21:17:51 | INFO     | trainer |   ★ New best: val_acc=0.5309
+21:17:51 | INFO     | trainer | Epoch  24/100 | train_loss=0.6205 acc=0.5221 | val_loss=0.6291 acc=0.5209 | 0.4s | LR=1.36e-04
+21:17:52 | INFO     | trainer | Epoch  25/100 | train_loss=0.6221 acc=0.5207 | val_loss=0.6258 acc=0.4992 | 0.4s | LR=1.28e-04
+21:17:52 | INFO     | trainer | Epoch  26/100 | train_loss=0.6204 acc=0.5165 | val_loss=0.6316 acc=0.4775 | 0.5s | LR=1.19e-04
+21:17:53 | INFO     | trainer | Epoch  27/100 | train_loss=0.6189 acc=0.5258 | val_loss=0.6353 acc=0.5092 | 0.4s | LR=1.09e-04
+21:17:53 | INFO     | trainer | Epoch  28/100 | train_loss=0.6186 acc=0.5239 | val_loss=0.6331 acc=0.5025 | 0.4s | LR=9.82e-05
+21:17:54 | INFO     | trainer | Epoch  29/100 | train_loss=0.6184 acc=0.5349 | val_loss=0.6294 acc=0.4925 | 0.4s | LR=8.67e-05
+21:17:54 | INFO     | trainer | Epoch  30/100 | train_loss=0.6179 acc=0.5395 | val_loss=0.6301 acc=0.4841 | 0.4s | LR=7.50e-05
+21:17:54 | INFO     | trainer | Epoch  31/100 | train_loss=0.6185 acc=0.5357 | val_loss=0.6329 acc=0.4858 | 0.4s | LR=6.33e-05
+21:17:55 | INFO     | trainer | Epoch  32/100 | train_loss=0.6168 acc=0.5365 | val_loss=0.6311 acc=0.4992 | 0.4s | LR=5.18e-05
+21:17:55 | INFO     | trainer | Epoch  33/100 | train_loss=0.6163 acc=0.5382 | val_loss=0.6356 acc=0.4925 | 0.4s | LR=4.10e-05
+21:17:56 | INFO     | trainer | Epoch  34/100 | train_loss=0.6168 acc=0.5391 | val_loss=0.6363 acc=0.4875 | 0.4s | LR=3.09e-05
+21:17:56 | INFO     | trainer | Epoch  35/100 | train_loss=0.6165 acc=0.5445 | val_loss=0.6336 acc=0.4725 | 0.4s | LR=2.20e-05
+21:17:56 | INFO     | trainer | Epoch  36/100 | train_loss=0.6162 acc=0.5424 | val_loss=0.6352 acc=0.4975 | 0.4s | LR=1.43e-05
+21:17:57 | INFO     | trainer | Epoch  37/100 | train_loss=0.6164 acc=0.5434 | val_loss=0.6347 acc=0.4891 | 0.4s | LR=8.17e-06
+21:17:57 | INFO     | trainer | Epoch  38/100 | train_loss=0.6155 acc=0.5436 | val_loss=0.6344 acc=0.4891 | 0.4s | LR=3.67e-06
+21:17:58 | INFO     | trainer | Epoch  39/100 | train_loss=0.6158 acc=0.5445 | val_loss=0.6344 acc=0.4875 | 0.4s | LR=9.23e-07
+21:17:58 | INFO     | trainer | Epoch  40/100 | train_loss=0.6154 acc=0.5385 | val_loss=0.6344 acc=0.4891 | 0.4s | LR=1.50e-04
+21:17:58 | INFO     | trainer | Epoch  41/100 | train_loss=0.6166 acc=0.5388 | val_loss=0.6392 acc=0.4608 | 0.4s | LR=1.49e-04
+21:17:59 | INFO     | trainer | Epoch  42/100 | train_loss=0.6184 acc=0.5404 | val_loss=0.6304 acc=0.4925 | 0.4s | LR=1.46e-04
+21:17:59 | INFO     | trainer | Epoch  43/100 | train_loss=0.6172 acc=0.5442 | val_loss=0.6397 acc=0.4975 | 0.4s | LR=1.42e-04
+21:17:59 | INFO     | trainer |   Early stopping at epoch 43 (patience=20).
+21:18:00 | INFO     | trainer | ✓ Best model (val_acc=0.5309) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+21:18:00 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+21:18:00 | INFO     | trainer | Fisher matrix saved.
+21:18:00 | INFO     | errors | ✓  Stage 'train' completed in 19.7s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$ python main.py eval --split test
+21:18:05 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+21:18:05 | INFO     | main | Command: eval | Profile: full | Force: False
+21:18:05 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+21:18:05 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+21:18:05 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+21:18:05 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.0d old) — skipping stage.
+21:18:06 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+21:18:06 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+21:18:06 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.0d old) — skipping stage.
+21:18:07 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+21:18:07 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+21:18:07 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.0d old) — skipping stage.
+21:18:08 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+21:18:08 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+21:18:08 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.0d old) — skipping stage.
+21:18:08 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+21:18:08 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+21:18:08 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.0d old) — skipping stage.
+21:18:09 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+21:18:09 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+21:18:09 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.0d old) — skipping stage.
+21:18:10 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+21:18:10 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+21:18:10 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.0d old) — skipping stage.
+21:18:10 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+21:18:10 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+21:18:10 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.0d old) — skipping stage.
+21:18:11 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+21:18:11 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+21:18:11 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.0d old) — skipping stage.
+21:18:12 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+21:18:12 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+21:18:12 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.0d old) — skipping stage.
+21:18:12 | INFO     | errors | ▶  Starting stage: evaluate
+21:18:12 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000432 var_std=0.000094 | threshold=0.000574
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   Overall Accuracy  : 60.15%
+21:18:12 | INFO     | evaluate |   Macro F1          : 0.5976
+21:18:12 | INFO     | evaluate |   Abstention Rate   : 9.84%  (coverage=90.16%)
+21:18:12 | INFO     | evaluate |   ECE (calibration) : 0.0882  (lower=better, 0=perfect)
+21:18:12 | INFO     | evaluate |   acc@var<0.5σ             : 60.31%  (n=262)
+21:18:12 | INFO     | evaluate |   acc@var<1.0σ             : 60.15%  (n=394)
+21:18:12 | INFO     | evaluate |   acc@var<1.5σ             : 60.15%  (n=394)
+21:18:12 | INFO     | evaluate |   acc@var<2.0σ             : 60.00%  (n=430)
+21:18:12 | INFO     | evaluate | ------------------------------------------------------------
+21:18:12 | INFO     | evaluate |   [BAJFINANCE  ] acc=71.79% f1=0.6762 abstain=9.30%
+21:18:12 | INFO     | evaluate |   [BPCL        ] acc=63.04% f1=0.6303 abstain=4.17%
+21:18:12 | INFO     | evaluate |   [HDFCBANK    ] acc=76.47% f1=0.7647 abstain=8.11%
+21:18:12 | INFO     | evaluate |   [ICICIBANK   ] acc=64.71% f1=0.6458 abstain=12.82%
+21:18:12 | INFO     | evaluate |   [INFY        ] acc=51.11% f1=0.4666 abstain=8.16%
+21:18:12 | INFO     | evaluate |   [NTPC        ] acc=25.81% f1=0.2051 abstain=24.39%
+21:18:12 | INFO     | evaluate |   [ONGC        ] acc=68.18% f1=0.6709 abstain=12.00%
+21:18:12 | INFO     | evaluate |   [RELIANCE    ] acc=51.22% f1=0.5096 abstain=6.82%
+21:18:12 | INFO     | evaluate |   [SBIN        ] acc=68.42% f1=0.6833 abstain=7.32%
+21:18:12 | INFO     | evaluate |   [WIPRO       ] acc=57.14% f1=0.5675 abstain=6.67%
+21:18:12 | INFO     | evaluate | ============================================================
+21:18:12 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+21:18:13 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+new data-set
+
+22:53:20 | INFO     | trainer | Epoch   1/100 | train_loss=0.6274 acc=0.4979 | val_loss=0.6324 acc=0.5242 | 0.8s | LR=1.49e-04
+22:53:20 | INFO     | trainer |   ★ New best: val_acc=0.5242
+22:53:21 | INFO     | trainer | Epoch   2/100 | train_loss=0.6245 acc=0.4985 | val_loss=0.6293 acc=0.5109 | 0.5s | LR=1.46e-04
+22:53:21 | INFO     | trainer | Epoch   3/100 | train_loss=0.6253 acc=0.4987 | val_loss=0.6282 acc=0.5125 | 0.5s | LR=1.42e-04
+22:53:22 | INFO     | trainer | Epoch   4/100 | train_loss=0.6225 acc=0.5168 | val_loss=0.6281 acc=0.5175 | 0.5s | LR=1.36e-04
+22:53:22 | INFO     | trainer | Epoch   5/100 | train_loss=0.6255 acc=0.4947 | val_loss=0.6269 acc=0.5259 | 0.5s | LR=1.28e-04
+22:53:22 | INFO     | trainer |   ★ New best: val_acc=0.5259
+22:53:23 | INFO     | trainer | Epoch   6/100 | train_loss=0.6236 acc=0.5069 | val_loss=0.6257 acc=0.5008 | 0.5s | LR=1.19e-04
+22:53:23 | INFO     | trainer | Epoch   7/100 | train_loss=0.6237 acc=0.5020 | val_loss=0.6305 acc=0.5042 | 0.5s | LR=1.09e-04
+22:53:24 | INFO     | trainer | Epoch   8/100 | train_loss=0.6227 acc=0.5141 | val_loss=0.6249 acc=0.4841 | 0.5s | LR=9.82e-05
+22:53:24 | INFO     | trainer | Epoch   9/100 | train_loss=0.6225 acc=0.5102 | val_loss=0.6274 acc=0.5259 | 0.5s | LR=8.67e-05
+22:53:25 | INFO     | trainer | Epoch  10/100 | train_loss=0.6222 acc=0.5204 | val_loss=0.6249 acc=0.4858 | 0.5s | LR=7.50e-05
+22:53:25 | INFO     | trainer | Epoch  11/100 | train_loss=0.6226 acc=0.5073 | val_loss=0.6249 acc=0.4942 | 0.5s | LR=6.33e-05
+22:53:26 | INFO     | trainer | Epoch  12/100 | train_loss=0.6211 acc=0.5172 | val_loss=0.6271 acc=0.5075 | 0.5s | LR=5.18e-05
+22:53:26 | INFO     | trainer | Epoch  13/100 | train_loss=0.6216 acc=0.5188 | val_loss=0.6274 acc=0.5175 | 0.5s | LR=4.10e-05
+22:53:27 | INFO     | trainer | Epoch  14/100 | train_loss=0.6219 acc=0.5169 | val_loss=0.6260 acc=0.4942 | 0.5s | LR=3.09e-05
+22:53:27 | INFO     | trainer | Epoch  15/100 | train_loss=0.6227 acc=0.5127 | val_loss=0.6269 acc=0.5025 | 0.5s | LR=2.20e-05
+22:53:28 | INFO     | trainer | Epoch  16/100 | train_loss=0.6216 acc=0.5221 | val_loss=0.6267 acc=0.5092 | 0.5s | LR=1.43e-05
+22:53:28 | INFO     | trainer | Epoch  17/100 | train_loss=0.6218 acc=0.5076 | val_loss=0.6267 acc=0.5142 | 0.5s | LR=8.17e-06
+22:53:29 | INFO     | trainer | Epoch  18/100 | train_loss=0.6211 acc=0.5273 | val_loss=0.6269 acc=0.5092 | 0.5s | LR=3.67e-06
+22:53:29 | INFO     | trainer | Epoch  19/100 | train_loss=0.6215 acc=0.5179 | val_loss=0.6268 acc=0.5142 | 0.5s | LR=9.23e-07
+22:53:30 | INFO     | trainer | Epoch  20/100 | train_loss=0.6210 acc=0.5294 | val_loss=0.6268 acc=0.5159 | 0.5s | LR=1.50e-04
+22:53:31 | INFO     | trainer | Epoch  21/100 | train_loss=0.6230 acc=0.5160 | val_loss=0.6274 acc=0.5092 | 0.6s | LR=1.49e-04
+22:53:31 | INFO     | trainer | Epoch  22/100 | train_loss=0.6228 acc=0.5043 | val_loss=0.6261 acc=0.5075 | 0.5s | LR=1.46e-04
+22:53:32 | INFO     | trainer | Epoch  23/100 | train_loss=0.6210 acc=0.5280 | val_loss=0.6321 acc=0.5192 | 0.5s | LR=1.42e-04
+22:53:32 | INFO     | trainer | Epoch  24/100 | train_loss=0.6227 acc=0.5177 | val_loss=0.6255 acc=0.4908 | 0.5s | LR=1.36e-04
+22:53:33 | INFO     | trainer | Epoch  25/100 | train_loss=0.6209 acc=0.5182 | val_loss=0.6287 acc=0.5042 | 0.6s | LR=1.28e-04
+22:53:33 | INFO     | trainer |   Early stopping at epoch 25 (patience=20).
+22:53:33 | INFO     | trainer | ✓ Best model (val_acc=0.5259) → /home/prabhashpadhan/Desktop/5/InlpFinalProject/models/lstm/production/best_model.pt
+22:53:33 | INFO     | trainer | Computing Fisher Information Matrix for EWC …
+22:53:34 | INFO     | trainer | Fisher matrix saved.
+22:53:34 | INFO     | errors | ✓  Stage 'train' completed in 15.3s | CPU RAM: 1.71 GB | GPU VRAM: 0.02 GB
+(venv) prabhashpadhan@prabhashpadhan-ASUS-TUF-Gaming-F16-FX608JMR-FX608JMR:~/Desktop/5/InlpFinalProject$    python main.py eval --split test
+22:53:55 | INFO     | config | [CONFIG] Profile='full' | price_hidden=256 | sent_hidden=128 | epochs=100 | int8=False
+22:53:55 | INFO     | main | Command: eval | Profile: full | Force: False
+22:53:55 | INFO     | model | DualStreamLSTM built | price_hidden=256 ×3L | sent_hidden=128 ×2L | params=1,630,977
+22:53:56 | INFO     | cache | [CACHE HIT] BAJFINANCE.pt (0.0d old) — skipping stage.
+22:53:56 | INFO     | data_fusion | [BAJFINANCE] Loading fused tensors from cache …
+22:53:56 | INFO     | cache | [CACHE HIT] BAJFINANCE_splits.npz (0.1d old) — skipping stage.
+22:53:56 | INFO     | cache | [CACHE HIT] BPCL.pt (0.0d old) — skipping stage.
+22:53:56 | INFO     | data_fusion | [BPCL] Loading fused tensors from cache …
+22:53:56 | INFO     | cache | [CACHE HIT] BPCL_splits.npz (0.1d old) — skipping stage.
+22:53:57 | INFO     | cache | [CACHE HIT] HDFCBANK.pt (0.0d old) — skipping stage.
+22:53:57 | INFO     | data_fusion | [HDFCBANK] Loading fused tensors from cache …
+22:53:57 | INFO     | cache | [CACHE HIT] HDFCBANK_splits.npz (0.1d old) — skipping stage.
+22:53:58 | INFO     | cache | [CACHE HIT] ICICIBANK.pt (0.0d old) — skipping stage.
+22:53:58 | INFO     | data_fusion | [ICICIBANK] Loading fused tensors from cache …
+22:53:58 | INFO     | cache | [CACHE HIT] ICICIBANK_splits.npz (0.1d old) — skipping stage.
+22:53:58 | INFO     | cache | [CACHE HIT] INFY.pt (0.0d old) — skipping stage.
+22:53:58 | INFO     | data_fusion | [INFY] Loading fused tensors from cache …
+22:53:58 | INFO     | cache | [CACHE HIT] INFY_splits.npz (0.1d old) — skipping stage.
+22:53:59 | INFO     | cache | [CACHE HIT] NTPC.pt (0.0d old) — skipping stage.
+22:53:59 | INFO     | data_fusion | [NTPC] Loading fused tensors from cache …
+22:53:59 | INFO     | cache | [CACHE HIT] NTPC_splits.npz (0.1d old) — skipping stage.
+22:54:00 | INFO     | cache | [CACHE HIT] ONGC.pt (0.0d old) — skipping stage.
+22:54:00 | INFO     | data_fusion | [ONGC] Loading fused tensors from cache …
+22:54:00 | INFO     | cache | [CACHE HIT] ONGC_splits.npz (0.1d old) — skipping stage.
+22:54:01 | INFO     | cache | [CACHE HIT] RELIANCE.pt (0.0d old) — skipping stage.
+22:54:01 | INFO     | data_fusion | [RELIANCE] Loading fused tensors from cache …
+22:54:01 | INFO     | cache | [CACHE HIT] RELIANCE_splits.npz (0.1d old) — skipping stage.
+22:54:01 | INFO     | cache | [CACHE HIT] SBIN.pt (0.0d old) — skipping stage.
+22:54:01 | INFO     | data_fusion | [SBIN] Loading fused tensors from cache …
+22:54:01 | INFO     | cache | [CACHE HIT] SBIN_splits.npz (0.1d old) — skipping stage.
+22:54:02 | INFO     | cache | [CACHE HIT] WIPRO.pt (0.0d old) — skipping stage.
+22:54:02 | INFO     | data_fusion | [WIPRO] Loading fused tensors from cache …
+22:54:02 | INFO     | cache | [CACHE HIT] WIPRO_splits.npz (0.1d old) — skipping stage.
+22:54:02 | INFO     | errors | ▶  Starting stage: evaluate
+22:54:02 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000706 var_std=0.000149 | threshold=0.000930
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   Overall Accuracy  : 56.13%
+22:54:02 | INFO     | evaluate |   Macro F1          : 0.4998
+22:54:02 | INFO     | evaluate |   Abstention Rate   : 6.64%  (coverage=93.36%)
+22:54:02 | INFO     | evaluate |   ECE (calibration) : 0.0555  (lower=better, 0=perfect)
+22:54:02 | INFO     | evaluate |   acc@var<0.5σ             : 53.63%  (n=289)
+22:54:02 | INFO     | evaluate |   acc@var<1.0σ             : 55.77%  (n=364)
+22:54:02 | INFO     | evaluate |   acc@var<1.5σ             : 56.13%  (n=408)
+22:54:02 | INFO     | evaluate |   acc@var<2.0σ             : 55.92%  (n=431)
+22:54:02 | INFO     | evaluate | ------------------------------------------------------------
+22:54:02 | INFO     | evaluate |   [BAJFINANCE  ] acc=47.37% f1=0.4493 abstain=11.63%
+22:54:02 | INFO     | evaluate |   [BPCL        ] acc=54.35% f1=0.4496 abstain=4.17%
+22:54:02 | INFO     | evaluate |   [HDFCBANK    ] acc=74.19% f1=0.7182 abstain=16.22%
+22:54:02 | INFO     | evaluate |   [ICICIBANK   ] acc=54.55% f1=0.4058 abstain=15.38%
+22:54:02 | INFO     | evaluate |   [INFY        ] acc=45.83% f1=0.4429 abstain=2.04%
+22:54:02 | INFO     | evaluate |   [NTPC        ] acc=60.00% f1=0.4984 abstain=2.44%
+22:54:02 | INFO     | evaluate |   [ONGC        ] acc=68.75% f1=0.6427 abstain=4.00%
+22:54:02 | INFO     | evaluate |   [RELIANCE    ] acc=53.66% f1=0.3919 abstain=6.82%
+22:54:02 | INFO     | evaluate |   [SBIN        ] acc=67.50% f1=0.6366 abstain=2.44%
+22:54:02 | INFO     | evaluate |   [WIPRO       ] acc=39.53% f1=0.3116 abstain=4.44%
+22:54:02 | INFO     | evaluate | ============================================================
+22:54:02 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+22:54:03 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+==
+10:30:55 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+10:30:55 | INFO     | evaluate | ============================================================
+10:30:55 | INFO     | evaluate |   Overall Accuracy  : 52.92%
+10:30:55 | INFO     | evaluate |   Macro F1          : 0.4842
+10:30:55 | INFO     | evaluate |   Abstention Rate   : 3.80%  (coverage=96.20%)
+10:30:55 | INFO     | evaluate |   ECE (calibration) : 0.0655  (lower=better, 0=perfect)
+10:30:55 | INFO     | evaluate |   acc@var<0.5σ             : 51.84%  (n=461)
+10:30:55 | INFO     | evaluate |   acc@var<1.0σ             : 52.87%  (n=575)
+10:30:55 | INFO     | evaluate |   acc@var<1.5σ             : 52.92%  (n=633)
+10:30:55 | INFO     | evaluate |   acc@var<2.0σ             : 52.92%  (n=633)
+10:30:55 | INFO     | evaluate | ------------------------------------------------------------
+10:30:55 | INFO     | evaluate |   [BAJFINANCE  ] acc=65.00% f1=0.5833 abstain=6.98%
+10:30:55 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.02% f1=0.3098 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [BPCL        ] acc=47.92% f1=0.4045 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [HDFCBANK    ] acc=58.33% f1=0.5404 abstain=2.70%
+10:30:55 | INFO     | evaluate |   [ICICIBANK   ] acc=46.15% f1=0.4236 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [INFY        ] acc=58.33% f1=0.4725 abstain=2.04%
+10:30:55 | INFO     | evaluate |   [ITC         ] acc=44.74% f1=0.3454 abstain=7.32%
+10:30:55 | INFO     | evaluate |   [KOTAKBANK   ] acc=72.73% f1=0.6857 abstain=2.22%
+10:30:55 | INFO     | evaluate |   [NTPC        ] acc=56.41% f1=0.5641 abstain=4.88%
+10:30:55 | INFO     | evaluate |   [ONGC        ] acc=55.10% f1=0.5272 abstain=2.00%
+10:30:55 | INFO     | evaluate |   [POWERGRID   ] acc=41.46% f1=0.3692 abstain=6.82%
+10:30:55 | INFO     | evaluate |   [RELIANCE    ] acc=40.00% f1=0.3862 abstain=9.09%
+10:30:55 | INFO     | evaluate |   [SBIN        ] acc=53.66% f1=0.5264 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [TATASTEEL   ] acc=47.92% f1=0.4045 abstain=4.00%
+10:30:55 | INFO     | evaluate |   [WIPRO       ] acc=65.85% f1=0.6058 abstain=8.89%
+10:30:55 | INFO     | evaluate | ============================================================
+10:30:55 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+10:30:56 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.6s | CPU RAM: 1.15 GB | GPU VRAM: 0.04 GB
+
+
+
+
+| evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   PERFORMANCE MATRIX — split=test
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Overall Accuracy  : 59.39%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Macro F1          : 0.5611
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Abstention Rate   : 10.94%  (coverage=89.06%)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   ECE (calibration) : 0.0746  (lower=better, 0=perfect)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<0.5σ             : 61.07%  (n=524)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<1.0σ             : 60.00%  (n=570)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<1.5σ             : 59.39%  (n=586)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<2.0σ             : 57.78%  (n=623)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ------------------------------------------------------------
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BAJFINANCE  ] acc=72.97% f1=0.7279 abstain=13.95%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BHARTIARTL  ] acc=46.15% f1=0.4052 abstain=36.59%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BPCL        ] acc=52.27% f1=0.4390 abstain=8.33%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [HDFCBANK    ] acc=61.11% f1=0.6000 abstain=2.70%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ICICIBANK   ] acc=61.29% f1=0.5921 abstain=20.51%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [INFY        ] acc=52.08% f1=0.5104 abstain=2.04%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ITC         ] acc=78.79% f1=0.7664 abstain=19.51%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [KOTAKBANK   ] acc=62.50% f1=0.6113 abstain=28.89%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [NTPC        ] acc=77.50% f1=0.7254 abstain=2.44%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ONGC        ] acc=75.00% f1=0.6975 abstain=4.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [POWERGRID   ] acc=65.91% f1=0.5810 abstain=0.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [RELIANCE    ] acc=60.00% f1=0.5238 abstain=9.09%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [SBIN        ] acc=50.00% f1=0.4969 abstain=7.32%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [TATASTEEL   ] acc=47.73% f1=0.4637 abstain=12.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [WIPRO       ] acc=31.11% f1=0.2373 abstain=0.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+2026-04-10 10:16:34 | [32mINFO    [0m | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+
+  Starting stage: evaluate
+11:27:13 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000518 var_std=0.000552 | threshold=0.001346
+11:27:13 | INFO     | evaluate | ============================================================
+11:27:13 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:27:13 | INFO     | evaluate | ============================================================
+11:27:13 | INFO     | evaluate |   Overall Accuracy  : 59.97%
+11:27:13 | INFO     | evaluate |   Macro F1          : 0.5885
+11:27:13 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:27:13 | INFO     | evaluate |   ECE (calibration) : 0.0887  (lower=better, 0=perfect)
+11:27:13 | INFO     | evaluate |   acc@var<0.5σ             : 61.23%  (n=521)
+11:27:13 | INFO     | evaluate |   acc@var<1.0σ             : 60.21%  (n=578)
+11:27:13 | INFO     | evaluate |   acc@var<1.5σ             : 59.97%  (n=607)
+11:27:13 | INFO     | evaluate |   acc@var<2.0σ             : 59.78%  (n=629)
+11:27:13 | INFO     | evaluate | ------------------------------------------------------------
+11:27:13 | INFO     | evaluate |   [BAJFINANCE  ] acc=74.29% f1=0.7420 abstain=18.60%
+11:27:13 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.47% f1=0.3735 abstain=7.32%
+11:27:13 | INFO     | evaluate |   [BPCL        ] acc=59.57% f1=0.5428 abstain=2.08%
+11:27:13 | INFO     | evaluate |   [HDFCBANK    ] acc=64.71% f1=0.6357 abstain=8.11%
+11:27:13 | INFO     | evaluate |   [ICICIBANK   ] acc=41.67% f1=0.4052 abstain=7.69%
+11:27:13 | INFO     | evaluate |   [INFY        ] acc=46.94% f1=0.4692 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [ITC         ] acc=63.89% f1=0.6364 abstain=12.20%
+11:27:13 | INFO     | evaluate |   [KOTAKBANK   ] acc=58.82% f1=0.5750 abstain=24.44%
+11:27:13 | INFO     | evaluate |   [NTPC        ] acc=68.29% f1=0.6629 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [ONGC        ] acc=77.78% f1=0.7500 abstain=10.00%
+11:27:13 | INFO     | evaluate |   [POWERGRID   ] acc=77.27% f1=0.7603 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [RELIANCE    ] acc=57.89% f1=0.5594 abstain=13.64%
+11:27:13 | INFO     | evaluate |   [SBIN        ] acc=55.26% f1=0.5523 abstain=7.32%
+11:27:13 | INFO     | evaluate |   [TATASTEEL   ] acc=68.09% f1=0.6657 abstain=6.00%
+11:27:13 | INFO     | evaluate |   [WIPRO       ] acc=44.44% f1=0.4433 abstain=0.00%
+
+
+
+
+for different seeds
+
+
+seed=42
+ Starting stage: evaluate
+11:51:01 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001051 var_std=0.000199 | threshold=0.001350
+11:51:02 | INFO     | evaluate | ============================================================
+11:51:02 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:51:02 | INFO     | evaluate | ============================================================
+11:51:02 | INFO     | evaluate |   Overall Accuracy  : 43.47%
+11:51:02 | INFO     | evaluate |   Macro F1          : 0.3030
+11:51:02 | INFO     | evaluate |   Abstention Rate   : 8.05%  (coverage=91.95%)
+11:51:02 | INFO     | evaluate |   ECE (calibration) : 0.1133  (lower=better, 0=perfect)
+11:51:02 | INFO     | evaluate |   acc@var<0.5σ             : 41.70%  (n=470)
+11:51:02 | INFO     | evaluate |   acc@var<1.0σ             : 42.88%  (n=555)
+11:51:02 | INFO     | evaluate |   acc@var<1.5σ             : 43.47%  (n=605)
+11:51:02 | INFO     | evaluate |   acc@var<2.0σ             : 43.68%  (n=641)
+11:51:02 | INFO     | evaluate | ------------------------------------------------------------
+11:51:02 | INFO     | evaluate |   [BAJFINANCE  ] acc=58.97% f1=0.3710 abstain=9.30%
+11:51:02 | INFO     | evaluate |   [BHARTIARTL  ] acc=43.24% f1=0.3019 abstain=9.76%
+11:51:02 | INFO     | evaluate |   [BPCL        ] acc=43.18% f1=0.3016 abstain=8.33%
+11:51:02 | INFO     | evaluate |   [HDFCBANK    ] acc=41.18% f1=0.2917 abstain=8.11%
+11:51:02 | INFO     | evaluate |   [ICICIBANK   ] acc=40.00% f1=0.2857 abstain=10.26%
+11:51:02 | INFO     | evaluate |   [INFY        ] acc=54.35% f1=0.3521 abstain=6.12%
+11:51:02 | INFO     | evaluate |   [ITC         ] acc=44.74% f1=0.3091 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [KOTAKBANK   ] acc=59.52% f1=0.3731 abstain=6.67%
+11:51:02 | INFO     | evaluate |   [NTPC        ] acc=23.68% f1=0.1915 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [ONGC        ] acc=35.56% f1=0.2623 abstain=10.00%
+11:51:02 | INFO     | evaluate |   [POWERGRID   ] acc=35.00% f1=0.2593 abstain=9.09%
+11:51:02 | INFO     | evaluate |   [RELIANCE    ] acc=34.15% f1=0.2545 abstain=6.82%
+11:51:02 | INFO     | evaluate |   [SBIN        ] acc=34.21% f1=0.2549 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [TATASTEEL   ] acc=41.30% f1=0.2923 abstain=8.00%
+11:51:02 | INFO     | evaluate |   [WIPRO       ] acc=59.52% f1=0.3731 abstain=6.67%
+11:51:02 | INFO     | evaluate | ============================================================
+
+
+
+seed=123
+
+Starting stage: evaluate
+11:53:42 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000518 var_std=0.000552 | threshold=0.001346
+11:53:42 | INFO     | evaluate | ============================================================
+11:53:42 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:53:42 | INFO     | evaluate | ============================================================
+11:53:42 | INFO     | evaluate |   Overall Accuracy  : 59.97%
+11:53:42 | INFO     | evaluate |   Macro F1          : 0.5885
+11:53:42 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:53:42 | INFO     | evaluate |   ECE (calibration) : 0.0887  (lower=better, 0=perfect)
+11:53:42 | INFO     | evaluate |   acc@var<0.5σ             : 61.23%  (n=521)
+11:53:42 | INFO     | evaluate |   acc@var<1.0σ             : 60.21%  (n=578)
+11:53:42 | INFO     | evaluate |   acc@var<1.5σ             : 59.97%  (n=607)
+11:53:42 | INFO     | evaluate |   acc@var<2.0σ             : 59.78%  (n=629)
+11:53:42 | INFO     | evaluate | ------------------------------------------------------------
+11:53:42 | INFO     | evaluate |   [BAJFINANCE  ] acc=74.29% f1=0.7420 abstain=18.60%
+11:53:42 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.47% f1=0.3735 abstain=7.32%
+11:53:42 | INFO     | evaluate |   [BPCL        ] acc=59.57% f1=0.5428 abstain=2.08%
+11:53:42 | INFO     | evaluate |   [HDFCBANK    ] acc=64.71% f1=0.6357 abstain=8.11%
+11:53:42 | INFO     | evaluate |   [ICICIBANK   ] acc=41.67% f1=0.4052 abstain=7.69%
+11:53:42 | INFO     | evaluate |   [INFY        ] acc=46.94% f1=0.4692 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [ITC         ] acc=63.89% f1=0.6364 abstain=12.20%
+11:53:42 | INFO     | evaluate |   [KOTAKBANK   ] acc=58.82% f1=0.5750 abstain=24.44%
+11:53:42 | INFO     | evaluate |   [NTPC        ] acc=68.29% f1=0.6629 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [ONGC        ] acc=77.78% f1=0.7500 abstain=10.00%
+11:53:42 | INFO     | evaluate |   [POWERGRID   ] acc=77.27% f1=0.7603 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [RELIANCE    ] acc=57.89% f1=0.5594 abstain=13.64%
+11:53:42 | INFO     | evaluate |   [SBIN        ] acc=55.26% f1=0.5523 abstain=7.32%
+11:53:42 | INFO     | evaluate |   [TATASTEEL   ] acc=68.09% f1=0.6657 abstain=6.00%
+11:53:42 | INFO     | evaluate |   [WIPRO       ] acc=44.44% f1=0.4433 abstain=0.00%
+11:53:42 | INFO     | evaluate | ============================================================
+
+
+seed=7
+
+
+ Starting stage: evaluate
+11:56:32 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001190 var_std=0.000247 | threshold=0.001561
+11:56:32 | INFO     | evaluate | ============================================================
+11:56:32 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:56:32 | INFO     | evaluate | ============================================================
+11:56:32 | INFO     | evaluate |   Overall Accuracy  : 43.58%
+11:56:32 | INFO     | evaluate |   Macro F1          : 0.3035
+11:56:32 | INFO     | evaluate |   Abstention Rate   : 10.03%  (coverage=89.97%)
+11:56:32 | INFO     | evaluate |   ECE (calibration) : 0.1155  (lower=better, 0=perfect)
+11:56:32 | INFO     | evaluate |   acc@var<0.5σ             : 43.16%  (n=526)
+11:56:32 | INFO     | evaluate |   acc@var<1.0σ             : 42.91%  (n=557)
+11:56:32 | INFO     | evaluate |   acc@var<1.5σ             : 43.58%  (n=592)
+11:56:32 | INFO     | evaluate |   acc@var<2.0σ             : 44.53%  (n=622)
+11:56:32 | INFO     | evaluate | ------------------------------------------------------------
+11:56:32 | INFO     | evaluate |   [BAJFINANCE  ] acc=52.50% f1=0.3443 abstain=6.98%
+11:56:32 | INFO     | evaluate |   [BHARTIARTL  ] acc=45.95% f1=0.3148 abstain=9.76%
+11:56:32 | INFO     | evaluate |   [BPCL        ] acc=40.91% f1=0.2903 abstain=8.33%
+11:56:32 | INFO     | evaluate |   [HDFCBANK    ] acc=45.45% f1=0.3125 abstain=10.81%
+11:56:32 | INFO     | evaluate |   [ICICIBANK   ] acc=41.18% f1=0.2917 abstain=12.82%
+11:56:32 | INFO     | evaluate |   [INFY        ] acc=54.55% f1=0.3529 abstain=10.20%
+11:56:32 | INFO     | evaluate |   [ITC         ] acc=44.44% f1=0.3077 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [KOTAKBANK   ] acc=59.52% f1=0.3731 abstain=6.67%
+11:56:32 | INFO     | evaluate |   [NTPC        ] acc=25.00% f1=0.2000 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [ONGC        ] acc=36.96% f1=0.2698 abstain=8.00%
+11:56:32 | INFO     | evaluate |   [POWERGRID   ] acc=35.90% f1=0.2642 abstain=11.36%
+11:56:32 | INFO     | evaluate |   [RELIANCE    ] acc=32.50% f1=0.2453 abstain=9.09%
+11:56:32 | INFO     | evaluate |   [SBIN        ] acc=36.11% f1=0.2653 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [TATASTEEL   ] acc=41.30% f1=0.2923 abstain=8.00%
+11:56:32 | INFO     | evaluate |   [WIPRO       ] acc=58.97% f1=0.3710 abstain=13.33%
+11:56:32 | INFO     | evaluate | ==========================================================
+
+
+
+
+seed=21
+
+Starting stage: evaluate
+11:58:34 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000976 var_std=0.000910 | threshold=0.002341
+11:58:34 | INFO     | evaluate | ============================================================
+11:58:34 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:58:34 | INFO     | evaluate | ============================================================
+11:58:34 | INFO     | evaluate |   Overall Accuracy  : 49.42%
+11:58:34 | INFO     | evaluate |   Macro F1          : 0.4926
+11:58:34 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:58:34 | INFO     | evaluate |   ECE (calibration) : 0.0685  (lower=better, 0=perfect)
+11:58:34 | INFO     | evaluate |   acc@var<0.5σ             : 50.10%  (n=505)
+11:58:34 | INFO     | evaluate |   acc@var<1.0σ             : 49.12%  (n=568)
+11:58:34 | INFO     | evaluate |   acc@var<1.5σ             : 49.42%  (n=607)
+11:58:34 | INFO     | evaluate |   acc@var<2.0σ             : 49.12%  (n=623)
+11:58:34 | INFO     | evaluate | ------------------------------------------------------------
+11:58:34 | INFO     | evaluate |   [BAJFINANCE  ] acc=67.57% f1=0.6636 abstain=13.95%
+11:58:34 | INFO     | evaluate |   [BHARTIARTL  ] acc=46.88% f1=0.4682 abstain=21.95%
+11:58:34 | INFO     | evaluate |   [BPCL        ] acc=58.33% f1=0.5446 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [HDFCBANK    ] acc=45.71% f1=0.4554 abstain=5.41%
+11:58:34 | INFO     | evaluate |   [ICICIBANK   ] acc=28.57% f1=0.2763 abstain=10.26%
+11:58:34 | INFO     | evaluate |   [INFY        ] acc=44.90% f1=0.4490 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [ITC         ] acc=52.63% f1=0.5142 abstain=7.32%
+11:58:34 | INFO     | evaluate |   [KOTAKBANK   ] acc=51.35% f1=0.5103 abstain=17.78%
+11:58:34 | INFO     | evaluate |   [NTPC        ] acc=58.54% f1=0.5690 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [ONGC        ] acc=44.68% f1=0.4445 abstain=6.00%
+11:58:34 | INFO     | evaluate |   [POWERGRID   ] acc=59.09% f1=0.5448 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [RELIANCE    ] acc=58.54% f1=0.5763 abstain=6.82%
+11:58:34 | INFO     | evaluate |   [SBIN        ] acc=60.00% f1=0.5997 abstain=14.63%
+11:58:34 | INFO     | evaluate |   [TATASTEEL   ] acc=37.21% f1=0.3707 abstain=14.00%
+11:58:34 | INFO     | evaluate |   [WIPRO       ] acc=28.89% f1=0.2593 abstain=0.00%
+11:58:34 | INFO     | evaluate | ============================================================
+
+
+seed=99
+
+
+Starting stage: evaluate
+12:01:21 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001205 var_std=0.001048 | threshold=0.002777
+12:01:21 | INFO     | evaluate | ============================================================
+12:01:21 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+12:01:21 | INFO     | evaluate | ============================================================
+12:01:21 | INFO     | evaluate |   Overall Accuracy  : 52.17%
+12:01:21 | INFO     | evaluate |   Macro F1          : 0.5119
+12:01:21 | INFO     | evaluate |   Abstention Rate   : 8.81%  (coverage=91.19%)
+12:01:21 | INFO     | evaluate |   ECE (calibration) : 0.0923  (lower=better, 0=perfect)
+12:01:21 | INFO     | evaluate |   acc@var<0.5σ             : 53.00%  (n=517)
+12:01:21 | INFO     | evaluate |   acc@var<1.0σ             : 52.41%  (n=561)
+12:01:21 | INFO     | evaluate |   acc@var<1.5σ             : 52.17%  (n=600)
+12:01:21 | INFO     | evaluate |   acc@var<2.0σ             : 52.18%  (n=619)
+12:01:21 | INFO     | evaluate | ------------------------------------------------------------
+12:01:21 | INFO     | evaluate |   [BAJFINANCE  ] acc=63.16% f1=0.6145 abstain=11.63%
+12:01:21 | INFO     | evaluate |   [BHARTIARTL  ] acc=44.74% f1=0.4280 abstain=7.32%
+12:01:21 | INFO     | evaluate |   [BPCL        ] acc=47.83% f1=0.4250 abstain=4.17%
+12:01:21 | INFO     | evaluate |   [HDFCBANK    ] acc=51.52% f1=0.5147 abstain=10.81%
+12:01:21 | INFO     | evaluate |   [ICICIBANK   ] acc=38.89% f1=0.3714 abstain=7.69%
+12:01:21 | INFO     | evaluate |   [INFY        ] acc=42.86% f1=0.4226 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [ITC         ] acc=61.11% f1=0.6000 abstain=12.20%
+12:01:21 | INFO     | evaluate |   [KOTAKBANK   ] acc=55.26% f1=0.5260 abstain=15.56%
+12:01:21 | INFO     | evaluate |   [NTPC        ] acc=58.54% f1=0.5591 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [ONGC        ] acc=61.70% f1=0.6083 abstain=6.00%
+12:01:21 | INFO     | evaluate |   [POWERGRID   ] acc=65.91% f1=0.6364 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [RELIANCE    ] acc=54.29% f1=0.5105 abstain=20.45%
+12:01:21 | INFO     | evaluate |   [SBIN        ] acc=54.29% f1=0.5425 abstain=14.63%
+12:01:21 | INFO     | evaluate |   [TATASTEEL   ] acc=46.15% f1=0.4379 abstain=22.00%
+12:01:21 | INFO     | evaluate |   [WIPRO       ] acc=37.78% f1=0.3775 abstain=0.00%
+12:01:21 | INFO     | evaluate | ==========================================================

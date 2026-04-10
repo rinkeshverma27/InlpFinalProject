@@ -1,0 +1,13 @@
+{
+  "completed_at": "2026-04-10T06:29:37.996782+00:00",
+  "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/KOTAKBANK.pt",
+  "ticker": "KOTAKBANK",
+  "n_samples": 4632,
+  "fusion_config": {
+    "label_horizon_days": 3,
+    "label_threshold": 0.008,
+    "window_min": 5,
+    "window_max": 15,
+    "window_atr_scale": 20
+  }
+}
