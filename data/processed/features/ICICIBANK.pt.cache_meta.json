@@ -1,8 +1,8 @@
 {
-  "completed_at": "2026-04-09T17:23:16.354615+00:00",
+  "completed_at": "2026-04-10T05:20:26.582627+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/ICICIBANK.pt",
   "ticker": "ICICIBANK",
-  "n_samples": 4395,
+  "n_samples": 4541,
   "fusion_config": {
     "label_horizon_days": 3,
     "label_threshold": 0.008,

@@ -1,8 +1,8 @@
 {
-  "completed_at": "2026-04-09T17:23:16.495712+00:00",
+  "completed_at": "2026-04-10T05:20:26.663227+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/INFY.pt",
   "ticker": "INFY",
-  "n_samples": 4947,
+  "n_samples": 5120,
   "fusion_config": {
     "label_horizon_days": 3,
     "label_threshold": 0.008,

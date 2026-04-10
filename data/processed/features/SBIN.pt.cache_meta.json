@@ -1,8 +1,8 @@
 {
-  "completed_at": "2026-04-09T17:23:17.053598+00:00",
+  "completed_at": "2026-04-10T05:20:27.229204+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/SBIN.pt",
   "ticker": "SBIN",
-  "n_samples": 5141,
+  "n_samples": 5299,
   "fusion_config": {
     "label_horizon_days": 3,
     "label_threshold": 0.008,

@@ -1,6 +1,6 @@
 {
-  "completed_at": "2026-04-09T17:23:08.063212+00:00",
+  "completed_at": "2026-04-10T05:20:13.887325+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/sentiment/SBIN.parquet",
   "ticker": "SBIN",
-  "n_days": 204
+  "n_days": 498
 }

@@ -44,6 +44,7 @@ sys.path.insert(0, str(ROOT))
 from src.utils.config_loader import load_config
 from src.utils.logger import get_logger
 from src.utils.paths import ensure_dirs
+from src.utils.reproducibility import get_seed, set_global_seed
 from src.utils.errors import run_stage
 
 log = get_logger("main")
@@ -173,6 +174,7 @@ def cmd_eval(args, cfg):
     m_cfg    = cfg.get("model", {})
     n_passes = m_cfg.get("mc_dropout_passes", 30)
     thresh   = m_cfg.get("confidence_threshold", 0.65)
+    eval_seed = get_seed(cfg)
 
     model_path = PRODUCTION_DIR / "best_model.pt"
     if not model_path.exists():
@@ -199,7 +201,7 @@ def cmd_eval(args, cfg):
 
             for price, sent, labels, dates in loader:
                 price, sent = price.to(device), sent.to(device)
-                mean, var = mc_predict(model, price, sent, n_passes)
+                mean, var = mc_predict(model, price, sent, n_passes, seed=eval_seed)
                 for i in range(len(labels)):
                     # Direction will be re-calibrated in evaluate.py, 
                     # but we provide a default here for consistency.
@@ -325,6 +327,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--resume",   default=None,            help="Path to checkpoint to resume from")
     p.add_argument("--date",     default=None,            help="Target date for tier1 (YYYY-MM-DD)")
     p.add_argument("--output",   default=None,            help="Output CSV path for predict command")
+    p.add_argument("--seed",     default=None, type=int,  help="Override experiment seed")
     return p
 
 
@@ -339,11 +342,19 @@ def main():
         sys.exit(1)
 
     cfg = load_config(cfg_path, profile_override=args.profile)
+    repro_cfg = cfg.get("reproducibility", {})
+    seed = get_seed(cfg, args.seed)
+    set_global_seed(seed, deterministic=repro_cfg.get("deterministic", True))
+    cfg.setdefault("reproducibility", {})
+    cfg["reproducibility"]["seed"] = seed
 
     # Create all directories
     ensure_dirs()
 
-    log.info(f"Command: {args.command} | Profile: {cfg.get('vram_profile','8gb')} | Force: {args.force}")
+    log.info(
+        f"Command: {args.command} | Profile: {cfg.get('vram_profile','8gb')} | "
+        f"Force: {args.force} | Seed: {seed}"
+    )
 
     COMMANDS[args.command](args, cfg)
 

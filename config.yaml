@@ -83,10 +83,13 @@ tickers:
   subset_5:    ["RELIANCE", "SBIN", "HDFCBANK", "INFY", "ICICIBANK"]
   pilot_10:    ["RELIANCE", "SBIN", "HDFCBANK", "INFY", "ICICIBANK",
                 "BAJFINANCE", "BPCL", "NTPC", "ONGC", "WIPRO"]
+  final_15:    ["BAJFINANCE", "BHARTIARTL", "BPCL", "HDFCBANK", "ICICIBANK",
+                "INFY", "ITC", "KOTAKBANK", "NTPC", "ONGC",
+                "POWERGRID", "RELIANCE", "SBIN", "TATASTEEL", "WIPRO"]
   nifty_10:   ["RELIANCE", "TCS", "HDFCBANK", "INFY", "ICICIBANK",
                 "HINDUNILVR", "BAJFINANCE", "WIPRO", "MARUTI", "AXISBANK"]
   nifty_50:   null   # null = load all from ohlcv_dir
-  active:      "pilot_10"   # available local tickers with enough OHLCV history
+  active:      "final_15"   # aligned with the current final OHLCV master dataset
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CACHE CONTROL
@@ -97,6 +100,13 @@ cache:
   features_ttl_days: 7
   splits_ttl_days: 30
   fusion_ttl_days: 7
+
+# ─────────────────────────────────────────────────────────────────────────────
+# REPRODUCIBILITY
+# ─────────────────────────────────────────────────────────────────────────────
+reproducibility:
+  seed: 123
+  deterministic: true
 
 # ─────────────────────────────────────────────────────────────────────────────
 # GRACEFUL FAILURE & MEMORY MANAGEMENT

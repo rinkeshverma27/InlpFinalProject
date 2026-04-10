@@ -1,8 +1,8 @@
 {
-  "completed_at": "2026-04-09T17:23:16.232359+00:00",
+  "completed_at": "2026-04-10T05:20:26.506147+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/HDFCBANK.pt",
   "ticker": "HDFCBANK",
-  "n_samples": 4665,
+  "n_samples": 4805,
   "fusion_config": {
     "label_horizon_days": 3,
     "label_threshold": 0.008,

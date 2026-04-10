@@ -1,0 +1,13 @@
+{
+  "completed_at": "2026-04-10T05:20:27.064770+00:00",
+  "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/POWERGRID.pt",
+  "ticker": "POWERGRID",
+  "n_samples": 3099,
+  "fusion_config": {
+    "label_horizon_days": 3,
+    "label_threshold": 0.008,
+    "window_min": 5,
+    "window_max": 15,
+    "window_atr_scale": 20
+  }
+}

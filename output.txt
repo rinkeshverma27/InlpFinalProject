@@ -451,3 +451,72 @@ new data-set
 22:54:02 | INFO     | evaluate | ============================================================
 22:54:02 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
 22:54:03 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+==
+10:30:55 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+10:30:55 | INFO     | evaluate | ============================================================
+10:30:55 | INFO     | evaluate |   Overall Accuracy  : 52.92%
+10:30:55 | INFO     | evaluate |   Macro F1          : 0.4842
+10:30:55 | INFO     | evaluate |   Abstention Rate   : 3.80%  (coverage=96.20%)
+10:30:55 | INFO     | evaluate |   ECE (calibration) : 0.0655  (lower=better, 0=perfect)
+10:30:55 | INFO     | evaluate |   acc@var<0.5σ             : 51.84%  (n=461)
+10:30:55 | INFO     | evaluate |   acc@var<1.0σ             : 52.87%  (n=575)
+10:30:55 | INFO     | evaluate |   acc@var<1.5σ             : 52.92%  (n=633)
+10:30:55 | INFO     | evaluate |   acc@var<2.0σ             : 52.92%  (n=633)
+10:30:55 | INFO     | evaluate | ------------------------------------------------------------
+10:30:55 | INFO     | evaluate |   [BAJFINANCE  ] acc=65.00% f1=0.5833 abstain=6.98%
+10:30:55 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.02% f1=0.3098 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [BPCL        ] acc=47.92% f1=0.4045 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [HDFCBANK    ] acc=58.33% f1=0.5404 abstain=2.70%
+10:30:55 | INFO     | evaluate |   [ICICIBANK   ] acc=46.15% f1=0.4236 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [INFY        ] acc=58.33% f1=0.4725 abstain=2.04%
+10:30:55 | INFO     | evaluate |   [ITC         ] acc=44.74% f1=0.3454 abstain=7.32%
+10:30:55 | INFO     | evaluate |   [KOTAKBANK   ] acc=72.73% f1=0.6857 abstain=2.22%
+10:30:55 | INFO     | evaluate |   [NTPC        ] acc=56.41% f1=0.5641 abstain=4.88%
+10:30:55 | INFO     | evaluate |   [ONGC        ] acc=55.10% f1=0.5272 abstain=2.00%
+10:30:55 | INFO     | evaluate |   [POWERGRID   ] acc=41.46% f1=0.3692 abstain=6.82%
+10:30:55 | INFO     | evaluate |   [RELIANCE    ] acc=40.00% f1=0.3862 abstain=9.09%
+10:30:55 | INFO     | evaluate |   [SBIN        ] acc=53.66% f1=0.5264 abstain=0.00%
+10:30:55 | INFO     | evaluate |   [TATASTEEL   ] acc=47.92% f1=0.4045 abstain=4.00%
+10:30:55 | INFO     | evaluate |   [WIPRO       ] acc=65.85% f1=0.6058 abstain=8.89%
+10:30:55 | INFO     | evaluate | ============================================================
+10:30:55 | INFO     | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+10:30:56 | INFO     | errors | ✓  Stage 'evaluate' completed in 0.6s | CPU RAM: 1.15 GB | GPU VRAM: 0.04 GB
+
+
+
+
+| evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   PERFORMANCE MATRIX — split=test
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Overall Accuracy  : 59.39%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Macro F1          : 0.5611
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Abstention Rate   : 10.94%  (coverage=89.06%)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   ECE (calibration) : 0.0746  (lower=better, 0=perfect)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<0.5σ             : 61.07%  (n=524)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<1.0σ             : 60.00%  (n=570)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<1.5σ             : 59.39%  (n=586)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   acc@var<2.0σ             : 57.78%  (n=623)
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ------------------------------------------------------------
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BAJFINANCE  ] acc=72.97% f1=0.7279 abstain=13.95%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BHARTIARTL  ] acc=46.15% f1=0.4052 abstain=36.59%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [BPCL        ] acc=52.27% f1=0.4390 abstain=8.33%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [HDFCBANK    ] acc=61.11% f1=0.6000 abstain=2.70%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ICICIBANK   ] acc=61.29% f1=0.5921 abstain=20.51%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [INFY        ] acc=52.08% f1=0.5104 abstain=2.04%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ITC         ] acc=78.79% f1=0.7664 abstain=19.51%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [KOTAKBANK   ] acc=62.50% f1=0.6113 abstain=28.89%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [NTPC        ] acc=77.50% f1=0.7254 abstain=2.44%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [ONGC        ] acc=75.00% f1=0.6975 abstain=4.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [POWERGRID   ] acc=65.91% f1=0.5810 abstain=0.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [RELIANCE    ] acc=60.00% f1=0.5238 abstain=9.09%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [SBIN        ] acc=50.00% f1=0.4969 abstain=7.32%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [TATASTEEL   ] acc=47.73% f1=0.4637 abstain=12.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   [WIPRO       ] acc=31.11% f1=0.2373 abstain=0.00%
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ============================================================
+2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
+2026-04-10 10:16:34 | [32mINFO    [0m | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB

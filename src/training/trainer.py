@@ -24,6 +24,7 @@ from src.utils.logger import get_logger
 from src.utils.errors import run_stage
 from src.utils.paths import CHECKPOINTS_DIR, PRODUCTION_DIR, TRAIN_LOGS_DIR
 from src.utils.plotting import plot_training_history
+from src.utils.reproducibility import get_seed, make_torch_generator, set_global_seed
 from src.training.dataset import StockSequenceDataset, make_splits, collate_fn
 from src.model.dual_stream_lstm import build_model
 
@@ -130,6 +131,12 @@ def train(
     grad_clip  = t_cfg.get("grad_clip_norm", 1.0)
     patience   = t_cfg.get("early_stopping_patience", 10)
     cosine_t0  = t_cfg.get("cosine_t0", 10)
+    repro_cfg  = cfg.get("reproducibility", {})
+    seed       = get_seed(cfg)
+
+    # Re-apply here so direct calls to train() remain reproducible too.
+    set_global_seed(seed, deterministic=repro_cfg.get("deterministic", True))
+    train_gen = make_torch_generator(seed)
 
     # ── Build datasets & loaders ──────────────────────────────────────────────
     train_sets, val_sets = [], []
@@ -152,7 +159,8 @@ def train(
     # Falling back to single-process loading keeps training portable.
     n_workers = 0
     train_loader = DataLoader(train_ds, batch_size=batch_sz, shuffle=True,
-                              num_workers=n_workers, collate_fn=collate_fn, pin_memory=True)
+                              num_workers=n_workers, collate_fn=collate_fn, pin_memory=True,
+                              generator=train_gen)
     val_loader   = DataLoader(val_ds,   batch_size=batch_sz, shuffle=False,
                               num_workers=n_workers, collate_fn=collate_fn, pin_memory=True)
 
@@ -231,6 +239,7 @@ def train(
             "val_acc":      va_acc,
             "best_val_acc": best_val_acc,
             "cfg_profile":  cfg.get("vram_profile", "8gb"),
+            "seed":         seed,
         }, ckpt_path)
 
         if va_acc > best_val_acc:

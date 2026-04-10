@@ -1,8 +1,8 @@
 {
-  "completed_at": "2026-04-09T17:23:15.818558+00:00",
+  "completed_at": "2026-04-10T05:20:26.275173+00:00",
   "output": "/home/prabhashpadhan/Desktop/5/InlpFinalProject/data/processed/features/BAJFINANCE.pt",
   "ticker": "BAJFINANCE",
-  "n_samples": 4327,
+  "n_samples": 4523,
   "fusion_config": {
     "label_horizon_days": 3,
     "label_threshold": 0.008,

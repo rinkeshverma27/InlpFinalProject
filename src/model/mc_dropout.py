@@ -16,6 +16,7 @@ def mc_predict(
     price_seq: torch.Tensor,
     sentiment_seq: torch.Tensor,
     n_passes: int,
+    seed: int | None = None,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     """
     Run Monte Carlo Dropout inference.
@@ -25,6 +26,7 @@ def mc_predict(
         price_seq     : [B, T, 11]
         sentiment_seq : [B, T, 9]
         n_passes      : Number of stochastic forward passes.
+        seed          : Optional fixed seed for reproducible MC dropout.
 
     Returns:
         mean     : [B] mean probability of UP (direction call)
@@ -32,6 +34,12 @@ def mc_predict(
     """
     model.train()   # KEEP dropout active during inference
     preds = []
+
+    if seed is not None:
+        torch.manual_seed(seed)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed(seed)
+            torch.cuda.manual_seed_all(seed)
 
     with torch.no_grad():
         for _ in range(n_passes):
@@ -75,7 +83,8 @@ def predict_single(
     price_seq     = price_seq.to(device)
     sentiment_seq = sentiment_seq.to(device)
 
-    mean, var = mc_predict(model, price_seq, sentiment_seq, n_passes)
+    seed = int(cfg.get("reproducibility", {}).get("seed", 42))
+    mean, var = mc_predict(model, price_seq, sentiment_seq, n_passes, seed=seed)
 
     prob   = mean[0].item()
     varval = var[0].item()
