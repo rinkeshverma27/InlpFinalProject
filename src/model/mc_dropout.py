@@ -69,7 +69,9 @@ def predict_single(
             direction   : "UP" | "DOWN" | "ABSTAIN"
             probability : float [0,1] - probability of UP
             variance    : float - MC uncertainty
-            confidence  : float - min(prob, 1-prob) distance from 0.5, scaled
+            direction_strength : float [0,1] - directional certainty from probability distance to 0.5
+            stability          : float [0,1] - inverse uncertainty from MC variance
+            confidence         : float [0,1] - combined score using both direction and stability
     """
     m_cfg    = cfg.get("model", {})
     n_passes = m_cfg.get("mc_dropout_passes", 30)
@@ -89,9 +91,11 @@ def predict_single(
     prob   = mean[0].item()
     varval = var[0].item()
     
-    # Sensible default threshold for single prediction if not calibrated
     # If variance is very high, we abstain.
     do_abs = varval > (1.0 - thresh)
+    direction_strength = abs(prob - 0.5) * 2.0
+    stability = max(0.0, min(1.0, 1.0 - varval))
+    confidence = direction_strength * stability
 
     if do_abs:
         direction = "ABSTAIN"
@@ -102,5 +106,7 @@ def predict_single(
         "direction":   direction,
         "probability": round(prob, 4),
         "variance":    round(varval, 4),
-        "confidence":  round(1.0 - varval, 4),
+        "direction_strength": round(direction_strength, 4),
+        "stability":   round(stability, 4),
+        "confidence":  round(confidence, 4),
     }

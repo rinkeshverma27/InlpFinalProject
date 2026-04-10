@@ -27,7 +27,8 @@ def generate_predictions_csv(
     Run latest-available prediction for each ticker and save to CSV.
 
     Output columns:
-        ticker, date, direction, prob_up, variance, confidence, n_samples
+        ticker, date, direction, actual_direction, prediction_result,
+        prob_up, variance, direction_strength, stability, confidence, n_samples
     """
     model_path = PRODUCTION_DIR / "best_model.pt"
     if not model_path.exists():
@@ -49,13 +50,23 @@ def generate_predictions_csv(
         price_seq = fd["price_seq"][-1]
         sent_seq = fd["sentiment_seq"][-1]
         result = predict_single(model, price_seq, sent_seq, cfg, device)
+        actual_label = int(fd["labels"][-1].item())
+        actual_direction = "UP" if actual_label == 1 else "DOWN"
+        if result["direction"] == "ABSTAIN":
+            prediction_result = "ABSTAIN"
+        else:
+            prediction_result = "CORRECT" if result["direction"] == actual_direction else "WRONG"
 
         rows.append({
             "ticker": ticker,
             "date": fd["dates"][-1],
             "direction": result["direction"],
+            "actual_direction": actual_direction,
+            "prediction_result": prediction_result,
             "prob_up": result["probability"],
             "variance": result["variance"],
+            "direction_strength": result["direction_strength"],
+            "stability": result["stability"],
             "confidence": result["confidence"],
             "n_samples": len(fd["dates"]),
         })

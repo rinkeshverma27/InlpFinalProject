@@ -31,6 +31,15 @@ from src.model.dual_stream_lstm import build_model
 log = get_logger("trainer")
 
 
+def _prune_epoch_checkpoints(keep_path: Optional[pathlib.Path] = None) -> None:
+    """Delete root-level epoch checkpoints except the one we want to keep."""
+    CHECKPOINTS_DIR.mkdir(parents=True, exist_ok=True)
+    for path in CHECKPOINTS_DIR.glob("epoch_*.pt"):
+        if keep_path is not None and path.resolve() == keep_path.resolve():
+            continue
+        path.unlink(missing_ok=True)
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Fisher Information Matrix (for EWC)
 # ─────────────────────────────────────────────────────────────────────────────
@@ -129,7 +138,6 @@ def train(
     wd         = t_cfg.get("weight_decay",  1e-5)
     batch_sz   = t_cfg.get("batch_size",    64)
     grad_clip  = t_cfg.get("grad_clip_norm", 1.0)
-    patience   = t_cfg.get("early_stopping_patience", 10)
     cosine_t0  = t_cfg.get("cosine_t0", 10)
     repro_cfg  = cfg.get("reproducibility", {})
     seed       = get_seed(cfg)
@@ -197,7 +205,6 @@ def train(
     CHECKPOINTS_DIR.mkdir(parents=True, exist_ok=True)
     TRAIN_LOGS_DIR.mkdir(parents=True, exist_ok=True)
     history = []
-    no_improve = 0
 
     for epoch in range(start_epoch, epochs):
         t0 = time.time()
@@ -245,14 +252,10 @@ def train(
         if va_acc > best_val_acc:
             best_val_acc   = va_acc
             best_ckpt_path = ckpt_path
-            no_improve     = 0
             log.info(f"  ★ New best: val_acc={best_val_acc:.4f}")
+            _prune_epoch_checkpoints(best_ckpt_path)
         else:
-            no_improve += 1
-
-        if no_improve >= patience:
-            log.info(f"  Early stopping at epoch {epoch+1} (patience={patience}).")
-            break
+            ckpt_path.unlink(missing_ok=True)
 
     # ── Save training history ─────────────────────────────────────────────────
     hist_path = TRAIN_LOGS_DIR / "training_history.json"
@@ -262,6 +265,7 @@ def train(
 
     # ── Promote best to production ────────────────────────────────────────────
     if best_ckpt_path:
+        _prune_epoch_checkpoints(best_ckpt_path)
         PRODUCTION_DIR.mkdir(parents=True, exist_ok=True)
         import shutil
         prod_path = PRODUCTION_DIR / "best_model.pt"
