@@ -520,3 +520,217 @@ new data-set
 2026-04-10 10:16:34 | [32mINFO    [0m | evaluate | ============================================================
 2026-04-10 10:16:34 | [32mINFO    [0m | evaluate |   Full report saved → /home/prabhashpadhan/Desktop/5/InlpFinalProject/logs/eval_report/report_test.json
 2026-04-10 10:16:34 | [32mINFO    [0m | errors | ✓  Stage 'evaluate' completed in 0.5s | CPU RAM: 1.16 GB | GPU VRAM: 0.04 GB
+
+
+
+
+
+
+  Starting stage: evaluate
+11:27:13 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000518 var_std=0.000552 | threshold=0.001346
+11:27:13 | INFO     | evaluate | ============================================================
+11:27:13 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:27:13 | INFO     | evaluate | ============================================================
+11:27:13 | INFO     | evaluate |   Overall Accuracy  : 59.97%
+11:27:13 | INFO     | evaluate |   Macro F1          : 0.5885
+11:27:13 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:27:13 | INFO     | evaluate |   ECE (calibration) : 0.0887  (lower=better, 0=perfect)
+11:27:13 | INFO     | evaluate |   acc@var<0.5σ             : 61.23%  (n=521)
+11:27:13 | INFO     | evaluate |   acc@var<1.0σ             : 60.21%  (n=578)
+11:27:13 | INFO     | evaluate |   acc@var<1.5σ             : 59.97%  (n=607)
+11:27:13 | INFO     | evaluate |   acc@var<2.0σ             : 59.78%  (n=629)
+11:27:13 | INFO     | evaluate | ------------------------------------------------------------
+11:27:13 | INFO     | evaluate |   [BAJFINANCE  ] acc=74.29% f1=0.7420 abstain=18.60%
+11:27:13 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.47% f1=0.3735 abstain=7.32%
+11:27:13 | INFO     | evaluate |   [BPCL        ] acc=59.57% f1=0.5428 abstain=2.08%
+11:27:13 | INFO     | evaluate |   [HDFCBANK    ] acc=64.71% f1=0.6357 abstain=8.11%
+11:27:13 | INFO     | evaluate |   [ICICIBANK   ] acc=41.67% f1=0.4052 abstain=7.69%
+11:27:13 | INFO     | evaluate |   [INFY        ] acc=46.94% f1=0.4692 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [ITC         ] acc=63.89% f1=0.6364 abstain=12.20%
+11:27:13 | INFO     | evaluate |   [KOTAKBANK   ] acc=58.82% f1=0.5750 abstain=24.44%
+11:27:13 | INFO     | evaluate |   [NTPC        ] acc=68.29% f1=0.6629 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [ONGC        ] acc=77.78% f1=0.7500 abstain=10.00%
+11:27:13 | INFO     | evaluate |   [POWERGRID   ] acc=77.27% f1=0.7603 abstain=0.00%
+11:27:13 | INFO     | evaluate |   [RELIANCE    ] acc=57.89% f1=0.5594 abstain=13.64%
+11:27:13 | INFO     | evaluate |   [SBIN        ] acc=55.26% f1=0.5523 abstain=7.32%
+11:27:13 | INFO     | evaluate |   [TATASTEEL   ] acc=68.09% f1=0.6657 abstain=6.00%
+11:27:13 | INFO     | evaluate |   [WIPRO       ] acc=44.44% f1=0.4433 abstain=0.00%
+
+
+
+
+for different seeds
+
+
+seed=42
+ Starting stage: evaluate
+11:51:01 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001051 var_std=0.000199 | threshold=0.001350
+11:51:02 | INFO     | evaluate | ============================================================
+11:51:02 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:51:02 | INFO     | evaluate | ============================================================
+11:51:02 | INFO     | evaluate |   Overall Accuracy  : 43.47%
+11:51:02 | INFO     | evaluate |   Macro F1          : 0.3030
+11:51:02 | INFO     | evaluate |   Abstention Rate   : 8.05%  (coverage=91.95%)
+11:51:02 | INFO     | evaluate |   ECE (calibration) : 0.1133  (lower=better, 0=perfect)
+11:51:02 | INFO     | evaluate |   acc@var<0.5σ             : 41.70%  (n=470)
+11:51:02 | INFO     | evaluate |   acc@var<1.0σ             : 42.88%  (n=555)
+11:51:02 | INFO     | evaluate |   acc@var<1.5σ             : 43.47%  (n=605)
+11:51:02 | INFO     | evaluate |   acc@var<2.0σ             : 43.68%  (n=641)
+11:51:02 | INFO     | evaluate | ------------------------------------------------------------
+11:51:02 | INFO     | evaluate |   [BAJFINANCE  ] acc=58.97% f1=0.3710 abstain=9.30%
+11:51:02 | INFO     | evaluate |   [BHARTIARTL  ] acc=43.24% f1=0.3019 abstain=9.76%
+11:51:02 | INFO     | evaluate |   [BPCL        ] acc=43.18% f1=0.3016 abstain=8.33%
+11:51:02 | INFO     | evaluate |   [HDFCBANK    ] acc=41.18% f1=0.2917 abstain=8.11%
+11:51:02 | INFO     | evaluate |   [ICICIBANK   ] acc=40.00% f1=0.2857 abstain=10.26%
+11:51:02 | INFO     | evaluate |   [INFY        ] acc=54.35% f1=0.3521 abstain=6.12%
+11:51:02 | INFO     | evaluate |   [ITC         ] acc=44.74% f1=0.3091 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [KOTAKBANK   ] acc=59.52% f1=0.3731 abstain=6.67%
+11:51:02 | INFO     | evaluate |   [NTPC        ] acc=23.68% f1=0.1915 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [ONGC        ] acc=35.56% f1=0.2623 abstain=10.00%
+11:51:02 | INFO     | evaluate |   [POWERGRID   ] acc=35.00% f1=0.2593 abstain=9.09%
+11:51:02 | INFO     | evaluate |   [RELIANCE    ] acc=34.15% f1=0.2545 abstain=6.82%
+11:51:02 | INFO     | evaluate |   [SBIN        ] acc=34.21% f1=0.2549 abstain=7.32%
+11:51:02 | INFO     | evaluate |   [TATASTEEL   ] acc=41.30% f1=0.2923 abstain=8.00%
+11:51:02 | INFO     | evaluate |   [WIPRO       ] acc=59.52% f1=0.3731 abstain=6.67%
+11:51:02 | INFO     | evaluate | ============================================================
+
+
+
+seed=123
+
+Starting stage: evaluate
+11:53:42 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000518 var_std=0.000552 | threshold=0.001346
+11:53:42 | INFO     | evaluate | ============================================================
+11:53:42 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:53:42 | INFO     | evaluate | ============================================================
+11:53:42 | INFO     | evaluate |   Overall Accuracy  : 59.97%
+11:53:42 | INFO     | evaluate |   Macro F1          : 0.5885
+11:53:42 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:53:42 | INFO     | evaluate |   ECE (calibration) : 0.0887  (lower=better, 0=perfect)
+11:53:42 | INFO     | evaluate |   acc@var<0.5σ             : 61.23%  (n=521)
+11:53:42 | INFO     | evaluate |   acc@var<1.0σ             : 60.21%  (n=578)
+11:53:42 | INFO     | evaluate |   acc@var<1.5σ             : 59.97%  (n=607)
+11:53:42 | INFO     | evaluate |   acc@var<2.0σ             : 59.78%  (n=629)
+11:53:42 | INFO     | evaluate | ------------------------------------------------------------
+11:53:42 | INFO     | evaluate |   [BAJFINANCE  ] acc=74.29% f1=0.7420 abstain=18.60%
+11:53:42 | INFO     | evaluate |   [BHARTIARTL  ] acc=39.47% f1=0.3735 abstain=7.32%
+11:53:42 | INFO     | evaluate |   [BPCL        ] acc=59.57% f1=0.5428 abstain=2.08%
+11:53:42 | INFO     | evaluate |   [HDFCBANK    ] acc=64.71% f1=0.6357 abstain=8.11%
+11:53:42 | INFO     | evaluate |   [ICICIBANK   ] acc=41.67% f1=0.4052 abstain=7.69%
+11:53:42 | INFO     | evaluate |   [INFY        ] acc=46.94% f1=0.4692 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [ITC         ] acc=63.89% f1=0.6364 abstain=12.20%
+11:53:42 | INFO     | evaluate |   [KOTAKBANK   ] acc=58.82% f1=0.5750 abstain=24.44%
+11:53:42 | INFO     | evaluate |   [NTPC        ] acc=68.29% f1=0.6629 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [ONGC        ] acc=77.78% f1=0.7500 abstain=10.00%
+11:53:42 | INFO     | evaluate |   [POWERGRID   ] acc=77.27% f1=0.7603 abstain=0.00%
+11:53:42 | INFO     | evaluate |   [RELIANCE    ] acc=57.89% f1=0.5594 abstain=13.64%
+11:53:42 | INFO     | evaluate |   [SBIN        ] acc=55.26% f1=0.5523 abstain=7.32%
+11:53:42 | INFO     | evaluate |   [TATASTEEL   ] acc=68.09% f1=0.6657 abstain=6.00%
+11:53:42 | INFO     | evaluate |   [WIPRO       ] acc=44.44% f1=0.4433 abstain=0.00%
+11:53:42 | INFO     | evaluate | ============================================================
+
+
+seed=7
+
+
+ Starting stage: evaluate
+11:56:32 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001190 var_std=0.000247 | threshold=0.001561
+11:56:32 | INFO     | evaluate | ============================================================
+11:56:32 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:56:32 | INFO     | evaluate | ============================================================
+11:56:32 | INFO     | evaluate |   Overall Accuracy  : 43.58%
+11:56:32 | INFO     | evaluate |   Macro F1          : 0.3035
+11:56:32 | INFO     | evaluate |   Abstention Rate   : 10.03%  (coverage=89.97%)
+11:56:32 | INFO     | evaluate |   ECE (calibration) : 0.1155  (lower=better, 0=perfect)
+11:56:32 | INFO     | evaluate |   acc@var<0.5σ             : 43.16%  (n=526)
+11:56:32 | INFO     | evaluate |   acc@var<1.0σ             : 42.91%  (n=557)
+11:56:32 | INFO     | evaluate |   acc@var<1.5σ             : 43.58%  (n=592)
+11:56:32 | INFO     | evaluate |   acc@var<2.0σ             : 44.53%  (n=622)
+11:56:32 | INFO     | evaluate | ------------------------------------------------------------
+11:56:32 | INFO     | evaluate |   [BAJFINANCE  ] acc=52.50% f1=0.3443 abstain=6.98%
+11:56:32 | INFO     | evaluate |   [BHARTIARTL  ] acc=45.95% f1=0.3148 abstain=9.76%
+11:56:32 | INFO     | evaluate |   [BPCL        ] acc=40.91% f1=0.2903 abstain=8.33%
+11:56:32 | INFO     | evaluate |   [HDFCBANK    ] acc=45.45% f1=0.3125 abstain=10.81%
+11:56:32 | INFO     | evaluate |   [ICICIBANK   ] acc=41.18% f1=0.2917 abstain=12.82%
+11:56:32 | INFO     | evaluate |   [INFY        ] acc=54.55% f1=0.3529 abstain=10.20%
+11:56:32 | INFO     | evaluate |   [ITC         ] acc=44.44% f1=0.3077 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [KOTAKBANK   ] acc=59.52% f1=0.3731 abstain=6.67%
+11:56:32 | INFO     | evaluate |   [NTPC        ] acc=25.00% f1=0.2000 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [ONGC        ] acc=36.96% f1=0.2698 abstain=8.00%
+11:56:32 | INFO     | evaluate |   [POWERGRID   ] acc=35.90% f1=0.2642 abstain=11.36%
+11:56:32 | INFO     | evaluate |   [RELIANCE    ] acc=32.50% f1=0.2453 abstain=9.09%
+11:56:32 | INFO     | evaluate |   [SBIN        ] acc=36.11% f1=0.2653 abstain=12.20%
+11:56:32 | INFO     | evaluate |   [TATASTEEL   ] acc=41.30% f1=0.2923 abstain=8.00%
+11:56:32 | INFO     | evaluate |   [WIPRO       ] acc=58.97% f1=0.3710 abstain=13.33%
+11:56:32 | INFO     | evaluate | ==========================================================
+
+
+
+
+seed=21
+
+Starting stage: evaluate
+11:58:34 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.000976 var_std=0.000910 | threshold=0.002341
+11:58:34 | INFO     | evaluate | ============================================================
+11:58:34 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+11:58:34 | INFO     | evaluate | ============================================================
+11:58:34 | INFO     | evaluate |   Overall Accuracy  : 49.42%
+11:58:34 | INFO     | evaluate |   Macro F1          : 0.4926
+11:58:34 | INFO     | evaluate |   Abstention Rate   : 7.75%  (coverage=92.25%)
+11:58:34 | INFO     | evaluate |   ECE (calibration) : 0.0685  (lower=better, 0=perfect)
+11:58:34 | INFO     | evaluate |   acc@var<0.5σ             : 50.10%  (n=505)
+11:58:34 | INFO     | evaluate |   acc@var<1.0σ             : 49.12%  (n=568)
+11:58:34 | INFO     | evaluate |   acc@var<1.5σ             : 49.42%  (n=607)
+11:58:34 | INFO     | evaluate |   acc@var<2.0σ             : 49.12%  (n=623)
+11:58:34 | INFO     | evaluate | ------------------------------------------------------------
+11:58:34 | INFO     | evaluate |   [BAJFINANCE  ] acc=67.57% f1=0.6636 abstain=13.95%
+11:58:34 | INFO     | evaluate |   [BHARTIARTL  ] acc=46.88% f1=0.4682 abstain=21.95%
+11:58:34 | INFO     | evaluate |   [BPCL        ] acc=58.33% f1=0.5446 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [HDFCBANK    ] acc=45.71% f1=0.4554 abstain=5.41%
+11:58:34 | INFO     | evaluate |   [ICICIBANK   ] acc=28.57% f1=0.2763 abstain=10.26%
+11:58:34 | INFO     | evaluate |   [INFY        ] acc=44.90% f1=0.4490 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [ITC         ] acc=52.63% f1=0.5142 abstain=7.32%
+11:58:34 | INFO     | evaluate |   [KOTAKBANK   ] acc=51.35% f1=0.5103 abstain=17.78%
+11:58:34 | INFO     | evaluate |   [NTPC        ] acc=58.54% f1=0.5690 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [ONGC        ] acc=44.68% f1=0.4445 abstain=6.00%
+11:58:34 | INFO     | evaluate |   [POWERGRID   ] acc=59.09% f1=0.5448 abstain=0.00%
+11:58:34 | INFO     | evaluate |   [RELIANCE    ] acc=58.54% f1=0.5763 abstain=6.82%
+11:58:34 | INFO     | evaluate |   [SBIN        ] acc=60.00% f1=0.5997 abstain=14.63%
+11:58:34 | INFO     | evaluate |   [TATASTEEL   ] acc=37.21% f1=0.3707 abstain=14.00%
+11:58:34 | INFO     | evaluate |   [WIPRO       ] acc=28.89% f1=0.2593 abstain=0.00%
+11:58:34 | INFO     | evaluate | ============================================================
+
+
+seed=99
+
+
+Starting stage: evaluate
+12:01:21 | INFO     | evaluate | Dynamic Calibration (test) | var_mean=0.001205 var_std=0.001048 | threshold=0.002777
+12:01:21 | INFO     | evaluate | ============================================================
+12:01:21 | INFO     | evaluate |   PERFORMANCE MATRIX — split=test
+12:01:21 | INFO     | evaluate | ============================================================
+12:01:21 | INFO     | evaluate |   Overall Accuracy  : 52.17%
+12:01:21 | INFO     | evaluate |   Macro F1          : 0.5119
+12:01:21 | INFO     | evaluate |   Abstention Rate   : 8.81%  (coverage=91.19%)
+12:01:21 | INFO     | evaluate |   ECE (calibration) : 0.0923  (lower=better, 0=perfect)
+12:01:21 | INFO     | evaluate |   acc@var<0.5σ             : 53.00%  (n=517)
+12:01:21 | INFO     | evaluate |   acc@var<1.0σ             : 52.41%  (n=561)
+12:01:21 | INFO     | evaluate |   acc@var<1.5σ             : 52.17%  (n=600)
+12:01:21 | INFO     | evaluate |   acc@var<2.0σ             : 52.18%  (n=619)
+12:01:21 | INFO     | evaluate | ------------------------------------------------------------
+12:01:21 | INFO     | evaluate |   [BAJFINANCE  ] acc=63.16% f1=0.6145 abstain=11.63%
+12:01:21 | INFO     | evaluate |   [BHARTIARTL  ] acc=44.74% f1=0.4280 abstain=7.32%
+12:01:21 | INFO     | evaluate |   [BPCL        ] acc=47.83% f1=0.4250 abstain=4.17%
+12:01:21 | INFO     | evaluate |   [HDFCBANK    ] acc=51.52% f1=0.5147 abstain=10.81%
+12:01:21 | INFO     | evaluate |   [ICICIBANK   ] acc=38.89% f1=0.3714 abstain=7.69%
+12:01:21 | INFO     | evaluate |   [INFY        ] acc=42.86% f1=0.4226 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [ITC         ] acc=61.11% f1=0.6000 abstain=12.20%
+12:01:21 | INFO     | evaluate |   [KOTAKBANK   ] acc=55.26% f1=0.5260 abstain=15.56%
+12:01:21 | INFO     | evaluate |   [NTPC        ] acc=58.54% f1=0.5591 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [ONGC        ] acc=61.70% f1=0.6083 abstain=6.00%
+12:01:21 | INFO     | evaluate |   [POWERGRID   ] acc=65.91% f1=0.6364 abstain=0.00%
+12:01:21 | INFO     | evaluate |   [RELIANCE    ] acc=54.29% f1=0.5105 abstain=20.45%
+12:01:21 | INFO     | evaluate |   [SBIN        ] acc=54.29% f1=0.5425 abstain=14.63%
+12:01:21 | INFO     | evaluate |   [TATASTEEL   ] acc=46.15% f1=0.4379 abstain=22.00%
+12:01:21 | INFO     | evaluate |   [WIPRO       ] acc=37.78% f1=0.3775 abstain=0.00%
+12:01:21 | INFO     | evaluate | ==========================================================
