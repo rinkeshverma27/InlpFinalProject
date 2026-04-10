@@ -1,0 +1,146 @@
+[
+  {
+    "ticker": "BHARTIARTL",
+    "news_input": "Bharti Airtel expands 5G footprint with 4,300 new sites in Eastern Uttar Pradesh, improving network coverage across urban and rural markets.",
+    "label": "Strong positive infrastructure expansion",
+    "expected_polarity": "Positive",
+    "expected_model_output": "UP",
+    "explanation": "Direct capex-driven network expansion signals revenue growth potential; unambiguously positive for Bharti Airtel."
+  },
+  {
+    "ticker": "SBIN",
+    "news_input": "Q4 results se pehle PSU banks par brokerages bullish hain; healthy business updates aur better credit momentum ki wajah se SBI par buying advice di gayi hai.",
+    "label": "Positive pre-results brokerage support",
+    "expected_polarity": "Positive",
+    "expected_model_output": "UP",
+    "explanation": "Hinglish headline conveying bullish brokerage consensus on SBI ahead of Q4; sentiment is clearly positive with buy recommendation."
+  },
+  {
+    "ticker": "ICICIBANK",
+    "news_input": "RBI ne policy rate hold ki, jiske baad banking shares mein rally dekhi gayi; ICICI Bank ko rate-sensitive recovery theme ka beneficiary bataya gaya.",
+    "label": "Positive policy-linked bank rerating",
+    "expected_polarity": "Positive",
+    "expected_model_output": "UP",
+    "explanation": "Hinglish headline: RBI rate hold expected to spur banking rally; ICICI Bank named as key beneficiary, which is stock-specific positive."
+  },
+  {
+    "ticker": "NTPC",
+    "news_input": "Government announces ₹12,000 crore thermal capacity addition plan; NTPC likely to be the anchor developer for three new coal-based units.",
+    "label": "Policy support with direct order visibility",
+    "expected_polarity": "Positive",
+    "expected_model_output": "UP",
+    "explanation": "Direct order pipeline for NTPC from government policy; capacity addition translates to future earnings growth — clearly positive."
+  },
+  {
+    "ticker": "BAJFINANCE",
+    "news_input": "Goldman Sachs retains a Buy on Bajaj Finance, citing execution strength and AUM growth visibility despite mixed consumer lending trends.",
+    "label": "Brokerage positive with caveats",
+    "expected_polarity": "Positive",
+    "expected_model_output": "LOW-CONFIDENCE UP",
+    "explanation": "Buy rating is positive, but 'despite mixed trends' introduces uncertainty. Model should lean UP but with lower confidence."
+  },
+  {
+    "ticker": "INFY",
+    "news_input": "Zoho founder says the Indian IT sector is struggling not only because of AI and tariffs, but also because of weak product depth and service inefficiency.",
+    "label": "Strong sector-level negative for IT",
+    "expected_polarity": "Negative",
+    "expected_model_output": "DOWN",
+    "explanation": "Broad negative critique of the IT sector from a credible industry voice; structural weakness claim affects sentiment for Infosys directly."
+  },
+  {
+    "ticker": "BHARTIARTL",
+    "news_input": "Market-cap erosion among top Indian firms was led by Bharti Airtel, which emerged as the biggest laggard in a weak holiday-shortened week.",
+    "label": "Market-led negative tone",
+    "expected_polarity": "Negative",
+    "expected_model_output": "DOWN",
+    "explanation": "Stock named as the biggest laggard with market-cap erosion — directly negative signal with no offsetting positive factor."
+  },
+  {
+    "ticker": "RELIANCE",
+    "news_input": "CAG says BSNL failed to recover infrastructure-sharing dues from Reliance Jio for years, leading to a large loss to the government.",
+    "label": "Governance and regulatory overhang",
+    "expected_polarity": "Negative",
+    "expected_model_output": "DOWN",
+    "explanation": "Regulatory / governance concern involving a government audit finding; negative overhang even if not an immediate earnings hit."
+  },
+  {
+    "ticker": "TATASTEEL",
+    "news_input": "Sensex mein 500+ points ki girawat ke beech metals par pressure bana, geopolitics aur oil spike ki wajah se Tata Steel jaise cyclical names weak mood mein rahe.",
+    "label": "Macro risk-off with metals pressure",
+    "expected_polarity": "Negative",
+    "expected_model_output": "DOWN",
+    "explanation": "Hinglish headline: broad market selloff with metals under pressure due to geopolitics and oil spike. Tata Steel named as weak — unambiguously negative."
+  },
+  {
+    "ticker": "WIPRO",
+    "news_input": "Wipro ke Q4 results mein revenue growth flat rahi, lekin management ne FY27 mein AI-led deals se recovery ka guidance diya hai.",
+    "label": "Mixed results with forward guidance",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "LOW-CONFIDENCE UP",
+    "explanation": "Hinglish: weak current-quarter results (flat revenue) offset by optimistic forward guidance. Opposing signals should yield mixed polarity and low confidence."
+  },
+  {
+    "ticker": "ONGC",
+    "news_input": "Crude oil crashes nearly 16%; while lower oil eases inflation concerns for the economy, it clouds near-term realization outlook for upstream producers like ONGC.",
+    "label": "Mixed macro, stock-specific negative",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "LOW-CONFIDENCE DOWN",
+    "explanation": "Macro-positive (lower inflation) but stock-specific negative (lower realizations for ONGC). Conflicting signals should produce mixed polarity, leaning DOWN."
+  },
+  {
+    "ticker": "ITC",
+    "news_input": "ITC chairman says India is better placed to manage US tariff disruption and may benefit from an early bilateral trade agreement.",
+    "label": "Constructive macro but indirect",
+    "expected_polarity": "Positive",
+    "expected_model_output": "LOW-CONFIDENCE UP",
+    "explanation": "Positive macro outlook from company leadership, but no direct earnings catalyst mentioned. Sentiment is positive but impact is indirect, warranting lower confidence."
+  },
+  {
+    "ticker": "HDFCBANK",
+    "news_input": "Top Technical Picks mein HDFC Bank ko weak market ke bawajood strong setup wala stock bataya gaya, even as broader indices stayed under pressure.",
+    "label": "Weak positive technical signal",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "LOW-CONFIDENCE UP",
+    "explanation": "Hinglish: stock named as a technical pick despite weak market. Positive for HDFC Bank but the bearish broader context creates mixed sentiment with low confidence."
+  },
+  {
+    "ticker": "KOTAKBANK",
+    "news_input": "Should investors buy Kotak Mahindra Bank ahead of Q4 results, or is the asset-quality risk still too large to ignore?",
+    "label": "Ambiguous pre-results question",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "ABSTAIN",
+    "explanation": "Rhetorical question with no directional stance; buy opportunity vs. asset-quality risk creates maximum ambiguity. Model should abstain."
+  },
+  {
+    "ticker": "POWERGRID",
+    "news_input": "Power Grid Corporation employees may receive a performance-linked reward ahead of the festive season, though the direct earnings impact remains unclear.",
+    "label": "Weak, ambiguous corporate update",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "ABSTAIN",
+    "explanation": "Minor corporate HR update with no material earnings impact. Insufficiently directional for a trading signal — model should abstain."
+  },
+  {
+    "ticker": "BPCL",
+    "news_input": "BPCL ki refining margins mein tezi aayi hai global supply cuts ke baad, lekin government ne fuel subsidy ka burden badhane ka ishara diya hai.",
+    "label": "Positive fundamentals vs. policy risk",
+    "expected_polarity": "Mixed",
+    "expected_model_output": "LOW-CONFIDENCE DOWN",
+    "explanation": "Hinglish: positive refining margins offset by government subsidy burden signal. Two opposing forces create mixed polarity; subsidy risk typically dominates for OMCs."
+  },
+  {
+    "ticker": "SBIN",
+    "news_input": "RBI imposes ₹1 crore penalty on State Bank of India for non-compliance with KYC norms and customer account regulations.",
+    "label": "Regulatory penalty — negative but immaterial",
+    "expected_polarity": "Negative",
+    "expected_model_output": "LOW-CONFIDENCE DOWN",
+    "explanation": "Regulatory penalty is negative in tone but ₹1Cr is financially immaterial for SBI. Sentiment skews negative but magnitude is too small for high conviction."
+  },
+  {
+    "ticker": "RELIANCE",
+    "news_input": "Reliance Retail reports record quarterly revenue of ₹78,000 crore, driven by strong store expansion and digital commerce growth across metros and Tier-2 cities.",
+    "label": "Strong subsidiary earnings beat",
+    "expected_polarity": "Positive",
+    "expected_model_output": "UP",
+    "explanation": "Record revenue from a key subsidiary with structural growth drivers (store expansion + digital). Unambiguously positive for Reliance Industries."
+  }
+]
