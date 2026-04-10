@@ -11,7 +11,7 @@ What it does:
    UP / DOWN / LOW-CONFIDENCE UP / LOW-CONFIDENCE DOWN / ABSTAIN
 
 Usage:
-  python3 scripts/qualitative_news_inference.py
+  python3 scripts/qualittive_news_inference.py
   python3 scripts/qualitative_news_inference.py --input path/to/cases.json
   python3 scripts/qualitative_news_inference.py --output reports/qualitative_cases.csv
 
