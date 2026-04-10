@@ -1,4 +1,4 @@
-# 🚀 Dual-Stream Stock Direction Predictor (Nifty-50)
+# Dual-Stream Stock Direction Predictor (Nifty-50)
 
 ![Stock Direction Predictor Pipeline](stock_direction_predictor_pipeline.svg)
 
@@ -6,7 +6,7 @@ A production-ready deep learning pipeline designed to predict stock price direct
 
 ---
 
-## 🏗️ Architectural Overview & Technical Description
+##  Architectural Overview & Technical Description
 
 The project utilizes a **Dual-Stream LSTM Architecture** combined with an **Adaptive Learning System**. Standard models usually evaluate only price momentum or only news sentiment. This system solves that by processing two completely asynchronous data streams and perfectly aligning them over a 20-year trading history.
 
@@ -17,7 +17,7 @@ The project utilizes a **Dual-Stream LSTM Architecture** combined with an **Adap
 
 ---
 
-## 📂 File Structure & Module Roles
+##  File Structure & Module Roles
 
 ```text
 InlpFinalProject/
@@ -79,7 +79,7 @@ InlpFinalProject/
 
 ---
 
-## 🧠 Design Choices
+##  Design Choices
 
 - **Hidden Layer Dimensions:** 
   - Price Stream: `192` (full) or `128` (4gb scale-down). Price features have high temporal complexity and therefore need a larger hidden state representation. 
@@ -89,7 +89,7 @@ InlpFinalProject/
 
 ---
 
-## 📊 Data Samples
+##  Data Samples
 
 ### 1. OHLCV Technical Data (Stream B)
 After feature engineering, the dataset looks like this:
@@ -109,7 +109,7 @@ datetime, ticker, headline, body, source
 
 ---
 
-## 🏆 Current Results (Smoke Test Execution)
+##  Current Results (Smoke Test Execution)
 
 Currently, the pipeline has been verified via a **Smoke Test** execution using the heavily scaled-down `4gb` hardware profile (see below). 
 
@@ -118,11 +118,11 @@ Currently, the pipeline has been verified via a **Smoke Test** execution using t
 *   **Best Ticker (ICICIBANK):** `63.89%` (F1: 0.601)
 *   **Expected Calibration Error (ECE):** `0.0186` (A score near 0 proves the model is exceptionally well calibrated and knows when it is uncertain).
 
-> **⚠️ NOTE:** This is a purely logical smoke-test. We artificially capped the Teacher-Student NLP distillation to just 64 sample texts and restricted the LSTM hidden sizes to fit inside a tiny 4GB VRAM footprint. 
+> ** NOTE:** This is a purely logical smoke-test. We artificially capped the Teacher-Student NLP distillation to just 64 sample texts and restricted the LSTM hidden sizes to fit inside a tiny 4GB VRAM footprint. 
 
 ---
 
-## 📈 Unlocking the Full Potential 
+##  Unlocking the Full Potential 
 
 Currently, `config.yaml` defaults to:
 `vram_profile: "4gb"`
